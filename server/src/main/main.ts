@@ -9,6 +9,8 @@ import { Session } from './session';
 import { UserRoutes } from '../route/user.routes';
 import { RoleRoutes } from '../route/role.routes';
 import { ProjectRoutes } from '../route/project.routes';
+import { TranslationProjectRoutes } from '../route/translation.project.routes';
+import { LanguageRoutes } from '../route/language.routes';
 
 export class Main {
 
@@ -21,6 +23,9 @@ export class Main {
     private userRoutes: UserRoutes;
     private roleRoutes: RoleRoutes;
     private projectRoutes: ProjectRoutes;
+    private translationProjectRoutes: TranslationProjectRoutes;
+
+    private languageRoutes: LanguageRoutes;
 
     constructor() {
         this.app = express();
@@ -31,6 +36,9 @@ export class Main {
         this.userRoutes = new UserRoutes(this.app, this.session);
         this.roleRoutes = new RoleRoutes(this.app, this.session);
         this.projectRoutes = new ProjectRoutes(this.app, this.session);
+        this.translationProjectRoutes = new TranslationProjectRoutes(this.app, this.session);
+        
+        this.languageRoutes = new LanguageRoutes(this.app, this.session);
     }
 
     private initServer(): void {

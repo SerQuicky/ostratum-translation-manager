@@ -34,7 +34,6 @@ export class CommonController {
                     res.status(500);
                     res.json({actionSuccess: false});
                 }
-                console.log(result);
 
                 res.status(200);
                 res.json({actionSuccess: result, token: data.token});
@@ -52,4 +51,11 @@ export class CommonController {
             });
         });
     }
+
+    public getDateTime(date: number): number {
+        const now = new Date(date);
+        const offsetMs = now.getTimezoneOffset() * 60 * 1000;
+        const dateLocal = new Date(now.getTime() - offsetMs);
+        return parseInt(dateLocal.toISOString().slice(0, 19).replace(/-/g, "").replace("T", "").replace(/:/g, ""));
+      }
 }

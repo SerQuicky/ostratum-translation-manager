@@ -1,0 +1,56 @@
+<div class="page-wrapper with-sidebar">
+    <div class="sidebar">
+        <div class="sidebar-menu ostratum-sidebar">
+            <div class="logo-container">
+                <a href="#" class="sidebar-brand ostratum-logo">
+                    <img src="./../assets/images/ostratum_logo_2.png" alt="...">
+                </a>
+            </div>
+
+            <div class="view-container">
+                <h5 class="sidebar-title">Views</h5>
+                <div class="sidebar-divider"></div>
+                <a href="#" class="sidebar-link active">Projects</a>
+            </div>
+
+            <div class="settings-container">
+                <h5 class="sidebar-title">Settings</h5>
+                <div class="sidebar-divider"></div>
+                <a href="#" class="sidebar-link">Accout</a>
+                <a href="#" class="sidebar-link">System</a>
+                <a href="#" class="sidebar-link">Logout</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="modal" id="modal-1" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" role="button" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                    <h5 class="modal-title">Modal title</h5>
+                    <p>
+                        This is the modal content. Almost any type of content can be presented to the user here.
+                    </p>
+                    <div class="text-right mt-20">
+                        <a href="#" class="btn mr-5" role="button">Close</a>
+                        <a href="#" class="btn btn-primary" role="button">I understand</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-wrapper">
+            <div class="content-wrapper">
+                <!--         ...
+        <a href="#modal-1" class="btn btn-primary" role="button">Open modal</a>
+        ... -->
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
+    </div>
+</div>

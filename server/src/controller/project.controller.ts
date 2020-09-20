@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { ProjectDao } from '../dao/project.dao';
+import { Session } from '../main/session';
 import { CommonController } from './common.controller';
 
 export class ProjectController {
@@ -18,14 +19,14 @@ export class ProjectController {
             .catch(this.commonController.serverError(res));
     }
 
-    public getProjectOfUser(req: Request, res: Response): void {
-        this.projectDao.getProjectOfUser(req.body.username)
+    public getProjectOfUser(req: Request, res: Response, session: Session): void {
+        this.projectDao.getProjectOfUser(session.getUsernameByToken(req.headers['authorization']))
             .then(this.commonController.findSuccess(res))
             .catch(this.commonController.serverError(res));
     }
 
     public addProject(req: Request, res: Response): void {
-        this.projectDao.addProject(req.body.name)
+        this.projectDao.addProject(req.body.name, req.body.description)
             .then(this.commonController.findSuccess(res))
             .catch(this.commonController.serverError(res));
     }
@@ -37,7 +38,7 @@ export class ProjectController {
     }
 
     public updateProject(req: Request, res: Response): void {
-        this.projectDao.updateProject(req.body.id, req.body.newName)
+        this.projectDao.updateProject(req.body.id, req.body.newName, req.body.description)
             .then(this.commonController.findSuccess(res))
             .catch(this.commonController.serverError(res));
     }

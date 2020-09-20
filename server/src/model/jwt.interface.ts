@@ -1,7 +1,7 @@
-import { Role } from "./role.interface";
 
 export interface JWT {
     token: string,
     admin: boolean,
+    username: string,
     expireDate: number
 }

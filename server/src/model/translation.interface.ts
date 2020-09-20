@@ -1,11 +1,9 @@
-import { Language } from "./language.interface";
-import { TranslationProject } from "./translationProject.interface";
-
 export interface Translation {
     id: number,
     fileName: string,
-    file: any,
+    file: string,
     type: string,
-    language: Language,
-    project: TranslationProject
+    date: number,
+    language: number,
+    project: number
 }

@@ -44,6 +44,7 @@ export class Connector {
             await this.executeRequest("CREATE TABLE if not exists projects (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " name TEXT," +
+                " description TEXT," +
                 " UNIQUE(name) " +
                 ")");
 
@@ -59,6 +60,7 @@ export class Connector {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " name TEXT," +
                 " projectID INTEGER," +
+                " description TEXT," +
                 " UNIQUE(name, projectID), " +
                 " FOREIGN KEY(projectID) REFERENCES projects(id) " +
                 ")");
@@ -74,8 +76,9 @@ export class Connector {
             await this.executeRequest("CREATE TABLE if not exists translations (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " fileName TEXT," +
-                " file BLOB," +
+                " file TEXT," +
                 " type TEXT," +
+                " date INTEGER," + 
                 " languageID INTEGER," +
                 " projectID INTEGER," +
                 " UNIQUE(languageID, projectID), " +
@@ -89,9 +92,20 @@ export class Connector {
 
     private addEntries(): Promise<any> {
         return new Promise(async (resolve, reject) => {
+            // user and roles
             await this.executeRequest("INSERT INTO roles (name) VALUES ('admin'), ('normal') ");
             await this.executeRequest("INSERT INTO users (username, password) VALUES ('Administrator', '$2b$10$yI1EWvrkiuUkDJo/fu8GPOBD1B/5iBhtlivwInMHx3H6n/A1QjMKG'), ('Test', '$2b$10$yI1EWvrkiuUkDJo/fu8GPOBD1B/5iBhtlivwInMHx3H6n/A1QjMKG') ");
             await this.executeRequest("INSERT INTO user_roles (userID, roleID) VALUES (1, 1), (2, 2) ");
+            
+            // projects and view rights
+            await this.executeRequest("INSERT INTO projects (name, description) VALUES ('Apps', 'This is a translation project for all Ionic 5 Apps.') ");
+            await this.executeRequest("INSERT INTO translation_projects (name, projectID, description) VALUES ('Game-App', 1, 'This is a description for the Gaming App.'), ('Invoice-App', 1, 'This is a description for the Invoice App.') ");
+            await this.executeRequest("INSERT INTO role_projects (roleID, projectID) VALUES (1, 1), (2, 1) ");
+
+            // language and translation files
+            await this.executeRequest("INSERT INTO languages (name, acronym) VALUES ('English', 'EN'), ('German', 'DE') ");
+            await this.executeRequest("INSERT INTO translations (fileName, file, type, date, languageID, projectID) VALUES ('en.json', '" + JSON.stringify({"GENERAL": {"APP": "HELLO"} }) + "', 'json', 20200921143000, 1, 1), ('de.json', '" + JSON.stringify({"GENERAL": {"APP": "HALLO"} }) + "', 'json', 20200921143000, 2, 1)");
+
 
             resolve();
         });

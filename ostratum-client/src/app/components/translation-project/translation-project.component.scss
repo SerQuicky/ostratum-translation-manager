@@ -1,0 +1,11 @@
+.project-name {
+    margin-left: 20px;
+}
+
+.card {
+    cursor: pointer;
+
+    &:hover {
+        border-color: #1890FF !important;
+    }
+}

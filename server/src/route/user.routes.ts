@@ -30,14 +30,5 @@ export class UserRoutes {
         this.app.post('/changePassword', (req: Request, res: Response) => {
             this.userController.changePassword(this.session, req, res);
         });
-
-        this.app.post('/testest', (req: Request, res: Response) => {
-            this.commonRoutes.authenticateRequest(this.session, req, res, this.temp);
-        });
-    }
-
-    private temp(req: Request, res: Response): Promise<void> {
-        return new Promise((resolve, reject) => resolve("void"))
-        .then(u => { res.status(200); res.json({ message: "YESA" }) }).catch(err => { res.status(500); res.json({ message: "UFF" }) });
     }
 }

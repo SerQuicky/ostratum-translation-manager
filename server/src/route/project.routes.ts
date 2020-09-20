@@ -20,14 +20,14 @@ export class ProjectRoutes {
     }
 
     private initRoutes(): void {
-        this.app.post('/projects', (req: Request, res: Response) => {
-            this.session.verifyAdmin(req.body.token)
+        this.app.get('/projects', (req: Request, res: Response) => {
+            this.session.verifyAdmin(req.headers['authorization'])
             .then(_ => this.projectController.getProjects(req, res)) 
             .catch(err => new AuthenticationError(res, err))
         });
 
-        this.app.post('/userProjects', (req: Request, res: Response) => {
-            this.projectController.getProjectOfUser(req, res);
+        this.app.get('/userProjects', (req: Request, res: Response) => {
+            this.projectController.getProjectOfUser(req, res, this.session);
         });
 
         this.app.post('/addProject', (req: Request, res: Response) => {

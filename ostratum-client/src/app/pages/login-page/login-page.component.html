@@ -1,0 +1,56 @@
+<div class="login-page-container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3"></div>
+
+            <div class="col-6">
+                <div class="login-card-container">
+                    <div class="card p-0">
+                        <!-- p-0 = padding: 0 -->
+                        <!-- Card header -->
+                        <div class="px-card py-10 border-bottom">
+                            <div class="login-ostratum-logo">
+                                <img src="../../../assets/images/ostratum_logo_2.png" alt="ostratum-logo">
+                            </div>
+                            <!-- py-10 = padding-top: 1rem (10px) and padding-bottom: 1rem (10px), border-bottom: adds a border on the bottom -->
+                        </div>
+                        <!-- Content -->
+                        <div class="content">
+                            <form>
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <input type="email" class="form-control" placeholder="Your username"
+                                        required="required" [(ngModel)]="username" name="username">
+                                </div>
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-key" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <input type="password" class="form-control" placeholder="Your password"
+                                        required="required" [(ngModel)]="password" name="password">
+                                </div>
+                                <input class="btn btn-primary btn-block" type="submit" value="Sign in" (click)="signIn()">
+                            </form>
+                        </div>
+                        <!-- Card footer -->
+                        <div class="px-card py-10 bg-light-lm bg-very-dark-dm rounded-bottom">
+                            <!-- py-10 = padding-top: 1rem (10px) and padding-bottom: 1rem (10px), bg-light-lm = background-color: var(--gray-color-light) only in light mode, bg-very-dark-dm = background-color: var(--dark-color-dark) only in dark mode, rounded-bottom = rounded corners on the bottom -->
+                            <p class="font-size-12 m-0">
+                                <!-- font-size-12 = font-size: 1.2rem (12px), m-0 = margin: 0 -->
+                                You can change your password after the authentication, in case you forgot your password please contact an administrator.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3"></div>
+        </div>
+    </div>
+</div>

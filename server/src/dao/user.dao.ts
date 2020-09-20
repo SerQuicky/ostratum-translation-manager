@@ -26,7 +26,6 @@ export class UserDao {
     public authenticate(session: Session, username: string, password: string): Promise<any> {
         return this.commonDao.read("SELECT * FROM users JOIN user_roles ON users.id = user_roles.userID " + 
                                     "JOIN roles ON user_roles.roleID = roles.id WHERE username = $username", { $username: username }).then(async rows => {
-            console.log(rows)
             let user: User =  {
                 id: 0,
                 username: rows[0].username,
@@ -34,7 +33,7 @@ export class UserDao {
             };
 
             const adminRole = rows.some((row: any) => row.roleID == 1);
-            const token: string = await session.add(adminRole);
+            const token: string = await session.add(adminRole, user.username);
 
             return {result: user, password: password, token: token };
         });

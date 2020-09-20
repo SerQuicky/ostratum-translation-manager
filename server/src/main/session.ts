@@ -13,8 +13,9 @@ export class Session {
 
     constructor() {}
 
-    public add(adminRole: boolean): Promise<string> {
-        this.jwts = this.jwts.filter(jwt => jwt.expireDate > Date.now());
+    public add(adminRole: boolean, username: string): Promise<string> {
+        this.jwts = this.jwts.filter(jwt => jwt.expireDate > Date.now() && jwt.username != username);
+
         return new Promise((resolve, reject) => {
             try {
                 // generate a base hashes and the a random IV
@@ -28,10 +29,7 @@ export class Session {
                 encrypted = Buffer.concat([encrypted, cipher.final()]);
     
                 // add it to the session list and return it
-                this.jwts.push({token: encrypted.toString('hex'), admin: adminRole, expireDate: Date.now() + TOKEN_EXPIRE_TIME})
-
-                console.log(this.jwts);
-
+                this.jwts.push({token: encrypted.toString('hex'), admin: adminRole, username: username, expireDate: Date.now() + TOKEN_EXPIRE_TIME})
                 resolve(encrypted.toString('hex'));
 
             } catch(err: any) {
@@ -51,7 +49,7 @@ export class Session {
         });
     }
 
-    public verifyAdmin(token: string): Promise<any> {
+    public verifyAdmin(token?: string): Promise<any> {
         return new Promise((resolve, reject) => { 
             const result = this.jwts.some(jwt => jwt.token == token && jwt.admin && jwt.expireDate > Date.now());
             if(!result) {
@@ -72,7 +70,7 @@ export class Session {
             // update old jwt
             this.jwts = this.jwts.map(jwt => {
                 if(jwt.token == token) {
-                    return {token: jwt.token, admin: jwt.admin, expireDate: Date.now() + TOKEN_EXPIRE_TIME}
+                    return {token: jwt.token, admin: jwt.admin, username: jwt.username, expireDate: Date.now() + TOKEN_EXPIRE_TIME}
                 }
 
                 return jwt;
@@ -80,6 +78,13 @@ export class Session {
 
             resolve(result);
         });
+    }
+
+    public getUsernameByToken(token?: string): string {
+        console.log(token);
+        console.log(this.jwts);
+        const jwt: JWT = this.jwts.filter(jwt => jwt.token == token)[0];
+        return jwt ? jwt.username : "";
     }
 
 }
