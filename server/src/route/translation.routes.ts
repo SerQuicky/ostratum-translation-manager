@@ -20,10 +20,8 @@ export class TranslationRoutes {
     }
 
     private initRoutes(): void {
-        this.app.post('/getTranslations', (req: Request, res: Response) => {
-            this.session.verifyAdmin(req.body.token)
-            .then(_ => this.translationController.getTranslations(req, res)) 
-            .catch(err => new AuthenticationError(res, err))
+        this.app.post('/translations', (req: Request, res: Response) => {
+            this.translationController.getTranslations(req, res)
         });
 
         this.app.post('/addTranslation', (req: Request, res: Response) => {

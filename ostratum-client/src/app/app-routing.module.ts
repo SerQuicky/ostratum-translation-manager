@@ -4,6 +4,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { ProjectsPageComponent } from './pages/projects-page/projects-page.component';
 import { TranslationProjectsPageComponent } from './pages/translation-projects-page/translation-projects-page.component';
+import { TranslationsPageComponent } from './pages/translations-page/translations-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,6 +20,10 @@ const routes: Routes = [
       {
         path: 'tprojects/:projectId',
         component: TranslationProjectsPageComponent
+      },
+      {
+        path: 'translations/:tprojectId',
+        component: TranslationsPageComponent
       }
     ]
   }

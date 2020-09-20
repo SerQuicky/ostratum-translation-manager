@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslationProject } from 'src/app/interfaces/translation.project.interface';
 
 @Component({
@@ -10,9 +11,14 @@ export class TranslationProjectComponent implements OnInit {
 
   @Input("tproject") project: TranslationProject;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+    console.log(this.project);
+  }
+
+  public openTranslations(): void {
+    this.router.navigate(['main/translations', this.project.projectId]);
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslationProject } from 'src/app/interfaces/translation.project.interface';
 import { ProjectService } from 'src/app/services/communication/project/project.service';
 
 @Component({
@@ -8,9 +9,15 @@ import { ProjectService } from 'src/app/services/communication/project/project.s
 })
 export class TranslationProjectsPageComponent implements OnInit {
 
+  public tProjects: TranslationProject[] = [];
+
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.projectService.getTranslationProjects().subscribe(tprojects => {
+      this.tProjects = tprojects;
+      console.log(this.tProjects);
+    })
   }
 
 }

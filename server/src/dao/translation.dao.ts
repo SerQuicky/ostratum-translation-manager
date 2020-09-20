@@ -11,18 +11,18 @@ export class TranslationDao {
     }
 
     public getTranslations(projectId: number): Promise<any> {
-        return this.commonDao.read("SELECT * FROM translations WHERE projectID = $projectId;", {$projectId: projectId}).then(rows => {
+        return this.commonDao.read("SELECT translations.id as tID, languages.id as lID, * FROM translations JOIN languages ON translations.languageID = languages.id WHERE projectID = $projectId;", {$projectId: projectId}).then(rows => {
             let translations: Translation[] = [];
 
             for (const translation of rows) {
                 translations.push(
                     {
-                        id: translation.id,
+                        id: translation.tID,
                         fileName: translation.name,
                         file: translation.file,
                         type: translation.type,
                         date: translation.date,
-                        language: translation.languageID,
+                        language: {id: translation.lID, name: translation.name, acronym: translation.acronym},
                         project: translation.projectID,
                     });
             }

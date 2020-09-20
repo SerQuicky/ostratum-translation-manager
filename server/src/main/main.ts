@@ -11,6 +11,7 @@ import { RoleRoutes } from '../route/role.routes';
 import { ProjectRoutes } from '../route/project.routes';
 import { TranslationProjectRoutes } from '../route/translation.project.routes';
 import { LanguageRoutes } from '../route/language.routes';
+import { TranslationRoutes } from '../route/translation.routes';
 
 export class Main {
 
@@ -24,7 +25,7 @@ export class Main {
     private roleRoutes: RoleRoutes;
     private projectRoutes: ProjectRoutes;
     private translationProjectRoutes: TranslationProjectRoutes;
-
+    private translationRoutes: TranslationRoutes;
     private languageRoutes: LanguageRoutes;
 
     constructor() {
@@ -37,7 +38,7 @@ export class Main {
         this.roleRoutes = new RoleRoutes(this.app, this.session);
         this.projectRoutes = new ProjectRoutes(this.app, this.session);
         this.translationProjectRoutes = new TranslationProjectRoutes(this.app, this.session);
-        
+        this.translationRoutes = new TranslationRoutes(this.app, this.session);
         this.languageRoutes = new LanguageRoutes(this.app, this.session);
     }
 

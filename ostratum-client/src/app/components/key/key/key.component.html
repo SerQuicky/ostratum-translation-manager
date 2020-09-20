@@ -1,0 +1,9 @@
+<div class="key-container">
+    <div (click)="editKeys()">
+        <i class="fa fa-bars" aria-hidden="true" style="margin-right: 20px;" *ngIf="key.value == null"></i>
+        <i class="fa  fa-file-word-o" aria-hidden="true" style="margin-right: 20px;" *ngIf="key.value != null"></i>
+        <span>{{key.name}}</span>
+    </div>
+    <i class="fa fa-caret-down" aria-hidden="true" style="font-size: 25px;"></i>
+</div>
+<app-key *ngFor="let subKey of key.keys" [key]="subKey"></app-key>

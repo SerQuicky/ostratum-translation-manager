@@ -1,9 +1,14 @@
+.project-container {
+    display: inline-block !important;
+}
+
 .project-name {
     margin-left: 20px;
 }
 
 .card {
     cursor: pointer;
+    border-radius: 15px;
 
     &:hover {
         border-color: #1890FF !important;

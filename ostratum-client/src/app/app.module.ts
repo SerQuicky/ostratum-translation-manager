@@ -14,6 +14,7 @@ import { AuthenticationService } from './services/communication/authentication/a
 import { CommonCommunication } from './services/communication/common.communication';
 import { ProjectComponent } from './components/project/project.component';
 import { TranslationProjectComponent } from './components/translation-project/translation-project.component';
+import { KeyComponent } from './components/key/key/key.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { TranslationProjectComponent } from './components/translation-project/tr
     TranslationsPageComponent,
     SidebarComponent,
     ProjectComponent,
-    TranslationProjectComponent
+    TranslationProjectComponent,
+    KeyComponent
   ],
   imports: [
     BrowserModule,

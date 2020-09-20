@@ -1,1 +1,23 @@
-<p>translations-page works!</p>
+<div class="w-400 mw-full" *ngFor="let section of sections">
+    <div class="card p-0"> 
+        <div class="px-card py-10 border-bottom">
+        <h2 class="card-title font-size-18 m-0">
+            {{section.language.name}} - {{section.keys[0].name}}
+        </h2>
+      </div>
+      <!-- Content -->
+      <div class="content">
+        <form>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+              </span>
+            </div>
+            <input type="email" class="form-control" placeholder="Your email" required="required" name="test" [(ngModel)]="section.keys[0].value">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <button (click)="test()">Test</button>

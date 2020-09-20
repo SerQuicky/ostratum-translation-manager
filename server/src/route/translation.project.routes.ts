@@ -20,7 +20,7 @@ export class TranslationProjectRoutes {
     }
 
     private initRoutes(): void {
-        this.app.post('/translationProjects', (req: Request, res: Response) => {
+        this.app.get('/translationProjects', (req: Request, res: Response) => {
             this.translationProjectController.getTranslationProjects(req, res)
         });
 
