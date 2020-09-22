@@ -3,6 +3,5 @@ import { Key } from './key.interface';
 
 export interface Section {
     language: Language,
-    json: any,
-    keys: Key[]
+    json: any
 }

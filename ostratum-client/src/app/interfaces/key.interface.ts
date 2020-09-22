@@ -1,7 +1,7 @@
-import { Check } from "./check.interface";
+import { KeyValue } from "./key.value.interface";
 
 export interface Key {
     name: string,
-    value: string,
+    values: KeyValue[],
     keys: Key[]
 }

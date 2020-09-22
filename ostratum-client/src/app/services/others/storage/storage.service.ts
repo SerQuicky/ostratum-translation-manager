@@ -8,7 +8,7 @@ import { Section } from 'src/app/interfaces/section.interface';
 })
 export class StorageService {
 
-  public sections: Section[] = [];
+  public keys: Key[] = [];
   public editKeySubject: Subject<Key> = new Subject();
 
   constructor() { }

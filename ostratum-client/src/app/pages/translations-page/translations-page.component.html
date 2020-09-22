@@ -1,23 +1,48 @@
-<div class="w-400 mw-full" *ngFor="let section of sections">
-    <div class="card p-0"> 
-        <div class="px-card py-10 border-bottom">
-        <h2 class="card-title font-size-18 m-0">
-            {{section.language.name}} - {{section.keys[0].name}}
-        </h2>
-      </div>
-      <!-- Content -->
-      <div class="content">
-        <form>
-          <div class="form-group input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">
-                <i class="fa fa-comments-o" aria-hidden="true"></i>
-              </span>
-            </div>
-            <input type="email" class="form-control" placeholder="Your email" required="required" name="test" [(ngModel)]="section.keys[0].value">
+<div class="translations-container">
+
+  <div class="translations-overview">
+    <div class="translation-container" *ngIf="storageService.keys.length != 0">
+      <div class="static-content">
+        <h5 class="sidebar-title">Translation-Keys</h5>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-content">
+          <input type="text" class="form-control" placeholder="Search">
+          <div class="mt-10 font-size-12">
+            Press <kbd>^</kbd> to focus and <kbd>&#8593;/&#8595;</kbd> to move up and down
           </div>
-        </form>
+        </div>
+      </div>
+      <div class="translation-content">
+        <div *ngFor="let key of storageService.keys">
+          <app-key [key]="key"></app-key>
+        </div>
       </div>
     </div>
   </div>
-  <button (click)="test()">Test</button>
+
+  <div class="translations-display" *ngIf="chosenKey != null">
+    <div class="w-400 mw-full" *ngFor="let value of chosenKey.values">
+      <div class="card p-0">
+        <div class="px-card py-10 border-bottom">
+          <h2 class="card-title font-size-18 m-0">
+            {{value.language.name}} - {{chosenKey.name}}
+          </h2>
+        </div>
+        <div class="content">
+          <form>
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-comments-o" aria-hidden="true"></i>
+                </span>
+              </div>
+              <input type="email" class="form-control" placeholder="Your email" required="required" name="test"
+                [(ngModel)]="value.value">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" (click)="test()">Save translation(s)</button>
+  </div>
+</div>

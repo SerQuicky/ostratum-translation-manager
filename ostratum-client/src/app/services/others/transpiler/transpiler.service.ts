@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Language } from 'src/app/interfaces/language.interface';
 import { Key } from '../../../interfaces/key.interface';
 import { Section } from '../../../interfaces/section.interface';
 
@@ -9,29 +10,28 @@ export class TranspilerService {
 
   constructor() { }
 
-  public transpileJSON(json: any): Key[] {
+  public transpileJSON(json: any, language: Language): Key[] {
     let keys: Key[] = [];
 
     const parts: string[] = this.iterateThroughKeys(json);
     parts.forEach(part => {
-      keys.push({ name: part, value: this.escapeValue(json, part), keys: this.escapeRecursion(json, part) });
+      keys.push({ name: part, values: [{value: this.escapeValue(json, part), language: language}], keys: this.escapeRecursion(json, part, language)});
     });
 
     return keys;
   }
 
-  private iterateThroughKeys(part: any): string[] {
-    return Object.keys(part);
-  }
+  public unifyKeys(mainKeys: Key[], subKeys: Key[]): Key[] {
+    for(let i = 0; i < mainKeys.length; i++) {
+      if(mainKeys[i].keys.length > 0) {
+        this.unifyKeys(mainKeys[i].keys, subKeys[i].keys);
+      } else {
+        mainKeys[i].values.push(subKeys[i].values[0]);
+      }
+    }
 
-  private escapeValue(json: any, part: string): string {
-    return typeof json[part] == "string" ? json[part] : null;
+    return mainKeys;
   }
-
-  private escapeRecursion(json: any, part: string): Key[] {
-    return typeof json[part] == "string" ? [] : this.transpileJSON(json[part]);
-  }
-
 
   public unifyJSONs(json1: any, json2: any): any {
     const parts: string[] = this.iterateThroughKeys(json2);
@@ -48,7 +48,20 @@ export class TranspilerService {
     return json1;
   }
 
-  public unifyAndTranspileJSONs(sections: Section[]): Section[] {
+  private iterateThroughKeys(part: any): string[] {
+    return Object.keys(part);
+  }
+
+  private escapeValue(json: any, part: string): string {
+    return typeof json[part] == "string" ? json[part] : null;
+  }
+
+  private escapeRecursion(json: any, part: string, language: Language): Key[] {
+    return typeof json[part] == "string" ? [] : this.transpileJSON(json[part], language);
+  }
+
+
+  public unifyAndTranspileJSONs(sections: Section[]): Key[] {
     // unify all jsons
     for (let i = 0; i < sections.length; i++) {
       for (let a = 0; a < sections.length; a++) {
@@ -58,12 +71,18 @@ export class TranspilerService {
       }
     }
 
-    // transpiles all jsons 
-    sections.map(section => {
-      section.keys = this.transpileJSON(section.json);
+    let keys: Key[][] = [];
+    sections.forEach(section => {
+      keys.push(this.transpileJSON(section.json, section.language));
     });
 
-    return sections;
+    console.log(keys);
+
+    for(let u = 1; u < keys.length; u++) {
+      keys[0] = this.unifyKeys(keys[0], keys[u]);
+    }
+
+    return keys[0];
   }
 
   public findKeyByName(keys: Key[], name: string): Key {

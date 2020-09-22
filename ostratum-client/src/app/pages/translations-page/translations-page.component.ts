@@ -18,22 +18,24 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
 
   private translationProjectId: number;
   public translations: Translation[] = [];
+  public chosenKey: Key;
   private keySubscription: Subscription;
-  public sections: Section[] = []; 
 
   constructor(private translationService: TranslationService, private route: ActivatedRoute, private transpilerService: TranspilerService, public storageService: StorageService) { }
 
   ngOnInit(): void {
     this.translationProjectId = parseInt(this.route.snapshot.paramMap.get('tprojectId'));
     this.translationService.getTranslations(this.translationProjectId).subscribe(translations => {
+      console.log(translations);
       this.translations = translations;
 
       // set sections
+      let sections: Section[] = [];
       this.translations.forEach(translation => {
-        this.storageService.sections.push({language: translation.language, json: JSON.parse(translation.file), keys: []})
+        sections.push({language: translation.language, json: JSON.parse(translation.file)})
       });
-      this.storageService.sections = this.transpilerService.unifyAndTranspileJSONs(this.storageService.sections);
-      console.log(this.storageService.sections)
+    
+      this.storageService.keys = this.transpilerService.unifyAndTranspileJSONs(sections);
     });
 
     this.keySubscription = this.storageService.editKeySubject.subscribe(key => {
@@ -44,20 +46,16 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
 
   public showKeyTranslations(key: Key): void {
     console.log(key);
-    this.sections = [];
+    this.chosenKey = key;
+/*     this.sections = [];
     this.storageService.sections.forEach(section => {
       this.transpilerService.findKeyByName(section.keys, key.name)
       this.sections.push({language: section.language, json: "", keys: [this.transpilerService.findKeyByName(section.keys, key.name)]});
-    })
-    console.log(this.sections);
+    }) */
   }
 
   ngOnDestroy(): void {
     this.keySubscription.unsubscribe();
-  }
-
-  public test(): void {
-    console.log(this.sections);
   }
 
 }

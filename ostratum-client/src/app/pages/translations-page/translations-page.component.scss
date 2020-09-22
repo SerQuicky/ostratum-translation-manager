@@ -1,0 +1,18 @@
+.translations-container {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 350px 1fr;
+}
+
+.translations-overview {
+    background: #f8fafc;
+    
+    .sidebar-title {
+        font-size: 25px;
+    }
+}
+
+.translations-display {
+
+}
