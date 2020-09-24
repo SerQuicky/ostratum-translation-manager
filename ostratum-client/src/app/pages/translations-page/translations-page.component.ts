@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Translation } from 'src/app/interfaces/translation.interface';
 import { Section } from 'src/app/interfaces/section.interface';
@@ -16,12 +16,22 @@ import { Key } from 'src/app/interfaces/key.interface';
 })
 export class TranslationsPageComponent implements OnInit, OnDestroy {
 
+  @ViewChild('search') searchbar: ElementRef;
+
   private translationProjectId: number;
   public translations: Translation[] = [];
   public chosenKey: Key;
+  public chosenKeyId: string = null;
+  public keys: Key[] = [];
   private keySubscription: Subscription;
 
-  constructor(private translationService: TranslationService, private route: ActivatedRoute, private transpilerService: TranspilerService, public storageService: StorageService) { }
+  public searchbarValue: string = "";
+  public showMissingTranslations: boolean = false;
+
+  constructor(private translationService: TranslationService,
+    private route: ActivatedRoute,
+    private transpilerService: TranspilerService,
+    public storageService: StorageService) { }
 
   ngOnInit(): void {
     this.translationProjectId = parseInt(this.route.snapshot.paramMap.get('tprojectId'));
@@ -32,10 +42,11 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
       // set sections
       let sections: Section[] = [];
       this.translations.forEach(translation => {
-        sections.push({language: translation.language, json: JSON.parse(translation.file)})
+        sections.push({ language: translation.language, json: JSON.parse(translation.file) })
       });
-    
-      this.storageService.keys = this.transpilerService.unifyAndTranspileJSONs(sections);
+
+      this.keys = this.transpilerService.unifyAndTranspileJSONs(sections);
+      console.log(this.keys);
     });
 
     this.keySubscription = this.storageService.editKeySubject.subscribe(key => {
@@ -45,17 +56,66 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
   }
 
   public showKeyTranslations(key: Key): void {
-    console.log(key);
+    this.storageService.updateTranslationCounter.next();
     this.chosenKey = key;
-/*     this.sections = [];
-    this.storageService.sections.forEach(section => {
-      this.transpilerService.findKeyByName(section.keys, key.name)
-      this.sections.push({language: section.language, json: "", keys: [this.transpilerService.findKeyByName(section.keys, key.name)]});
-    }) */
+    this.chosenKeyId = this.chosenKey.id;
+  }
+
+  public test(): void {
+    console.log(this.keys);
+    this.storageService.updateTranslationCounter.next();
+    console.log(this.transpilerService.keysToJSON(this.keys, "EN"));
+  }
+
+  public resolveCountryFlagSVG(acronym: string): string {
+    let rAcronym: string = acronym == "EN" ? "GB" : acronym;
+    return "http://catamphetamine.gitlab.io/country-flag-icons/3x2/" + rAcronym + ".svg"
   }
 
   ngOnDestroy(): void {
     this.keySubscription.unsubscribe();
   }
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    console.log(event.key);
+    if (event.key === "ArrowUp") {
+      this.selectKeyByKeyboard(-1);
+    } else if (event.key === "ArrowDown") {
+      this.selectKeyByKeyboard(1);
+    } else if (event.key === "Dead") {
+      this.searchbar.nativeElement.focus();
+    } else if (event.key === "Escape") {
+      this.searchbar.nativeElement.blur();
+    }
+  }
+
+  private selectKeyByKeyboard(icrement: number): void {
+    if (this.chosenKey) {
+      const switchedKey: Key = this.transpilerService.getNextCheckableKey(this.keys,
+        this.chosenKey,
+        icrement,
+        this.showMissingTranslations ? this.switchToOnlyMissingTranslations : (_: Key) => true);
+
+      if (switchedKey) {
+        this.showKeyTranslations(switchedKey);
+      } else {
+        alert('uff');
+      }
+
+    } else {
+      const switchedKey: Key = this.transpilerService.getFirstCheckableKey(this.keys, this.showMissingTranslations);
+      if (switchedKey) {
+        this.showKeyTranslations(switchedKey);
+      } else {
+        alert('uff');
+      }
+    }
+  }
+
+  private switchToOnlyMissingTranslations(key: Key): boolean {
+    return key.values.some(value => value.value == "");
+  }
+
 
 }

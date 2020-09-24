@@ -10,6 +10,7 @@ export class StorageService {
 
   public keys: Key[] = [];
   public editKeySubject: Subject<Key> = new Subject();
+  public updateTranslationCounter: Subject<any> = new Subject();
 
   constructor() { }
 }

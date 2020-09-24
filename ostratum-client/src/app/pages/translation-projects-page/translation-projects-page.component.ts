@@ -16,7 +16,6 @@ export class TranslationProjectsPageComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.getTranslationProjects().subscribe(tprojects => {
       this.tProjects = tprojects;
-      console.log(this.tProjects);
     })
   }
 

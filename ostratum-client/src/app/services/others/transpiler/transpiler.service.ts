@@ -10,20 +10,20 @@ export class TranspilerService {
 
   constructor() { }
 
-  public transpileJSON(json: any, language: Language): Key[] {
+  public transpileJSON(json: any, language: Language, baseId: string): Key[] {
     let keys: Key[] = [];
 
     const parts: string[] = this.iterateThroughKeys(json);
-    parts.forEach(part => {
-      keys.push({ name: part, values: [{value: this.escapeValue(json, part), language: language}], keys: this.escapeRecursion(json, part, language)});
-    });
+    for (let i = 0; i < parts.length; i++) {
+      keys.push({ id: baseId + i, name: parts[i], values: [{ value: this.escapeValue(json, parts[i]), language: language }], holder: typeof json[parts[i]] == "object", keys: this.escapeRecursion(json, parts[i], language, baseId + i) });
+    }
 
     return keys;
   }
 
   public unifyKeys(mainKeys: Key[], subKeys: Key[]): Key[] {
-    for(let i = 0; i < mainKeys.length; i++) {
-      if(mainKeys[i].keys.length > 0) {
+    for (let i = 0; i < mainKeys.length; i++) {
+      if (mainKeys[i].keys.length > 0) {
         this.unifyKeys(mainKeys[i].keys, subKeys[i].keys);
       } else {
         mainKeys[i].values.push(subKeys[i].values[0]);
@@ -56,8 +56,8 @@ export class TranspilerService {
     return typeof json[part] == "string" ? json[part] : null;
   }
 
-  private escapeRecursion(json: any, part: string, language: Language): Key[] {
-    return typeof json[part] == "string" ? [] : this.transpileJSON(json[part], language);
+  private escapeRecursion(json: any, part: string, language: Language, baseId: string): Key[] {
+    return typeof json[part] == "string" ? [] : this.transpileJSON(json[part], language, baseId);
   }
 
 
@@ -73,28 +73,76 @@ export class TranspilerService {
 
     let keys: Key[][] = [];
     sections.forEach(section => {
-      keys.push(this.transpileJSON(section.json, section.language));
+      keys.push(this.transpileJSON(section.json, section.language, "id"));
     });
 
     console.log(keys);
 
-    for(let u = 1; u < keys.length; u++) {
+    for (let u = 1; u < keys.length; u++) {
       keys[0] = this.unifyKeys(keys[0], keys[u]);
     }
 
     return keys[0];
   }
 
-  public findKeyByName(keys: Key[], name: string): Key {
-    for(let i = 0; i < keys.length; i++) {
-      if(keys[i].name == name) {
-        return keys[i];
-      } else {
-        const test = this.findKeyByName(keys[i].keys, name);
-        if(test) {
-          return test;
-        }
+  public updateKey(keys: Key[], key: Key): Key[] {
+    keys.forEach(subKey => {
+      if (subKey.holder) {
+        subKey.keys = this.updateKey(subKey.keys, key);
+      } else if (subKey.id == key.id) {
+        subKey = key;
+      }
+    })
+
+    return keys;
+  }
+
+  public getFirstCheckableKey(keys: Key[], onlyMissingTranslations: boolean): Key {
+    const keyList: Key[] = this.keysToDimensionList(keys);
+    for(let i = 0; i < keyList.length; i++) {
+      if(!keyList[i].holder && keyList[i].values.some(value => value.value == "")) {
+        return keyList[i];
       }
     }
   }
+
+  public getNextCheckableKey(keys: Key[], chosenKey: Key, increment: number, func: (key: Key) => boolean): Key {
+    const keyList: Key[] = this.keysToDimensionList(keys);
+    let index: number = keyList.indexOf(chosenKey);
+    for(let i = index; i < keyList.length && i >= 0; i+= increment) {
+      if(keyList[i] && !keyList[i].holder && i != index && func(keyList[i])) {
+        return keyList[i];
+      }
+    }
+  }
+
+  private keysToDimensionList(keys: Key[]): Key[] {
+    let result: Key[] = [];
+
+    for(let i = 0; i < keys.length; i++) {
+      if(keys[i].holder) {
+        result = result.concat(this.keysToDimensionList(keys[i].keys));
+      } else {
+        result.push(keys[i]);
+      }
+    }
+
+    return result;
+  }
+
+  public keysToJSON(keys: Key[], acronym: string): any {
+    let json = {};
+
+    keys.forEach(key => {
+      if(key.holder) {
+        json[key.name] = this.keysToJSON(key.keys, acronym);
+      } else {
+        json[key.name] = key.values.find(value => value.language.acronym == acronym).value;
+      }
+    });
+
+    return json;
+  }
+
+
 }

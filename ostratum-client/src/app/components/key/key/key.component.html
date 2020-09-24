@@ -2,12 +2,12 @@
     <div>
         <i class="fa fa-bars" aria-hidden="true" style="margin-right: 20px;" *ngIf="objectHolder"></i>
         <i class="fa fa-file-word-o" aria-hidden="true" style="margin-right: 20px;" *ngIf="!objectHolder"></i>
-        <span>{{key.name}}</span>
+        <span [ngClass]="{'chosen-key': key.id == chosenKeyId}">{{key.name}}</span>
         <span class="badge badge-danger" *ngIf="!objectHolder">{{openTranslationCounter}}</span>
     </div>
     <i class="fa fa-caret-down" aria-hidden="true" style="font-size: 25px;" *ngIf="objectHolder && hideChildKeys"></i>
     <i class="fa fa-caret-up" aria-hidden="true" style="font-size: 25px;" *ngIf="objectHolder && !hideChildKeys"></i>
 </div>
 <div *ngIf="hideChildKeys">
-    <app-key *ngFor="let subKey of key.keys" [key]="subKey"></app-key>
+    <app-key *ngFor="let subKey of key.keys | translationPipe:searchbarValue:showMissingTranslations;" [key]="subKey" [searchbarValue]="searchbarValue" [showMissingTranslations]="showMissingTranslations" [chosenKeyId]="chosenKeyId"></app-key>
 </div>

@@ -17,7 +17,6 @@ export class ProjectsPageComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.getProjects().subscribe(projects => {
       this.projects = projects;
-      console.log(projects);
     })
   }
 

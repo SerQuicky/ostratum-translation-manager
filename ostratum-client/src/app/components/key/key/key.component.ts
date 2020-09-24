@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Key } from 'src/app/interfaces/key.interface';
 import { StorageService } from 'src/app/services/others/storage/storage.service';
 
@@ -7,17 +8,28 @@ import { StorageService } from 'src/app/services/others/storage/storage.service'
   templateUrl: './key.component.html',
   styleUrls: ['./key.component.scss']
 })
-export class KeyComponent implements OnInit {
+export class KeyComponent implements OnInit, OnDestroy {
 
   @Input("key") key: Key;
-  public hideChildKeys: boolean = false;
+  @Input("searchbarValue") searchbarValue: string;
+  @Input("showMissingTranslations") showMissingTranslations: boolean;
+  @Input("chosenKeyId") chosenKeyId: string;
+
+  public hideChildKeys: boolean = true;
   public openTranslationCounter: number = 0;
   public objectHolder: boolean = false;
+  private updateSubscription: Subscription;
 
   constructor(private storageService: StorageService) {}
 
   ngOnInit(): void {
     this.objectHolder = this.key.values[0].value == null;
+    this.countOpenTranslations();
+
+    this.updateSubscription = this.storageService.updateTranslationCounter.subscribe(_ => this.countOpenTranslations());
+  }
+
+  private countOpenTranslations(): void {
     this.openTranslationCounter = this.key.values.filter(value => value.value == "").length;
   }
 
@@ -29,5 +41,9 @@ export class KeyComponent implements OnInit {
     }
   }
 
+  public ngOnDestroy() {
+    // changes.prop contains the old and the new value...
+    this.updateSubscription.unsubscribe();
+  }
 
 }

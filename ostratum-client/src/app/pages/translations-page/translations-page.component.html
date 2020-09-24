@@ -1,48 +1,61 @@
 <div class="translations-container">
 
   <div class="translations-overview">
-    <div class="translation-container" *ngIf="storageService.keys.length != 0">
+    <div class="translation-container" *ngIf="keys.length != 0">
       <div class="static-content">
         <h5 class="sidebar-title">Translation-Keys</h5>
         <div class="sidebar-divider"></div>
         <div class="sidebar-content">
-          <input type="text" class="form-control" placeholder="Search">
+          <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchbarValue" #search>
           <div class="mt-10 font-size-12">
             Press <kbd>^</kbd> to focus and <kbd>&#8593;/&#8595;</kbd> to move up and down
+          </div>
+          <div class="mt-10 font-size-12">
+            <div class="custom-checkbox">
+              <input type="checkbox" id="checkbox-1" [(ngModel)]="showMissingTranslations">
+              <label for="checkbox-1">Show only keys that are missing translations</label>
+            </div>
           </div>
         </div>
       </div>
       <div class="translation-content">
-        <div *ngFor="let key of storageService.keys">
-          <app-key [key]="key"></app-key>
+        <div *ngFor="let key of keys | translationPipe:searchbarValue:showMissingTranslations;">
+          <app-key [key]="key" [searchbarValue]="searchbarValue" [showMissingTranslations]="showMissingTranslations" [chosenKeyId]="chosenKeyId"></app-key>
         </div>
       </div>
     </div>
   </div>
 
   <div class="translations-display" *ngIf="chosenKey != null">
-    <div class="w-400 mw-full" *ngFor="let value of chosenKey.values">
-      <div class="card p-0">
-        <div class="px-card py-10 border-bottom">
-          <h2 class="card-title font-size-18 m-0">
-            {{value.language.name}} - {{chosenKey.name}}
-          </h2>
-        </div>
-        <div class="content">
-          <form>
-            <div class="form-group input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-comments-o" aria-hidden="true"></i>
-                </span>
-              </div>
-              <input type="email" class="form-control" placeholder="Your email" required="required" name="test"
-                [(ngModel)]="value.value">
+    <div class="translation-boxes">
+      <div class="w-400 mw-full" *ngFor="let value of chosenKey.values">
+        <div class="card p-0">
+          <div class="px-card py-10 border-bottom">
+            <div class="translation-header">
+              <img [src]="resolveCountryFlagSVG(value.language.acronym)" />
+              <h2 class="card-title font-size-18 m-0">
+                {{value.language.name}} - {{chosenKey.name}}
+              </h2>
             </div>
-          </form>
+          </div>
+          <div class="content">
+            <form>
+              <div class="form-group input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-comments-o" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <input type="email" class="form-control" placeholder="Your email" required="required" name="test"
+                  [(ngModel)]="value.value">
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-    <button class="btn btn-primary" (click)="test()">Save translation(s)</button>
+    <div class="save-btn-container">
+      <button class="btn btn-primary" (click)="test()" *ngIf="chosenKey != null">Save translation(s)</button>
+    </div>
   </div>
 </div>

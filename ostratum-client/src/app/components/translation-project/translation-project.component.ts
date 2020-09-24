@@ -14,7 +14,6 @@ export class TranslationProjectComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    console.log(this.project);
   }
 
   public openTranslations(): void {

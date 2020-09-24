@@ -4,8 +4,13 @@
     margin-top: 5px;
     display: grid;
     grid-template-columns: 1fr 20%;
+    cursor: pointer;
 
     .badge {
         margin-left: 10px;
+    }
+
+    .chosen-key {
+        color: var(--lm-sidebar-link-text-color-active);
     }
 }
