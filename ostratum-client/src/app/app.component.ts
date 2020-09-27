@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ostratum-client';
+
+  constructor() {
+    if(JSON.parse(localStorage.getItem("darkmode"))) {
+      document.getElementById("body").classList.add("dark-mode");
+    }
+  }
+
+
 }
