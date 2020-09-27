@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+.dark-mode {
+    .login-page-container {
+        background-color: #485461 !important;
+        background-image: linear-gradient(315deg, #485461 0%, #28313b 74%) !important;
+    }
+
+    .navbar {
+        background-color: #111417 !important;
+    }
+
+    .translations-overview {
+        background: #181A1D !important;
+    }
+
+}

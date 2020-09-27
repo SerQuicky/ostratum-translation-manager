@@ -13,10 +13,16 @@ export class LoginPageComponent implements OnInit {
 
   public username: string = "";
   public password: string = "";
+  public logoURL: string = "../../../assets/images/ostratum_logo_2.png";
+  public darkModeOn: boolean = false;
 
   constructor(private authService: AuthenticationService, private common: CommonCommunication, private router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(JSON.parse(localStorage.getItem("darkmode"))) {
+      this.logoURL = "../../../assets/images/ostratum_logo_dark.png"
+    }
+  }
 
   public signIn(): void {
     this.authService.authenticate("Test", "A12").subscribe(auth => {

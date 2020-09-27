@@ -11,6 +11,16 @@ export class StorageService {
   public keys: Key[] = [];
   public editKeySubject: Subject<Key> = new Subject();
   public updateTranslationCounter: Subject<any> = new Subject();
+  public sidebarStates: boolean[] = [true, false, false];
 
   constructor() { }
+
+  public setSidebarStatus(index: number) {
+    this.sidebarStates = this.sidebarStates.map(_ => false);
+    this.sidebarStates[index] = true;
+  }
+
+  public initSidebar(index: number): void {
+    setTimeout(() => { this.setSidebarStatus(index) }, 5)
+  }
 }

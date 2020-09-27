@@ -1,24 +1,31 @@
-<div class="page-wrapper with-sidebar">
+<div class="page-wrapper with-navbar with-sidebar">
+
+    <nav class="navbar">
+        <a href="#" class="sidebar-brand ostratum-logo">
+            <img [src]="logoURL" alt="...">
+        </a>
+
+        <!-- Navbar form (inline form) -->
+        <form class="form-inline d-none d-md-flex ml-auto">
+            <a class="sidebar-link">Logout</a>
+        </form>
+        <!-- Navbar content (with the dropdown menu) -->
+    </nav>
+
     <div class="sidebar">
         <div class="sidebar-menu ostratum-sidebar">
-            <div class="logo-container">
-                <a href="#" class="sidebar-brand ostratum-logo">
-                    <img src="./../assets/images/ostratum_logo_2.png" alt="...">
-                </a>
-            </div>
-
             <div class="view-container">
                 <div class="projects-container">
                     <h5 class="sidebar-title">Views</h5>
                     <div class="sidebar-divider"></div>
-                    <a href="#" class="sidebar-link active">Projects</a>
+                    <span [ngClass]="{'active': storageService.sidebarStates[0]}" class="sidebar-link" (click)="navigateThroughSidebar('projects', 0)" >Projects</span>
                 </div>
 
                 <div class="projects-container">
                     <h5 class="sidebar-title">System</h5>
                     <div class="sidebar-divider"></div>
-                    <a class="sidebar-link">Account</a>
-                    <a class="sidebar-link">Settings</a>
+                    <span [ngClass]="{'active': storageService.sidebarStates[1]}" class="sidebar-link" (click)="navigateThroughSidebar('account', 1)">Account</span>
+                    <span [ngClass]="{'active': storageService.sidebarStates[2]}" class="sidebar-link" (click)="navigateThroughSidebar('settings', 2)">Settings</span>
                 </div>
 
                 <div>
@@ -27,17 +34,11 @@
             </div>
         </div>
     </div>
+    
 
     <div class="content-wrapper">
         <div class="page-wrapper">
             <div class="content-wrapper">
-                <nav class="navbar">
-                    <!-- Navbar form (inline form) -->
-                    <form class="form-inline d-none d-md-flex ml-auto">
-                        <a class="sidebar-link">Logout</a>
-                    </form>
-                    <!-- Navbar content (with the dropdown menu) -->
-                </nav>
                 <router-outlet></router-outlet>
             </div>
         </div>
