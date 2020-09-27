@@ -13,6 +13,8 @@ export class StorageService {
   public updateTranslationCounter: Subject<any> = new Subject();
   public sidebarStates: boolean[] = [true, false, false];
 
+  public logoURL: string = "../../../assets/images/ostratum_logo_2.png";
+
   constructor() { }
 
   public setSidebarStatus(index: number) {
@@ -22,5 +24,15 @@ export class StorageService {
 
   public initSidebar(index: number): void {
     setTimeout(() => { this.setSidebarStatus(index) }, 5)
+  }
+
+  public setDesignState(): void {
+    if(JSON.parse(localStorage.getItem("darkmode"))) {
+      document.getElementById("body").classList.add("dark-mode");
+      this.logoURL = "../../../assets/images/ostratum_logo_dark.png"
+    } else {
+      document.getElementById("body").classList.remove("dark-mode");
+      this.logoURL = "../../../assets/images/ostratum_logo_2.png";
+    }
   }
 }

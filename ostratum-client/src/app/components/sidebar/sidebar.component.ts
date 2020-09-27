@@ -9,14 +9,10 @@ import { StorageService } from '../../services/others/storage/storage.service';
 })
 export class SidebarComponent implements OnInit {
 
-  public logoURL: string = "../../../assets/images/ostratum_logo_2.png";
-
   constructor(public storageService: StorageService, private router: Router) { }
 
   ngOnInit(): void {
-    if(JSON.parse(localStorage.getItem("darkmode"))) {
-      this.logoURL = "../../../assets/images/ostratum_logo_dark.png"
-    }
+    this.storageService.setDesignState();
   }
 
   public navigateThroughSidebar(page: string, index: number): void {

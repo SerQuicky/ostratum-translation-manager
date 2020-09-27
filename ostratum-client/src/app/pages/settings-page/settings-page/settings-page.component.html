@@ -1,1 +1,56 @@
-<p>settings-page works!</p>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="content-title">
+                            Design settings
+                        </h2>
+                    </div>
+                    <div class="col-lg-12">
+                        <p>
+                            Switch the design mode of the application, the design choice will be saved.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="mode-checkbox">
+                            <div class="custom-checkbox">
+                                <input type="checkbox" id="checkbox-light" [(ngModel)]="!darkModeOn" [disabled]="!darkModeOn" (change)="updateLightMode($event)">
+                                <label for="checkbox-light">Light mode</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="mode-checkbox">
+                            <div class="custom-checkbox">
+                                <input type="checkbox" id="checkbox-dark" [(ngModel)]="darkModeOn" [disabled]="darkModeOn" (change)="updateDarkMode($event)">
+                                <label for="checkbox-dark">Dark mode</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card p-0 mode-container">
+                            <img src="../../../assets/images/light_mode.png">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="card p-0 mode-container">
+                            <img src="../../../assets/images/dark_mode.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

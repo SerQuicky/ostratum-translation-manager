@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonCommunication } from 'src/app/services/communication/common.communication';
+import { StorageService } from 'src/app/services/others/storage/storage.service';
 import { AuthenticationService } from '../../services/communication/authentication/authentication.service';
 
 @Component({
@@ -13,15 +13,11 @@ export class LoginPageComponent implements OnInit {
 
   public username: string = "";
   public password: string = "";
-  public logoURL: string = "../../../assets/images/ostratum_logo_2.png";
-  public darkModeOn: boolean = false;
 
-  constructor(private authService: AuthenticationService, private common: CommonCommunication, private router: Router) { }
+  constructor(private authService: AuthenticationService, public storageService: StorageService, private router: Router) { }
 
   ngOnInit(): void {
-    if(JSON.parse(localStorage.getItem("darkmode"))) {
-      this.logoURL = "../../../assets/images/ostratum_logo_dark.png"
-    }
+    this.storageService.setDesignState();
   }
 
   public signIn(): void {
