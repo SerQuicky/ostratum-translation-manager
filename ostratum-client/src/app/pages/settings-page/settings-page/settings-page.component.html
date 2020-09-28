@@ -20,7 +20,7 @@
                     <div class="col-lg-6">
                         <div class="mode-checkbox">
                             <div class="custom-checkbox">
-                                <input type="checkbox" id="checkbox-light" [(ngModel)]="!darkModeOn" [disabled]="!darkModeOn" (change)="updateLightMode($event)">
+                                <input type="checkbox" id="checkbox-light" [(ngModel)]="!darkModeOn" [disabled]="!darkModeOn" (change)="updateLightMode()">
                                 <label for="checkbox-light">Light mode</label>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                     <div class="col-lg-6">
                         <div class="mode-checkbox">
                             <div class="custom-checkbox">
-                                <input type="checkbox" id="checkbox-dark" [(ngModel)]="darkModeOn" [disabled]="darkModeOn" (change)="updateDarkMode($event)">
+                                <input type="checkbox" id="checkbox-dark" [(ngModel)]="darkModeOn" [disabled]="darkModeOn" (change)="updateDarkMode()">
                                 <label for="checkbox-dark">Dark mode</label>
                             </div>
                         </div>
@@ -39,13 +39,13 @@
 
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="card p-0 mode-container">
+                        <div class="card p-0 mode-container" (click)="updateLightMode()">
                             <img src="../../../assets/images/light_mode.png">
                         </div>
                     </div>
 
                     <div class="col-lg-6">
-                        <div class="card p-0 mode-container">
+                        <div class="card p-0 mode-container" (click)="updateDarkMode()">
                             <img src="../../../assets/images/dark_mode.png">
                         </div>
                     </div>

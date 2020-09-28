@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/communication/authentication/authentication.service';
 import { StorageService } from 'src/app/services/others/storage/storage.service';
+import { ToastService } from 'src/app/services/others/toast/toast.service';
 
 @Component({
   selector: 'app-account-page',
@@ -8,12 +10,20 @@ import { StorageService } from 'src/app/services/others/storage/storage.service'
 })
 export class AccountPageComponent implements OnInit {
 
-  constructor(private storageService: StorageService) { }
+  public username: string = "";
+  public oldPassword: string = "";
+  public newPassword: string = "";
+
+  constructor(private storageService: StorageService, private toastService: ToastService, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.storageService.initSidebar(1);
+    this.username = localStorage.getItem("username");
   }
 
-  ngAfterViewChecked(): void {}
-
+  public changePassword(): void {
+    this.authenticationService.changePassword(this.username, this.oldPassword, this.newPassword).subscribe(res => {
+      this.toastService.determineToast(res)
+    });
+  }
 }

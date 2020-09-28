@@ -25,7 +25,7 @@ export class UserController {
 
     public async authenticate(session: Session, req: Request, res: Response): Promise<void> {
 
-        this.userDao.authenticate(session, req.body.username, req.body.password)
+        this.userDao.authenticate(session, true, req.body.username, req.body.password)
             .then(this.commonController.authenticate(res))
             .catch(this.commonController.serverError(res));
     }
@@ -33,7 +33,7 @@ export class UserController {
     public async changePassword(session: Session, req: Request, res: Response) {
         const hashedNew: string = await bcrypt.hash(req.body.newPassword, this.saltRounds);
 
-        this.userDao.authenticate(session, req.body.username, req.body.oldPassword)
+        this.userDao.authenticate(session, false, req.body.username, req.body.oldPassword)
             .then(data => {
                 this.commonController.authenticatePassword(req.body.oldPassword, data.result.password).then(_ => {
                     this.userDao.changePassword(req.body.username, hashedNew)

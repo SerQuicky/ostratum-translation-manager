@@ -21,13 +21,13 @@ export class SettingsPageComponent implements OnInit {
     }
   }
 
-  public updateLightMode(event: any): void {
+  public updateLightMode(): void {
     this.darkModeOn = false;
     this.setModeState();
   }
 
-  public updateDarkMode(event: any): void {
-    localStorage.setItem("darkmode", JSON.stringify(this.darkModeOn));
+  public updateDarkMode(): void {
+    this.darkModeOn = true;
     this.setModeState();
   }
 

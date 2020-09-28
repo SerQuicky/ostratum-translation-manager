@@ -83,7 +83,8 @@ export class Session {
     public getUsernameByToken(token?: string): string {
         console.log(token);
         console.log(this.jwts);
-        const jwt: JWT = this.jwts.filter(jwt => jwt.token == token)[0];
+        const jwt: JWT | undefined = this.jwts.find(jwt => jwt.token == token);
+        console.log(jwt);
         return jwt ? jwt.username : "";
     }
 

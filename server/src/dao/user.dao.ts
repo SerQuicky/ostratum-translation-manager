@@ -14,8 +14,8 @@ export class UserDao {
 
     public async register(user: User): Promise<any> {
         let sqlRequest = "INSERT INTO users (username, password) VALUES (?, ?)";
-        const result = await this.commonDao.write(sqlRequest, [user.username, user.password]);
-        return this.addNormalUserRole(result.message['lastID']);
+        const response = await this.commonDao.write(sqlRequest, [user.username, user.password]);
+        return this.addNormalUserRole(response.result[0]['lastID']);
     }
 
     public addNormalUserRole(userId: number): Promise<any> {
@@ -23,7 +23,7 @@ export class UserDao {
         return this.commonDao.write(sqlRequest, [userId, 2]);
     }
 
-    public authenticate(session: Session, username: string, password: string): Promise<any> {
+    public authenticate(session: Session, shouldAddToken: boolean, username: string, password: string): Promise<any> {
         return this.commonDao.read("SELECT * FROM users JOIN user_roles ON users.id = user_roles.userID " + 
                                     "JOIN roles ON user_roles.roleID = roles.id WHERE username = $username", { $username: username }).then(async rows => {
             let user: User =  {
@@ -32,8 +32,11 @@ export class UserDao {
                 password: rows[0].password,
             };
 
-            const adminRole = rows.some((row: any) => row.roleID == 1);
-            const token: string = await session.add(adminRole, user.username);
+            let token: string = "";
+            if(shouldAddToken) {
+                const adminRole = rows.some((row: any) => row.roleID == 1);
+                token = await session.add(adminRole, user.username);
+            }
 
             return {result: user, password: password, token: token };
         });

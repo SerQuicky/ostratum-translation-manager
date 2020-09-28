@@ -1,6 +1,8 @@
 import { Database, Statement } from 'sqlite3'
+import { ServerResponse } from '../model/response.interface';
 import { DaoError } from './common.error';
 import { DaoSuccess } from './common.success';
+
 
 export class CommonDao {
 
@@ -34,19 +36,19 @@ export class CommonDao {
     }
 
     // write request are requests that overwrite changes the dabase entries
-    public write(sqlRequest: string, sqlParams: any): Promise<DaoSuccess | DaoError> {
+    public write(sqlRequest: string, sqlParams: any): Promise<ServerResponse<any>> {
         return new Promise((resolve, reject) => {
             let stmt: Statement = this.database.prepare(sqlRequest);
             stmt.run(sqlParams, function (err: any) {
                 if (this.changes === 1) {
-                    resolve(new DaoSuccess({lastID: this.lastID}));
+                    resolve({code: 200, message: "CODE_WRITE_SUCCESS", result: [{lastID: this.lastID}]});
                 } else if (this.changes === 0) {
                     reject(
-                        new DaoError(21, "Entity not found")
+                        {code: 500, message: "CODE_ERROR_WRITE_ENTITIY", result: []}
                     )
                 } else {
                     reject(
-                        new DaoError(11, "Invalid arguments")
+                        {code: 500, message: "CODE_ERROR_WRITE_ARGUMENT", result: []}
                     )
                 }
             })
