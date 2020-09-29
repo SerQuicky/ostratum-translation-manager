@@ -21,13 +21,15 @@ export class ProjectRoutes {
 
     private initRoutes(): void {
         this.app.get('/projects', (req: Request, res: Response) => {
-            this.session.verifyAdmin(req.headers['authorization'])
-            .then(_ => this.projectController.getProjects(req, res)) 
-            .catch(err => new AuthenticationError(res, err))
+            this.session.verify(req.headers['authorization'])
+                .then(_ => this.projectController.getProjects(req, res))
+                .catch(err => new AuthenticationError(res, err))
         });
 
         this.app.get('/userProjects', (req: Request, res: Response) => {
-            this.projectController.getProjectOfUser(req, res, this.session);
+            this.session.verify(req.headers['authorization'])
+                .then(_ => this.projectController.getProjectOfUser(req, res, this.session))
+                .catch(err => new AuthenticationError(res, {code: 400, message: "INVALID_TOKEN"}))
         });
 
         this.app.post('/addProject', (req: Request, res: Response) => {

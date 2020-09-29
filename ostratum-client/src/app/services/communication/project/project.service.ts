@@ -4,19 +4,20 @@ import { Observable } from 'rxjs';
 import { CommonCommunication } from '../common.communication';
 import { Project } from '../../../interfaces/project.interface';
 import { TranslationProject } from 'src/app/interfaces/translation.project.interface';
+import { ServerResponse } from 'src/app/interfaces/response.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
-  constructor(private http: HttpClient, private common: CommonCommunication) { }
+  constructor(private common: CommonCommunication) { }
 
-  public getProjects(): Observable<Project[]> {
-    return this.common.getRequest("userProjects");
+  public getProjects(): Observable<ServerResponse<Project>> {
+    return this.common.getRequest<Project>("userProjects");
   }
 
-  public getTranslationProjects(): Observable<TranslationProject[]> {
-    return this.common.getRequest("translationProjects");
+  public getTranslationProjects(): Observable<ServerResponse<TranslationProject>> {
+    return this.common.getRequest<TranslationProject>("translationProjects");
   }
 }

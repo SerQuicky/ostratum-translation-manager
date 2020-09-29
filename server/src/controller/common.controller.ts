@@ -6,10 +6,10 @@ export class CommonController {
 
     constructor() { }
 
-    public findSuccess(res: Response): (result: any) => void {
+    public findSuccess(res: Response): (result: Promise<ServerResponse<any>>) => void {
         return (result: any) => {
             res.status(200);
-            res.json(result);
+            res.json({code: 200, message: "FIND_SUCCESS", value: result});
         }
     }
 

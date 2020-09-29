@@ -1,9 +1,10 @@
 import { Response } from "express";
+import { ServerResponse } from '../model/response.interface';
 
 export class AuthenticationError {
 
-    constructor(res: Response, message: string) {
-        res.status(500);
-        res.json({code: message});
+    constructor(res: Response, response: ServerResponse<any>) {
+        res.status(200);
+        res.json(response);
     }
 }

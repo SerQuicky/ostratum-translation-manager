@@ -28,8 +28,6 @@ export class ProjectDao {
     }
 
     public getProjectOfUser(username: string): Promise<any> {
-        console.log(username);
-        console.log('yo')
         let sqlRequest = "SELECT projects.id as prID, projects.name as prName, * FROM projects JOIN role_projects ON projects.id = role_projects.projectID JOIN roles ON " +
                         "role_projects.roleID = roles.id JOIN user_roles ON user_roles.roleID = roles.id JOIN users ON users.id = user_roles.userID WHERE users.username = $username";
         return this.commonDao.read(sqlRequest, { $username: username }).then(rows => {

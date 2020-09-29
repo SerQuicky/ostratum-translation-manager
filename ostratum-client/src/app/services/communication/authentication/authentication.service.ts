@@ -11,15 +11,15 @@ export class AuthenticationService {
 
   constructor(private common: CommonCommunication) { }
 
-  public authenticate(username: string, password: string): Observable<Authenticate> {
+  public authenticate(username: string, password: string): Observable<ServerResponse<Authenticate>> {
     return this.common.postRequest<Authenticate>("authenticate", {"username": username, "password": password});
   }
 
   public changePassword(username: string, oldPassword: string, newPassword: string): Observable<ServerResponse<any>> {
-    return this.common.postRequest<ServerResponse<any>>("changePassword", {"username": username, "oldPassword": oldPassword, "newPassword": newPassword});
+    return this.common.postRequest<any>("changePassword", {"username": username, "oldPassword": oldPassword, "newPassword": newPassword});
   }
 
   public logout(): Observable<any> {
-    return this.common.postRequest<ServerResponse<any>>("logout", {});
+    return this.common.postRequest<any>("logout", {});
   }
 }

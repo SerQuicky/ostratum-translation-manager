@@ -1,6 +1,7 @@
 import { createCipheriv, randomBytes, createHash } from "crypto";
 import { JWT } from "../model/jwt.interface";
 import { Role } from "../model/role.interface";
+import { ServerResponse } from '../model/response.interface';
 
 // TODO: Add to an env file
 const ENCRYPTION_KEY = "d6F3Efeqd6F3Efeqd6F3Efeqd6F3Efeq"; // Must be 256 bits (32 characters)
@@ -38,14 +39,14 @@ export class Session {
         });
     }
 
-    public verify(token: string): Promise<any> {
+    public verify(token?: string): Promise<any> {
         return new Promise((resolve, reject) => { 
             const result = this.jwts.some(jwt => jwt.token == token && jwt.expireDate > Date.now());
             if(!result) {
-                resolve({state: false, message: "ERROR.TOKEN_EXPIRED"})
+                reject()
             }
 
-            resolve({state: true, message: ""});
+            resolve();
         });
     }
 
