@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/communication/authentication/authentication.service';
+import { ToastService } from 'src/app/services/others/toast/toast.service';
 import { StorageService } from '../../services/others/storage/storage.service';
 
 @Component({
@@ -9,7 +11,7 @@ import { StorageService } from '../../services/others/storage/storage.service';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(public storageService: StorageService, private router: Router) { }
+  constructor(public storageService: StorageService, private router: Router, private authenticationService: AuthenticationService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.storageService.setDesignState();
@@ -18,6 +20,13 @@ export class SidebarComponent implements OnInit {
   public navigateThroughSidebar(page: string, index: number): void {
     this.storageService.setSidebarStatus(index);
     this.router.navigate(['/main/' + page]);
+  }
+  
+  public logout(): void {
+    this.authenticationService.logout().subscribe(response => {
+      this.router.navigate(['/']);
+      this.toastService.determineToast(response);
+    })
   }
 
 }

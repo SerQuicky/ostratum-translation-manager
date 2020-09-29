@@ -2,6 +2,7 @@ import { Request, Response, Application } from 'express';
 import { UserController } from '../controller/user.controller';
 import { Session } from '../main/session';
 import { CommonRoutes } from './common.routes';
+import { ServerResponse } from '../model/response.interface';
 
 export class UserRoutes {
 
@@ -29,6 +30,12 @@ export class UserRoutes {
 
         this.app.post('/changePassword', (req: Request, res: Response) => {
             this.userController.changePassword(this.session, req, res);
+        });
+
+        this.app.post('/logout', async (req: Request, res: Response) => {
+            await this.session.remove(req.headers['authorization']);
+            res.json({code: 200, message: "SIGN_OUT_SUCCESS", value: []});
+            res.status(200);
         });
     }
 }

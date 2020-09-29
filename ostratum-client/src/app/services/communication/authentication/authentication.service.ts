@@ -18,4 +18,8 @@ export class AuthenticationService {
   public changePassword(username: string, oldPassword: string, newPassword: string): Observable<ServerResponse<any>> {
     return this.common.postRequest<ServerResponse<any>>("changePassword", {"username": username, "oldPassword": oldPassword, "newPassword": newPassword});
   }
+
+  public logout(): Observable<any> {
+    return this.common.postRequest<ServerResponse<any>>("logout", {});
+  }
 }
