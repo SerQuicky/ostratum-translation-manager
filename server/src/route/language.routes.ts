@@ -2,7 +2,7 @@ import { Request, Response, Application } from 'express';
 import { LanguageController } from '../controller/language.controller';
 import { ProjectController } from '../controller/project.controller';
 import { Session } from '../main/session';
-import { AuthenticationError } from './authentication.error';
+import { InvalidTokenError } from './authentication.error';
 import { CommonRoutes } from './common.routes';
 
 export class LanguageRoutes {
@@ -24,7 +24,7 @@ export class LanguageRoutes {
         this.app.post('/languages', (req: Request, res: Response) => {
             this.session.verifyAdmin(req.body.token)
             .then(_ => this.languageController.getLanguages(req, res)) 
-            .catch(err => new AuthenticationError(res, err))
+            .catch(err => new InvalidTokenError(res))
         });
 
         this.app.post('/addLanguage', (req: Request, res: Response) => {

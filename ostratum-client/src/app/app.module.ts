@@ -18,6 +18,8 @@ import { KeyComponent } from './components/key/key/key.component';
 import { TranslationPipePipe } from './pipes/translation-pipe/translation-pipe.pipe';
 import { AccountPageComponent } from './pages/account-page/account-page/account-page.component';
 import { SettingsPageComponent } from './pages/settings-page/settings-page/settings-page.component';
+import { DialogModalComponent } from './components/modals/dialog-modal/dialog-modal.component';
+import { EditModalComponent } from './components/modals/edit-modal/edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { SettingsPageComponent } from './pages/settings-page/settings-page/setti
     KeyComponent,
     TranslationPipePipe,
     AccountPageComponent,
-    SettingsPageComponent
+    SettingsPageComponent,
+    DialogModalComponent,
+    EditModalComponent
   ],
   imports: [
     BrowserModule,

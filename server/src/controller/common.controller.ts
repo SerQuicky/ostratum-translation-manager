@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { token } from 'morgan';
 import { ServerResponse } from '../model/response.interface';
 const bcrypt = require('bcrypt');
 
@@ -26,7 +27,7 @@ export class CommonController {
         }
     }
 
-    public authenticate(res: Response): (result: any) => void {
+    public authenticate(res: Response): (result: ServerResponse<String>) => void {
         return (data: any) => {
             bcrypt.compare(data.password, data.result.password, function (err: any, result: boolean) {
                 if (err) {
@@ -35,7 +36,7 @@ export class CommonController {
                 }
 
                 res.status(200);
-                res.json({ actionSuccess: result, token: data.token });
+                res.json({ code: 200, message: "SUCCESS_SIGN_IN", value: [data.token] });
             });
         }
     }

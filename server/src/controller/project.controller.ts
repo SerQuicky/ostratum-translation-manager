@@ -6,7 +6,7 @@ import { CommonController } from './common.controller';
 export class ProjectController {
 
     private commonController: CommonController;
-    private projectDao: ProjectDao;
+    public projectDao: ProjectDao;
 
     constructor() {
         this.commonController = new CommonController();
@@ -37,7 +37,8 @@ export class ProjectController {
             .catch(this.commonController.serverError(res));
     }
 
-    public updateProject(req: Request, res: Response): void {
+    public updateProject(req: Request, res: Response, session: Session): void {
+        // session.getUsernameByToken(req.headers['authorization']))
         this.projectDao.updateProject(req.body.id, req.body.newName, req.body.description)
             .then(this.commonController.findSuccess(res))
             .catch(this.commonController.serverError(res));

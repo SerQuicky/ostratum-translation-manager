@@ -15,7 +15,8 @@ export class UserDao {
     public async register(user: User): Promise<any> {
         let sqlRequest = "INSERT INTO users (username, password) VALUES (?, ?)";
         const response = await this.commonDao.write(sqlRequest, [user.username, user.password]);
-        return this.addNormalUserRole(response.result[0]['lastID']);
+        // return normal error message
+        return response.result ? this.addNormalUserRole(response.result[0]['lastID']) : new Promise((resolve, reject) => resolve());
     }
 
     public addNormalUserRole(userId: number): Promise<any> {
@@ -33,12 +34,12 @@ export class UserDao {
             };
 
             let token: string = "";
+            const adminRole = rows.some((row: any) => row.roleID == 1);
             if(shouldAddToken) {
-                const adminRole = rows.some((row: any) => row.roleID == 1);
                 token = await session.add(adminRole, user.username);
             }
 
-            return {result: user, password: password, token: token };
+            return {result: user, password: password, token: token, admin: adminRole};
         });
     }
 

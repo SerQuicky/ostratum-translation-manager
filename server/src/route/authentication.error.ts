@@ -1,10 +1,10 @@
 import { Response } from "express";
 import { ServerResponse } from '../model/response.interface';
 
-export class AuthenticationError {
+export class InvalidTokenError {
 
-    constructor(res: Response, response: ServerResponse<any>) {
+    constructor(res: Response) {
         res.status(200);
-        res.json(response);
+        res.json({code: 400, message: "INVALID_TOKEN"});
     }
 }

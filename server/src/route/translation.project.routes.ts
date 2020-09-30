@@ -1,7 +1,7 @@
 import { Request, Response, Application } from 'express';
 import { TranslationProjectController } from '../controller/translation.project.controller';
 import { Session } from '../main/session';
-import { AuthenticationError } from './authentication.error';
+import { InvalidTokenError } from './authentication.error';
 import { CommonRoutes } from './common.routes';
 
 export class TranslationProjectRoutes {

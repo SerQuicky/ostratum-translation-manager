@@ -1,7 +1,7 @@
 import { Request, Response, Application } from 'express';
 import { ProjectController } from '../controller/project.controller';
 import { Session } from '../main/session';
-import { AuthenticationError } from './authentication.error';
+import { InvalidTokenError } from './authentication.error';
 import { CommonRoutes } from './common.routes';
 
 export class ProjectRoutes {
@@ -21,31 +21,27 @@ export class ProjectRoutes {
 
     private initRoutes(): void {
         this.app.get('/projects', (req: Request, res: Response) => {
-            this.session.verify(req.headers['authorization'])
-                .then(_ => this.projectController.getProjects(req, res))
-                .catch(err => new AuthenticationError(res, err))
+            this.session.verifyAdmin(req.headers['authorization']).then(_ => this.projectController.getProjects(req, res)).catch(_ => new InvalidTokenError(res))
         });
 
         this.app.get('/userProjects', (req: Request, res: Response) => {
-            this.session.verify(req.headers['authorization'])
-                .then(_ => this.projectController.getProjectOfUser(req, res, this.session))
-                .catch(err => new AuthenticationError(res, {code: 400, message: "INVALID_TOKEN"}))
+            this.session.verify(req.headers['authorization']).then(_ => this.projectController.getProjectOfUser(req, res, this.session)).catch(_ => new InvalidTokenError(res))
         });
 
         this.app.post('/addProject', (req: Request, res: Response) => {
-            this.projectController.addProject(req, res);
+            this.session.verify(req.headers['authorization']).then(_ => this.projectController.addProject(req, res)).catch(_ => new InvalidTokenError(res))
         });
 
         this.app.post('/addRoleToProject', (req: Request, res: Response) => {
-            this.projectController.addRoleToProject(req, res);
+            this.session.verifyAdmin(req.headers['authorization']).then(_ => this.projectController.addRoleToProject(req, res)).catch(_ => new InvalidTokenError(res))
         });
 
         this.app.post('/updateProject', (req: Request, res: Response) => {
-            this.projectController.updateProject(req, res);
+            this.session.verify(req.headers['authorization']).then(_ => this.projectController.updateProject(req, res, this.session)).catch(_ => new InvalidTokenError(res))
         });
 
         this.app.post('/deleteProject', (req: Request, res: Response) => {
-            this.projectController.deleteProject(req, res);
+            this.session.verifyAdmin(req.headers['authorization']).then(_ => this.projectController.deleteProject(req, res)).catch(_ => new InvalidTokenError(res))
         });
     }
 }

@@ -21,9 +21,9 @@ export class LoginPageComponent implements OnInit {
   }
 
   public signIn(): void {
-    this.authService.authenticate("Test", "A12").subscribe(auth => {
+    this.authService.authenticate("Test", "A12").subscribe(response => {
       localStorage.setItem("username", "Test");
-      localStorage.setItem("aot", auth.token);
+      localStorage.setItem("aot", response.value[0]);
       this.router.navigate(['main/projects']);
     });
   }

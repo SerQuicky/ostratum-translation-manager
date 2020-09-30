@@ -35,9 +35,9 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.translationProjectId = parseInt(this.route.snapshot.paramMap.get('tprojectId'));
-    this.translationService.getTranslations(this.translationProjectId).subscribe(translations => {
-      console.log(translations);
-      this.translations = translations;
+    this.translationService.getTranslations(this.translationProjectId).subscribe(reponse => {
+      console.log(reponse);
+      this.translations = reponse.value;
 
       // set sections
       let sections: Section[] = [];

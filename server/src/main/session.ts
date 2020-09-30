@@ -45,7 +45,6 @@ export class Session {
             if(!result) {
                 reject()
             }
-
             resolve();
         });
     }

@@ -14,8 +14,8 @@ export class TranslationProjectsPageComponent implements OnInit {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projectService.getTranslationProjects().subscribe(tprojects => {
-      this.tProjects = tprojects;
+    this.projectService.getTranslationProjects().subscribe(response => {
+      this.tProjects = response.value;
     })
   }
 

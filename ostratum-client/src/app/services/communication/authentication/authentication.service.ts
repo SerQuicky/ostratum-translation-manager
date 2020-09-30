@@ -11,8 +11,8 @@ export class AuthenticationService {
 
   constructor(private common: CommonCommunication) { }
 
-  public authenticate(username: string, password: string): Observable<ServerResponse<Authenticate>> {
-    return this.common.postRequest<Authenticate>("authenticate", {"username": username, "password": password});
+  public authenticate(username: string, password: string): Observable<ServerResponse<string>> {
+    return this.common.postRequest<string>("authenticate", {"username": username, "password": password});
   }
 
   public changePassword(username: string, oldPassword: string, newPassword: string): Observable<ServerResponse<any>> {
