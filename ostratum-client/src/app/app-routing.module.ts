@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { AccountPageComponent } from './pages/account-page/account-page/account-page.component';
+import { LanguagePageComponent } from './pages/language-page/language-page/language-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { ProjectsPageComponent } from './pages/projects-page/projects-page.component';
 import { SettingsPageComponent } from './pages/settings-page/settings-page/settings-page.component';
@@ -39,6 +40,10 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersPageComponent
+      },
+      {
+        path: 'languages',
+        component: LanguagePageComponent
       }
     ]
   }

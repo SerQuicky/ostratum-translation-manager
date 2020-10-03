@@ -24,6 +24,7 @@ import { EditModalComponent } from './components/modals/edit-modal/edit-modal.co
 import { UsersPageComponent } from './pages/users-page/users-page/users-page.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguagePageComponent } from './pages/language-page/language-page/language-page.component';
+import { UserModalComponent } from './components/modals/user-modal/user-modal.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { LanguagePageComponent } from './pages/language-page/language-page/langu
     EditModalComponent,
     UsersPageComponent,
     LanguagePageComponent,
+    UserModalComponent,
   ],
   imports: [
     BrowserModule,

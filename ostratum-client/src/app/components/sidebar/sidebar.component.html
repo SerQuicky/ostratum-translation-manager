@@ -28,11 +28,14 @@
                     <span [ngClass]="{'active': storageService.sidebarStates[2]}" class="sidebar-link" (click)="navigateThroughSidebar('settings', 2)">Settings</span>
                 </div>
 
-                <div class="projects-container">
+                <div class="projects-container" *ngIf="storageService.adminState">
                     <h5 class="sidebar-title">Admin</h5>
                     <div class="sidebar-divider"></div>
                     <span [ngClass]="{'active': storageService.sidebarStates[3]}" class="sidebar-link" (click)="navigateThroughSidebar('users', 3)">Users</span>
+                    <span [ngClass]="{'active': storageService.sidebarStates[4]}" class="sidebar-link" (click)="navigateThroughSidebar('languages', 4)">Languages</span>
                 </div>
+
+                <div *ngIf="!storageService.adminState"></div>
 
                 <div>
                     <span class="sidebar-link">Ostratum Beta-0.0.2</span>

@@ -1,8 +1,10 @@
 import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
 import { DialogModalComponent } from 'src/app/components/modals/dialog-modal/dialog-modal.component';
 import { EditModalComponent } from 'src/app/components/modals/edit-modal/edit-modal.component';
+import { UserModalComponent } from 'src/app/components/modals/user-modal/user-modal.component';
 import { Project } from 'src/app/interfaces/project.interface';
 import { TranslationProject } from 'src/app/interfaces/translation.project.interface';
+import { User } from 'src/app/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,7 @@ export class ModalService {
   }
 
   public createComponent<T>(component: ComponentFactory<T>): ComponentRef<T> {
+    // TODO: check if normal return is enough
     const cf: ComponentRef<T> = this.viewContainerRef.createComponent(component);
     return cf;
   }
@@ -43,6 +46,18 @@ export class ModalService {
     component.instance.dismissText = dismissText;
     component.instance.acceptClass = acceptClass;
     component.instance.projectId = projectId
+
+    return component;
+  }
+
+  public createUserModal(user: User, title: string, acceptText: string, dismissText: string, acceptClass: string): ComponentRef<UserModalComponent> {
+    const factory: ComponentFactory<UserModalComponent> = this.componentResolver.resolveComponentFactory(UserModalComponent);
+    const component: ComponentRef<UserModalComponent> = this.viewContainerRef.createComponent(factory);
+    component.instance.title = title;
+    component.instance.user = user;
+    component.instance.acceptText = acceptText;
+    component.instance.dismissText = dismissText;
+    component.instance.acceptClass = acceptClass;
 
     return component;
   }

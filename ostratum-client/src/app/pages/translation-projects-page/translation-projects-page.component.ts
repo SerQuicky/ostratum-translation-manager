@@ -19,9 +19,9 @@ export class TranslationProjectsPageComponent implements OnInit, OnDestroy {
   private projectId: number;
   public projectSubscription: Subscription;
 
-  constructor(private projectService: ProjectService, 
-    private modalService: ModalService, 
-    private toastService: ToastService, 
+  constructor(private projectService: ProjectService,
+    private modalService: ModalService,
+    private toastService: ToastService,
     private route: ActivatedRoute,
     private storageService: StorageService) { }
 
@@ -32,9 +32,10 @@ export class TranslationProjectsPageComponent implements OnInit, OnDestroy {
   }
 
   public openAddNewProjectModal(): void {
-    const component: ComponentRef<EditModalComponent> = this.modalService.createProjectEditModal("Add new translation project", 
-                                                                        {id: 0, name: "", description: "", projectId: this.projectId}, 
-                                                                        "Create", "Cancel", "btn btn-success", this.projectId);
+    const component: ComponentRef<EditModalComponent> = this.modalService.createProjectEditModal("Add new translation project",
+      { id: 0, name: "", description: "", projectId: this.projectId },
+      "Create", "Cancel", "btn btn-success", this.projectId);
+      
     component.instance.execute.subscribe(data => {
       if (data[0]) {
         const project: TranslationProject = data[1];

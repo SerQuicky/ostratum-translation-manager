@@ -16,12 +16,24 @@ export class AuthenticationService {
     return this.common.postRequest<string>("authenticate", {"username": username, "password": password});
   }
 
+  public register(username: string, password: string): Observable<ServerResponse<any>> {
+    return this.common.postRequest<string>("register", {"username": username, "password": password});
+  }
+
   public changePassword(username: string, oldPassword: string, newPassword: string): Observable<ServerResponse<any>> {
     return this.common.postRequest<any>("changePassword", {"username": username, "oldPassword": oldPassword, "newPassword": newPassword});
   }
 
   public getUsers(): Observable<ServerResponse<User>> {
     return this.common.getRequest<User>("users");
+  }
+
+  public deleteUser(id: number): Observable<ServerResponse<any>> {
+    return this.common.postRequest<any>("deleteUser", {id: id});
+  }
+
+  public updateUser(user: User): Observable<ServerResponse<any>> {
+    return this.common.postRequest<any>("updateUser", {id: user.id, username: user.username, password: user.password});
   }
 
   public logout(): Observable<any> {

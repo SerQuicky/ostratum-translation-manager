@@ -51,6 +51,20 @@ export class UserController {
             .catch(this.commonController.serverError(res));
     }
 
+    public deleteUser(req: Request, res: Response): void {
+        this.userDao.deleteUser(req.body.id)
+            .then(this.commonController.writeResult(res))
+            .catch(this.commonController.serverError(res))
+    }
+
+    public async updateUser(req: Request, res: Response) {
+        const hashedNew: string = await bcrypt.hash(req.body.password, this.saltRounds);
+
+        this.userDao.updateUser(req.body.id, req.body.username, hashedNew)
+            .then(this.commonController.writeResult(res))
+            .catch(this.commonController.serverError(res))
+    }
+
     private buildUser(req: Request): Promise<User> {
         return new Promise(async (resolve, reject) => {
             let user: User =

@@ -36,6 +36,15 @@ export class UserRoutes {
             this.userController.changePassword(this.session, req, res);
         });
 
+        this.app.post('/deleteUser', (req: Request, res: Response) => {
+            this.userController.deleteUser(req, res);
+        });
+
+        this.app.post('/updateUser', (req: Request, res: Response) => {
+            this.userController.updateUser(req, res);
+        });
+
+
         this.app.post('/logout', async (req: Request, res: Response) => {
             await this.session.remove(req.headers['authorization']);
             res.json({code: 200, message: "SIGN_OUT_SUCCESS", value: []});
