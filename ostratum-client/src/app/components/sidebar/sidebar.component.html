@@ -18,7 +18,7 @@
                 <div class="projects-container">
                     <h5 class="sidebar-title">Views</h5>
                     <div class="sidebar-divider"></div>
-                    <span [ngClass]="{'active': storageService.sidebarStates[0]}" class="sidebar-link" (click)="navigateThroughSidebar('projects', 0)" >Projects</span>
+                    <span [ngClass]="{'active': storageService.sidebarStates[0]}" class="sidebar-link" (click)="navigateThroughSidebar('projects', 0)" >{{'SIDEBAR.PROJECTS' | translate}}</span>
                 </div>
 
                 <div class="projects-container">

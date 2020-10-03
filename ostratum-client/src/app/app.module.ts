@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,7 +9,7 @@ import { ProjectsPageComponent } from './pages/projects-page/projects-page.compo
 import { TranslationProjectsPageComponent } from './pages/translation-projects-page/translation-projects-page.component';
 import { TranslationsPageComponent } from './pages/translations-page/translations-page.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from './services/communication/authentication/authentication.service';
 import { CommonCommunication } from './services/communication/common.communication';
@@ -21,6 +22,8 @@ import { SettingsPageComponent } from './pages/settings-page/settings-page/setti
 import { DialogModalComponent } from './components/modals/dialog-modal/dialog-modal.component';
 import { EditModalComponent } from './components/modals/edit-modal/edit-modal.component';
 import { UsersPageComponent } from './pages/users-page/users-page/users-page.component';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LanguagePageComponent } from './pages/language-page/language-page/language-page.component';
 
 @NgModule({
   declarations: [
@@ -39,14 +42,27 @@ import { UsersPageComponent } from './pages/users-page/users-page/users-page.com
     DialogModalComponent,
     EditModalComponent,
     UsersPageComponent,
+    LanguagePageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      }
+
+    })
   ],
   providers: [CommonCommunication],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}

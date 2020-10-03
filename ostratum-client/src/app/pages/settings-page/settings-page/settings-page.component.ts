@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from 'src/app/services/others/storage/storage.service';
 
 @Component({
@@ -9,8 +10,11 @@ import { StorageService } from 'src/app/services/others/storage/storage.service'
 export class SettingsPageComponent implements OnInit {
 
   public darkModeOn: boolean = false;
+  public language: string = "en";
 
-  constructor(private storageService: StorageService) { }
+  constructor(private storageService: StorageService, private translate: TranslateService) { 
+    this.language = this.translate.getDefaultLang();
+  }
 
   ngOnInit(): void {
     this.storageService.initSidebar(2);
@@ -36,5 +40,9 @@ export class SettingsPageComponent implements OnInit {
     this.storageService.setDesignState();
   }
 
+  public updateLanuage(language: string): void {
+    this.language = language;
+    this.translate.use(this.language);
+  }
 
 }

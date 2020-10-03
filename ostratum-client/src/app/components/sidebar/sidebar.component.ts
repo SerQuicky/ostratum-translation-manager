@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/communication/authentication/authentication.service';
+import { TranslationService } from 'src/app/services/communication/translation/translation.service';
 import { ToastService } from 'src/app/services/others/toast/toast.service';
 import { StorageService } from '../../services/others/storage/storage.service';
 
@@ -11,7 +12,11 @@ import { StorageService } from '../../services/others/storage/storage.service';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(public storageService: StorageService, private router: Router, private authenticationService: AuthenticationService, private toastService: ToastService) { }
+  constructor(public storageService: StorageService, 
+    private router: Router, 
+    private authenticationService: AuthenticationService, 
+    private toastService: ToastService,
+    public translate: TranslationService) { }
 
   ngOnInit(): void {
     this.storageService.setDesignState();

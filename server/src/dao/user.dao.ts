@@ -32,7 +32,6 @@ export class UserDao {
     public async register(user: User): Promise<any> {
         let sqlRequest = "INSERT INTO users (username, password) VALUES (?, ?)";
         const response = await this.commonDao.write(sqlRequest, [user.username, user.password]);
-        // return normal error message
         return response.result ? this.addNormalUserRole(response.result[0]['lastID']) : new Promise((resolve, reject) => resolve());
     }
 
@@ -58,6 +57,14 @@ export class UserDao {
 
             return {result: user, password: password, token: token, admin: adminRole};
         });
+    }
+
+    public deleteUser(id: number): Promise<any> {
+        return this.commonDao.write("DELETE FROM users WHERE id = $id", {$id: id});
+    }
+
+    public updateUser(id: number, username: string, password: string): Promise<any> {
+        return this.commonDao.write("UPDATE users SET username = $username, password = $password WHERE id = $id", {$id: id, $username: username, $password: password});
     }
 
     public changePassword(username: string, password: string): Promise<any> {
