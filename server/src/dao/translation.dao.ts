@@ -37,7 +37,7 @@ export class TranslationDao {
     }
 
     public updateTranslation(id: number, fileName: string, file: string, type: string, date: number): Promise<any> {
-        let sqlRequest = "UPDATE translations SET fileName = $fileName AND file = $file AND type = $type AND date = $date WHERE id = $id";
+        let sqlRequest = "UPDATE translations SET fileName = $fileName, file = $file, type = $type, date = $date WHERE id = $id";
         return this.commonDao.write(sqlRequest, { $id: id, $fileName: fileName, $file: file, $type: type, $date: date });
     }
 

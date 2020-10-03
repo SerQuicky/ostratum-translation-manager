@@ -36,7 +36,7 @@ import { EditModalComponent } from './components/modals/edit-modal/edit-modal.co
     AccountPageComponent,
     SettingsPageComponent,
     DialogModalComponent,
-    EditModalComponent
+    EditModalComponent,
   ],
   imports: [
     BrowserModule,

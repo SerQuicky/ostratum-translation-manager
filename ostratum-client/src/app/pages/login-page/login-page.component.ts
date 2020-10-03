@@ -24,6 +24,8 @@ export class LoginPageComponent implements OnInit {
     this.authService.authenticate("Test", "A12").subscribe(response => {
       localStorage.setItem("username", "Test");
       localStorage.setItem("aot", response.value[0]);
+      localStorage.setItem("state", response.value[1]);
+      this.storageService.adminState = JSON.parse(response.value[1]);
       this.router.navigate(['main/projects']);
     });
   }

@@ -27,26 +27,25 @@ export class ProjectController {
 
     public addProject(req: Request, res: Response): void {
         this.projectDao.addProject(req.body.name, req.body.description)
-            .then(this.commonController.findSuccess(res))
+            .then(this.commonController.writeResult(res))
             .catch(this.commonController.serverError(res));
     }
 
     public addRoleToProject(req: Request, res: Response): void {
         this.projectDao.addRoleToProject(req.body.roleId, req.body.projectId)
-            .then(this.commonController.findSuccess(res))
+            .then(this.commonController.writeResult(res))
             .catch(this.commonController.serverError(res));
     }
 
     public updateProject(req: Request, res: Response, session: Session): void {
-        // session.getUsernameByToken(req.headers['authorization']))
-        this.projectDao.updateProject(req.body.id, req.body.newName, req.body.description)
-            .then(this.commonController.findSuccess(res))
+        this.projectDao.updateProject(req.body.id, req.body.name, req.body.description)
+            .then(this.commonController.writeResult(res))
             .catch(this.commonController.serverError(res));
     }
 
     public deleteProject(req: Request, res: Response): void {
         this.projectDao.deleteProject(req.body.id)
-            .then(this.commonController.findSuccess(res))
+            .then(this.commonController.writeResult(res))
             .catch(this.commonController.serverError(res));
     }
 }

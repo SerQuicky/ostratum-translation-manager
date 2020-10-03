@@ -1,4 +1,5 @@
 import { Project } from '../model/project.interface';
+import { ServerResponse } from '../model/response.interface';
 import { CommonDao } from './common.dao';
 
 export class ProjectDao {
@@ -46,9 +47,12 @@ export class ProjectDao {
         })
     }
 
-    public addProject(name: string, description: string): Promise<any> {
-        let sqlRequest = "INSERT INTO projects (name, description) VALUES (?, ?)";
-        return this.commonDao.write(sqlRequest, [name, description]);
+    public async addProject(name: string, description: string): Promise<any> {
+        const response = await this.commonDao.write("INSERT INTO projects (name, description) VALUES (?, ?)", [name, description]);
+        console.log(response);
+        return response.result ? 
+            this.commonDao.write("INSERT INTO role_projects (roleID, projectID) VALUES (1, $projectId), (2, $projectId)", {$projectId: response.result[0]['lastID']})
+            : new Promise((resolve, reject) => resolve({code: 500, message: "ERROR_PROJECT_ADD", value: []}));
     }
 
     public addRoleToProject(roleID: number, projectID: number): Promise<any> {
@@ -57,7 +61,8 @@ export class ProjectDao {
     }
 
     public updateProject(id: number, newName: string, description: string): Promise<any> {
-        let sqlRequest = "UPDATE projects SET name = $newName AND description = $description WHERE id = $id";
+        console.log(id + " " + newName + " " + description);
+        let sqlRequest = "UPDATE projects SET name = $newName, description = $description WHERE id = $id";
         return this.commonDao.write(sqlRequest, { $id: id, $newName: newName, $description: description });
     }
 

@@ -33,7 +33,7 @@ export class LanguageDao {
     }
 
     public updateLanguage(id: number, name: string, acronym: string): Promise<any> {
-        let sqlRequest = "UPDATE languages SET name = $name AND acronym = $acronym WHERE id = $id";
+        let sqlRequest = "UPDATE languages SET name = $name, acronym = $acronym WHERE id = $id";
         return this.commonDao.write(sqlRequest, { $id: id, $name: name, $acronym: acronym });
     }
 

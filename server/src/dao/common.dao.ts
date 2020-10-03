@@ -40,13 +40,14 @@ export class CommonDao {
         return new Promise((resolve, reject) => {
             let stmt: Statement = this.database.prepare(sqlRequest);
             stmt.run(sqlParams, function (err: any) {
-                if (this.changes === 1) {
+                if (this.changes >= 1) {
                     resolve({code: 200, message: "CODE_WRITE_SUCCESS", result: [{lastID: this.lastID}]});
                 } else if (this.changes === 0) {
                     reject(
                         {code: 500, message: "CODE_ERROR_WRITE_ENTITIY", result: []}
                     )
                 } else {
+                    console.log(err);
                     reject(
                         {code: 500, message: "CODE_ERROR_WRITE_ARGUMENT", result: []}
                     )

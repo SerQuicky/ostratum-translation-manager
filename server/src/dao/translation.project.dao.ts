@@ -34,7 +34,7 @@ export class TranslationProjectDao {
     }
 
     public updateTranslationProject(id: number, name: string, description: string): Promise<any> {
-        let sqlRequest = "UPDATE translation_projects SET name = $name AND description = $description WHERE id = $id";
+        let sqlRequest = "UPDATE translation_projects SET name = $name, description = $description WHERE id = $id";
         return this.commonDao.write(sqlRequest, { $id: id, $name: name, $description: description });
     }
 

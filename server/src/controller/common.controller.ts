@@ -23,11 +23,12 @@ export class CommonController {
 
     public writeResult(res: Response): (result: ServerResponse<any>) => void {
         return (result: ServerResponse<any>) => {
+            res.status(200);
             res.json(result);
         }
     }
 
-    public authenticate(res: Response): (result: ServerResponse<String>) => void {
+    public authenticate(res: Response): (result: ServerResponse<[String, String]>) => void {
         return (data: any) => {
             bcrypt.compare(data.password, data.result.password, function (err: any, result: boolean) {
                 if (err) {
@@ -36,7 +37,7 @@ export class CommonController {
                 }
 
                 res.status(200);
-                res.json({ code: 200, message: "SUCCESS_SIGN_IN", value: [data.token] });
+                res.json({ code: 200, message: "SUCCESS_SIGN_IN", value: [data.token, data.admin] });
             });
         }
     }

@@ -11,11 +11,17 @@ export class StorageService {
   public keys: Key[] = [];
   public editKeySubject: Subject<Key> = new Subject();
   public updateTranslationCounter: Subject<any> = new Subject();
-  public sidebarStates: boolean[] = [true, false, false];
+  public updateProjectsSubject: Subject<any> = new Subject();
 
+
+  public sidebarStates: boolean[] = [true, false, false];
   public logoURL: string = "../../../assets/images/ostratum_logo_2.png";
 
-  constructor() { }
+  public adminState: boolean = false;
+
+  constructor() {
+    this.adminState = JSON.parse(localStorage.getItem("state"));
+   }
 
   public setSidebarStatus(index: number) {
     this.sidebarStates = this.sidebarStates.map(_ => false);
