@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Project } from 'src/app/interfaces/project.interface';
+import { TranslationProject } from 'src/app/interfaces/translation.project.interface';
 
 @Component({
   selector: 'app-edit-modal',
@@ -8,20 +9,24 @@ import { Project } from 'src/app/interfaces/project.interface';
 })
 export class EditModalComponent implements OnInit {
 
-  @Output() execute = new EventEmitter<[boolean, Project]>();
-  @Input() project: Project;
+  @Output() execute = new EventEmitter<[boolean, Project | TranslationProject]>();
+  @Input() project: TranslationProject | Project ;
   @Input() title: string;
+  @Input() projectId?: number;
   @Input() acceptText: string;
   @Input() dismissText: string;
   @Input() acceptClass: string;
 
   // prevents that the real projects reference will be used
-  public iProject: Project;
+  public iProject: Project | TranslationProject;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.iProject = {id: this.project.id, name: this.project.name, description: this.project.description};
+    this.iProject = {id: this.project.id, 
+      name: this.project.name, 
+      description: this.project.description,
+      projectId: this.projectId }
   }
 
   public executeEmitter(): void {

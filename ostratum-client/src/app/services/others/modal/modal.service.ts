@@ -2,6 +2,7 @@ import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, In
 import { DialogModalComponent } from 'src/app/components/modals/dialog-modal/dialog-modal.component';
 import { EditModalComponent } from 'src/app/components/modals/edit-modal/edit-modal.component';
 import { Project } from 'src/app/interfaces/project.interface';
+import { TranslationProject } from 'src/app/interfaces/translation.project.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class ModalService {
     return component;
   }
 
-  public createEditModal(title: string, project: Project, acceptText: string, dismissText: string, acceptClass: string): ComponentRef<EditModalComponent> {
+  public createProjectEditModal(title: string, project: Project | TranslationProject, acceptText: string, dismissText: string, acceptClass: string, projectId?: number): ComponentRef<EditModalComponent> {
     const factory: ComponentFactory<EditModalComponent> = this.componentResolver.resolveComponentFactory(EditModalComponent);
     const component: ComponentRef<EditModalComponent> = this.viewContainerRef.createComponent(factory);
     component.instance.title = title;
@@ -41,6 +42,7 @@ export class ModalService {
     component.instance.acceptText = acceptText;
     component.instance.dismissText = dismissText;
     component.instance.acceptClass = acceptClass;
+    component.instance.projectId = projectId
 
     return component;
   }

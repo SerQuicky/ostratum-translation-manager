@@ -20,20 +20,20 @@ export class TranslationProjectRoutes {
     }
 
     private initRoutes(): void {
-        this.app.get('/translationProjects', (req: Request, res: Response) => {
-            this.translationProjectController.getTranslationProjects(req, res)
+        this.app.post('/translationProjects', (req: Request, res: Response) => {
+            this.session.verify(req.headers['authorization']).then(_ => this.translationProjectController.getTranslationProjects(req, res)).catch(_ => new InvalidTokenError(res))
         });
 
         this.app.post('/addTranslationProject', (req: Request, res: Response) => {
-            this.translationProjectController.addTranslationProject(req, res);
+            this.session.verify(req.headers['authorization']).then(_ => this.translationProjectController.addTranslationProject(req, res)).catch(_ => new InvalidTokenError(res))
         });
 
         this.app.post('/updateTranslationProject', (req: Request, res: Response) => {
-            this.translationProjectController.updateTranslationProject(req, res);
+            this.session.verify(req.headers['authorization']).then(_ => this.translationProjectController.updateTranslationProject(req, res)).catch(_ => new InvalidTokenError(res))
         });
 
         this.app.post('/deleteTranslateProject', (req: Request, res: Response) => {
-            this.translationProjectController.deleteTranslateProject(req, res);
+            this.session.verify(req.headers['authorization']).then(_ => this.translationProjectController.deleteTranslateProject(req, res)).catch(_ => new InvalidTokenError(res))
         });
     }
 }

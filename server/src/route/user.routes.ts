@@ -28,6 +28,10 @@ export class UserRoutes {
             this.userController.authenticate(this.session, req, res);
         });
 
+        this.app.get('/users', (req: Request, res: Response) => {
+            this.userController.users(req, res);
+        });
+
         this.app.post('/changePassword', (req: Request, res: Response) => {
             this.userController.changePassword(this.session, req, res);
         });

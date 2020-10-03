@@ -28,6 +28,12 @@
                     <span [ngClass]="{'active': storageService.sidebarStates[2]}" class="sidebar-link" (click)="navigateThroughSidebar('settings', 2)">Settings</span>
                 </div>
 
+                <div class="projects-container">
+                    <h5 class="sidebar-title">Admin</h5>
+                    <div class="sidebar-divider"></div>
+                    <span [ngClass]="{'active': storageService.sidebarStates[3]}" class="sidebar-link" (click)="navigateThroughSidebar('users', 3)">Users</span>
+                </div>
+
                 <div>
                     <span class="sidebar-link">Ostratum Beta-0.0.2</span>
                 </div>

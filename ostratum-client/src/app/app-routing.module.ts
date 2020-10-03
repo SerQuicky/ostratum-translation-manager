@@ -7,6 +7,7 @@ import { ProjectsPageComponent } from './pages/projects-page/projects-page.compo
 import { SettingsPageComponent } from './pages/settings-page/settings-page/settings-page.component';
 import { TranslationProjectsPageComponent } from './pages/translation-projects-page/translation-projects-page.component';
 import { TranslationsPageComponent } from './pages/translations-page/translations-page.component';
+import { UsersPageComponent } from './pages/users-page/users-page/users-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -34,6 +35,10 @@ const routes: Routes = [
       {
         path: 'settings',
         component: SettingsPageComponent
+      },
+      {
+        path: 'users',
+        component: UsersPageComponent
       }
     ]
   }

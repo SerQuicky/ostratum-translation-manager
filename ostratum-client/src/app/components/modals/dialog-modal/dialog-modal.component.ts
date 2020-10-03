@@ -19,7 +19,6 @@ export class DialogModalComponent implements OnInit {
   ngOnInit(): void {}
 
   public executeEmitter(): void {
-    console.log('yo');
     this.execute.emit(true);
   }
 

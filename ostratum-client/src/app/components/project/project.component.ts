@@ -54,14 +54,16 @@ export class ProjectComponent implements OnInit {
 
     component.instance.execute.subscribe(success => {
       if (success) {
-        this.projectService.deleteProject(this.project.id);
-        // TODO: iniate deletion
+        this.projectService.deleteProject(this.project.id).subscribe(response => {
+          this.toastService.determineToast(response, "SUCCESSFULLY DELETED PROJECT");
+          this.storageService.updateProjectsSubject.next();
+        });
       }
     });
   }
 
   private openEditModal(): void {
-    let component: ComponentRef<EditModalComponent> = this.modalService.createEditModal(
+    let component: ComponentRef<EditModalComponent> = this.modalService.createProjectEditModal(
       "Edit project",
       this.project,
       "Save", "Cancel",

@@ -13,27 +13,27 @@ export class TranslationProjectController {
     }
 
     public getTranslationProjects(req: Request, res: Response): void {
-        this.translationProject.getTranslationProjects()
+        this.translationProject.getTranslationProjects(req.body.projectId)
             .then(this.commonController.findSuccess(res))
             .catch(this.commonController.serverError(res));
     }
 
     public addTranslationProject(req: Request, res: Response): void {
         this.translationProject.addTranslationProject(req.body.name, req.body.description, req.body.projectId)
-            .then(this.commonController.findSuccess(res))
+            .then(this.commonController.writeResult(res))
             .catch(this.commonController.serverError(res));
     }
 
 
     public updateTranslationProject(req: Request, res: Response): void {
         this.translationProject.updateTranslationProject(req.body.id, req.body.name, req.body.description)
-            .then(this.commonController.findSuccess(res))
+            .then(this.commonController.writeResult(res))
             .catch(this.commonController.serverError(res));
     }
 
     public deleteTranslateProject(req: Request, res: Response): void {
         this.translationProject.deleteTranslateProject(req.body.id)
-            .then(this.commonController.findSuccess(res))
+            .then(this.commonController.writeResult(res))
             .catch(this.commonController.serverError(res));
     }
 }

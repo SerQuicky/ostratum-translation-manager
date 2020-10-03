@@ -14,7 +14,7 @@ export class StorageService {
   public updateProjectsSubject: Subject<any> = new Subject();
 
 
-  public sidebarStates: boolean[] = [true, false, false];
+  public sidebarStates: boolean[] = [true, false, false, false];
   public logoURL: string = "../../../assets/images/ostratum_logo_2.png";
 
   public adminState: boolean = false;

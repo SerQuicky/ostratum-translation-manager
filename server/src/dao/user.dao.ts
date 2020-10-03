@@ -12,6 +12,23 @@ export class UserDao {
         this.commonDao = new CommonDao();
     }
 
+    public getUsers(): Promise<any> {
+        return this.commonDao.read("SELECT id, username FROM users", {}).then(rows => {
+            let users: User[] = [];
+
+            for (const user of rows) {
+                users.push(
+                    {
+                        id: user.id,
+                        username: user.username,
+                        password: ""
+                    });
+            }
+
+            return users;
+        })
+    }
+
     public async register(user: User): Promise<any> {
         let sqlRequest = "INSERT INTO users (username, password) VALUES (?, ?)";
         const response = await this.commonDao.write(sqlRequest, [user.username, user.password]);

@@ -20,6 +20,7 @@ import { AccountPageComponent } from './pages/account-page/account-page/account-
 import { SettingsPageComponent } from './pages/settings-page/settings-page/settings-page.component';
 import { DialogModalComponent } from './components/modals/dialog-modal/dialog-modal.component';
 import { EditModalComponent } from './components/modals/edit-modal/edit-modal.component';
+import { UsersPageComponent } from './pages/users-page/users-page/users-page.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { EditModalComponent } from './components/modals/edit-modal/edit-modal.co
     SettingsPageComponent,
     DialogModalComponent,
     EditModalComponent,
+    UsersPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -45,6 +45,12 @@ export class UserController {
             .catch(this.commonController.serverError(res));
     }
 
+    public users(req: Request, res: Response): void {
+        this.userDao.getUsers()
+            .then(this.commonController.findSuccess(res))
+            .catch(this.commonController.serverError(res));
+    }
+
     private buildUser(req: Request): Promise<User> {
         return new Promise(async (resolve, reject) => {
             let user: User =

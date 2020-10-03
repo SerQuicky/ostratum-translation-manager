@@ -1,11 +1,17 @@
-<div class="w-400 mw-full project-container" (click)="openTranslations()">
+<div class="w-400 mw-full project-container" (click)="resolveProjectClick($event)">
     <div class="card">
         <h2 class="card-title">
             <i class="fa fa-bookmark" aria-hidden="true"></i>
             <span class="project-name">{{project.name}}</span>
+            <span>
+                <i id="delete" class="fa fa-trash-o action-icon text-danger" aria-hidden="true"></i>
+            </span>
+            <span>
+                <i id="edit" class="fa fa-pencil action-icon" aria-hidden="true"></i>
+            </span>
         </h2>
-        <p class="text-muted">
+        <div class="text-left">
             {{project.description}}
-        </p>
+        </div>
     </div>
 </div>
