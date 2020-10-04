@@ -1,7 +1,9 @@
 import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
 import { DialogModalComponent } from 'src/app/components/modals/dialog-modal/dialog-modal.component';
 import { EditModalComponent } from 'src/app/components/modals/edit-modal/edit-modal.component';
+import { LanguageModalComponent } from 'src/app/components/modals/language-modal/language-modal.component';
 import { UserModalComponent } from 'src/app/components/modals/user-modal/user-modal.component';
+import { Language } from 'src/app/interfaces/language.interface';
 import { Project } from 'src/app/interfaces/project.interface';
 import { TranslationProject } from 'src/app/interfaces/translation.project.interface';
 import { User } from 'src/app/interfaces/user.interface';
@@ -10,6 +12,9 @@ import { User } from 'src/app/interfaces/user.interface';
   providedIn: 'root'
 })
 export class ModalService {
+
+
+  //TODO: Combine all create Functions
 
   private viewContainerRef: ViewContainerRef
 
@@ -55,6 +60,18 @@ export class ModalService {
     const component: ComponentRef<UserModalComponent> = this.viewContainerRef.createComponent(factory);
     component.instance.title = title;
     component.instance.user = user;
+    component.instance.acceptText = acceptText;
+    component.instance.dismissText = dismissText;
+    component.instance.acceptClass = acceptClass;
+
+    return component;
+  }
+
+  public createLanguageModal(language: Language, title: string, acceptText: string, dismissText: string, acceptClass: string): ComponentRef<LanguageModalComponent> {
+    const factory: ComponentFactory<LanguageModalComponent> = this.componentResolver.resolveComponentFactory(LanguageModalComponent);
+    const component: ComponentRef<LanguageModalComponent> = this.viewContainerRef.createComponent(factory);
+    component.instance.title = title;
+    component.instance.language = language;
     component.instance.acceptText = acceptText;
     component.instance.dismissText = dismissText;
     component.instance.acceptClass = acceptClass;

@@ -21,10 +21,8 @@ export class LanguageRoutes {
     }
 
     private initRoutes(): void {
-        this.app.post('/languages', (req: Request, res: Response) => {
-            this.session.verifyAdmin(req.body.token)
-            .then(_ => this.languageController.getLanguages(req, res)) 
-            .catch(err => new InvalidTokenError(res))
+        this.app.get('/languages', (req: Request, res: Response) => {
+            this.languageController.getLanguages(req, res)
         });
 
         this.app.post('/addLanguage', (req: Request, res: Response) => {

@@ -29,7 +29,7 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
   public openAddNewProjectModal(): void {
     const component: ComponentRef<EditModalComponent> = this.modalService.createProjectEditModal("Add new project", {id: 0, name: "", description: ""} ,"Create", "Cancel", "btn btn-success");
     component.instance.execute.subscribe(data => {
-      console.log(data);
+
       if (data[0]) {
         const project: Project = data[1];
         this.projectService.addProject(project.name, project.description).subscribe(res => {
