@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/communication/authentication/authentication.service';
 import { TranslationService } from 'src/app/services/communication/translation/translation.service';
+import { ModalService } from 'src/app/services/others/modal/modal.service';
 import { ToastService } from 'src/app/services/others/toast/toast.service';
 import { StorageService } from '../../services/others/storage/storage.service';
 
@@ -16,7 +17,8 @@ export class SidebarComponent implements OnInit {
     private router: Router, 
     private authenticationService: AuthenticationService, 
     private toastService: ToastService,
-    public translate: TranslationService) { }
+    public translate: TranslationService,
+    private modalService: ModalService) { }
 
   ngOnInit(): void {
     this.storageService.setDesignState();

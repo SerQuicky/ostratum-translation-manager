@@ -1,0 +1,13 @@
+.modal {
+    pointer-events: none !important;
+}
+
+.progress-group {
+    display: block;
+    text-align: center;
+
+    span {
+        display: block;
+        margin-top: 20px;
+    }
+}

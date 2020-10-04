@@ -26,6 +26,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguagePageComponent } from './pages/language-page/language-page/language-page.component';
 import { UserModalComponent } from './components/modals/user-modal/user-modal.component';
 import { LanguageModalComponent } from './components/modals/language-modal/language-modal.component';
+import { LoaderModalComponent } from './components/modals/loader-modal/loader-modal.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { LanguageModalComponent } from './components/modals/language-modal/langu
     LanguagePageComponent,
     UserModalComponent,
     LanguageModalComponent,
+    LoaderModalComponent,
   ],
   imports: [
     BrowserModule,

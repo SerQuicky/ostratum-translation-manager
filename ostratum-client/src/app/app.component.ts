@@ -25,6 +25,7 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.modalService.setContainerRef(this.vc);
+    //this.modalService.showLoader();
     //let component: ComponentRef<DialogModalComponent> = this.modalService.createComponent<DialogModalComponent>(this.componentResolver.resolveComponentFactory(DialogModalComponent));
     //let component: ComponentRef<DialogModalComponent> = this.modalService.createDialogModal("Hey", "Du loser das ist ein Text", "Delete", "Close", "btn btn-danger");
     //component.instance.execute.subscribe(test => console.log(test));
