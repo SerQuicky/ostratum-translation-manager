@@ -35,7 +35,7 @@ export class TranslationProjectsPageComponent implements OnInit, OnDestroy {
     const component: ComponentRef<EditModalComponent> = this.modalService.createProjectEditModal("Add new translation project",
       { id: 0, name: "", description: "", projectId: this.projectId },
       "Create", "Cancel", "btn btn-success", this.projectId);
-      
+
     component.instance.execute.subscribe(data => {
       if (data[0]) {
         const project: TranslationProject = data[1];

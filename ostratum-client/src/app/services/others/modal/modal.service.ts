@@ -82,13 +82,18 @@ export class ModalService {
   }
 
   public showLoader(): void {
-    const factory: ComponentFactory<LoaderModalComponent> = this.componentResolver.resolveComponentFactory(LoaderModalComponent);
-    this.loaderComponent =  this.viewContainerRef.createComponent(factory);
+    if (!this.loaderComponent) {
+      const factory: ComponentFactory<LoaderModalComponent> = this.componentResolver.resolveComponentFactory(LoaderModalComponent);
+      this.loaderComponent = this.viewContainerRef.createComponent(factory);
+    }
   }
 
   public hideLoader(): void {
-    if(this.loaderComponent) {
-      setTimeout(() => this.loaderComponent.destroy(), 500);
+    if (this.loaderComponent) {
+      setTimeout(() => {
+        this.loaderComponent.destroy();
+        this.loaderComponent = null;
+      }, 500);
     }
   }
 }
