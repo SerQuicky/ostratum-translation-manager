@@ -6,6 +6,7 @@ import { LanguageModalComponent } from 'src/app/components/modals/language-modal
 import { ModalService } from 'src/app/services/others/modal/modal.service';
 import { ToastService } from 'src/app/services/others/toast/toast.service';
 import { DialogModalComponent } from 'src/app/components/modals/dialog-modal/dialog-modal.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-language-page',
@@ -16,7 +17,11 @@ export class LanguagePageComponent implements OnInit {
 
   public languages: Language[] = [];
 
-  constructor(private storageService: StorageService, private languageService: LanguageService, private modalService: ModalService, private toastService: ToastService) { }
+  constructor(private storageService: StorageService,
+    private languageService: LanguageService,
+    private modalService: ModalService,
+    private toastService: ToastService,
+    public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.storageService.initSidebar(4);
@@ -25,14 +30,17 @@ export class LanguagePageComponent implements OnInit {
 
   public openAddNewLanguageModal(): void {
     const component: ComponentRef<LanguageModalComponent> = this.modalService.createLanguageModal(
-      { id: 0, name: "", acronym: "" }, "Add new language",
-      "Create", "Cancel", "btn btn-success");
+      { id: 0, name: "", acronym: "" },
+      this.translate.instant("LANGUAGE.ADD"),
+      this.translate.instant("MODAL.CREATE"),
+      this.translate.instant("MODAL.CANCEL"),
+      "btn btn-success");
 
     component.instance.execute.subscribe(data => {
       if (data[0]) {
         const language: Language = data[1];
         this.languageService.addLanguage(language.name, language.acronym).subscribe(res => {
-          this.toastService.determineToast(res);
+          this.toastService.determineToast(res, "TOAST.LANGUAGE_CREATED");
           this.loadLanguages();
         });
       }
@@ -42,14 +50,17 @@ export class LanguagePageComponent implements OnInit {
 
   public openEditLanguageModal(language: Language): void {
     const component: ComponentRef<LanguageModalComponent> = this.modalService.createLanguageModal(
-      language, "Update language",
-      "Save", "Cancel", "btn btn-success");
+      language, 
+      this.translate.instant("LANGUAGE.UPDATE", {name: language.name}),
+      this.translate.instant("MODAL.SAVE"),
+      this.translate.instant("MODAL.CANCEL"),
+      "btn btn-success");
 
     component.instance.execute.subscribe(data => {
       if (data[0]) {
         const language: Language = data[1];
         this.languageService.updateLanguage(language).subscribe(res => {
-          this.toastService.determineToast(res);
+          this.toastService.determineToast(res, "TOAST.LANGUAGE_DELETED");
           this.loadLanguages();
         });
       }
@@ -59,15 +70,16 @@ export class LanguagePageComponent implements OnInit {
 
   public openDeleteLanguageModal(language: Language): void {
     let component: ComponentRef<DialogModalComponent> = this.modalService.createDialogModal(
-      "Delete the language " + language.name,
-      "Are you sure, that you want to delete " + language.name + " this process can not be reverted!",
-      "Delete", "Cancel",
+      this.translate.instant("LANGUAGE.DELETE", {name: language.name}),
+      this.translate.instant("LANGUAGE.DELETE_DESCRIPTION", {name: language.name}),
+      this.translate.instant("MODAL.DELETE"),
+      this.translate.instant("MODAL.CANCEL"),
       "btn btn-danger");
 
     component.instance.execute.subscribe(success => {
       if (success) {
         this.languageService.deleteLanguage(language.id).subscribe(response => {
-          this.toastService.determineToast(response, "SUCCESSFULLY DELETED Language");
+          this.toastService.determineToast(response, "TOAST.LANGUAGE_UPDATED");
           this.loadLanguages();
         });
       }

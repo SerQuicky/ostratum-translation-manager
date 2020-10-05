@@ -3,24 +3,29 @@
   <div class="translations-overview">
     <div class="translation-container" *ngIf="keys.length != 0">
       <div class="static-content">
-        <h5 class="sidebar-title">Translation-Keys</h5>
+        <h5 class="sidebar-title">{{'TRANSLATION.TITLE' | translate}}</h5>
         <div class="sidebar-divider"></div>
         <div class="sidebar-content">
           <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchbarValue" #search>
           <div class="mt-10 font-size-12">
-            Press <kbd>^</kbd> to focus and <kbd>&#8593;/&#8595;</kbd> to move up and down
+            {{'TRANSLATION.MANUAL_P1' | translate}}
+            <kbd>^</kbd>
+            {{'TRANSLATION.MANUAL_P2' | translate}}
+            <kbd>&#8593;/&#8595;</kbd>
+            {{'TRANSLATION.MANUAL_P3' | translate}}
           </div>
           <div class="mt-10 font-size-12">
             <div class="custom-checkbox">
               <input type="checkbox" id="checkbox-1" [(ngModel)]="showMissingTranslations">
-              <label for="checkbox-1">Show only keys that are missing translations</label>
+              <label for="checkbox-1"> {{'TRANSLATION.FILTER' | translate}}</label>
             </div>
           </div>
         </div>
       </div>
       <div class="translation-content">
         <div *ngFor="let key of keys | translationPipe:searchbarValue:showMissingTranslations;">
-          <app-key [key]="key" [searchbarValue]="searchbarValue" [showMissingTranslations]="showMissingTranslations" [chosenKeyId]="chosenKeyId"></app-key>
+          <app-key [key]="key" [searchbarValue]="searchbarValue" [showMissingTranslations]="showMissingTranslations"
+            [chosenKeyId]="chosenKeyId"></app-key>
         </div>
       </div>
     </div>
@@ -32,9 +37,9 @@
         <div class="card p-0">
           <div class="px-card py-10 border-bottom">
             <div class="translation-header">
-              <img [src]="resolveCountryFlagSVG(value.language.acronym)" />
+              <img [src]="resolveCountryFlagSVG(value.language.acronym)" alt="{{value.language.name}}" />
               <h2 class="card-title font-size-18 m-0">
-                {{value.language.name}} - {{chosenKey.name}}
+                {{value.language.name}}
               </h2>
             </div>
           </div>
@@ -46,7 +51,7 @@
                     <i class="fa fa-comments-o" aria-hidden="true"></i>
                   </span>
                 </div>
-                <input type="email" class="form-control" placeholder="Your email" required="required" name="test"
+                <input type="email" class="form-control" [placeholder]="chosenKey.name" required="required" name="test"
                   [(ngModel)]="value.value">
               </div>
             </form>
@@ -55,7 +60,7 @@
       </div>
     </div>
     <div class="save-btn-container">
-      <button class="btn btn-primary" (click)="test()" *ngIf="chosenKey != null">Save translation(s)</button>
+      <button class="btn btn-primary" (click)="test()" *ngIf="chosenKey != null">{{'TRANSLATION.SAVE' | translate}}</button>
     </div>
   </div>
 </div>

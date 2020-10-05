@@ -42,7 +42,6 @@ export class KeyComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    // changes.prop contains the old and the new value...
     this.updateSubscription.unsubscribe();
   }
 

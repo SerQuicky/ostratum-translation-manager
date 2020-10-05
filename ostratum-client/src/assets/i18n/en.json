@@ -1,5 +1,112 @@
 {
+    "GENERAL": {
+        "SUCCESS_TOAST": "Operation was successful",
+        "ERROR_TOAST": "Operation failed",
+        "SUCCESS_SIGN_IN": "You have successfully signed in",
+        "SIGN_OUT_SUCCESS": "You were succesfully signed out",
+        "FIND_SUCCESS": "Date were found",
+        "CODE_PASSWORD_CHANGED": "The password was successfully changed",
+        "CODE_WRONG_OLD_PASSWORD": "The password could not be changed, please check your information.",
+        "CODE_WRITE_SUCCESS": "Operation was successful",
+        "CODE_ERROR_WRITE_ENTITIY": "Die Operation did not execute",
+        "CODE_ERROR_WRITE_ARGUMENT": "The resolved arguments were wrong"
+    },
     "SIDEBAR": {
-        "PROJECTS": "Projects"
+        "LOGOUT": "Logout",
+        "PROJECTS": "Projects",
+        "VIEWS": "Views",
+        "SYSTEM": "System",
+        "ACCOUNT": "Account",
+        "SETTINGS": "Settings",
+        "ADMIN": "Admin",
+        "USERS": "Users",
+        "LANGUAGES": "Languages"
+    },
+    "MODAL": {
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
+        "LANGUAGE": "Language",
+        "ACRONYM": "Acronym",
+        "WAIT_SERVER": "Wait for the server...",
+        "USERNAME": "Username",
+        "PASSWORD": "Password",
+        "SAVE": "Save",
+        "CREATE": "Create",
+        "DELETE": "Delete",
+        "CANCEL": "Cancel"
+    },
+    "TOAST": {
+        "PROJECT_DELETED": "The project was successfully deleted.",
+        "PROJECT_UPDATED": "The project was successfully updated.",
+        "PROJECT_CREATED": "The project was successfully created.",
+        "LANGUAGE_DELETED": "The language was successfully deleted.",
+        "LANGUAGE_UPDATED": "The language was successfully updated.",
+        "LANGUAGE_CREATED": "The language was successfully created.",
+        "USER_DELETED": "The user was deleted.",
+        "USER_UPDATED": "The user was updated.",
+        "USER_CREATED": "The user was created."
+    },
+    "PROJECT": {
+        "DELETE": "Delete {{name}}",
+        "DELETE_DESCRIPTION": "Are you sure, that you want to delete {{name}} this process can not be reverted!",
+        "EDIT": "Edit project",
+        "PROJECTS": "Projects",
+        "TRANSLATION_PROJECTS": "Translation projects",
+        "ADD": "Add a new project",
+        "ADD_TR": "Add a new translation project"
+    },
+    "ACCOUNT": {
+        "TITLE": "Account settings",
+        "UPDATE": "Update your Account",
+        "UPDATE_BUTTON": "Update account",
+        "USERNAME": "Username",
+        "OLD_PASSWORD": "Old password",
+        "NEW_PASSWORD": "New password"
+    },
+    "LANGUAGE": {
+        "LIST": "List of languages",
+        "INDEX": "Index",
+        "NAME": "Name",
+        "ACRONYM": "Acronym",
+        "ACTIONS": "Actions",
+        "ADD": "Add a new language",
+        "UPDATE": "Update the language {{name}}",
+        "DELETE": "Delete the language {{name}}",
+        "DELETE_DESCRIPTION": "Are you sure, that you want to delete the language, the process can not be reverted!"
+    },
+    "LOGIN": {
+        "DESCRIPTION": "You can change your password after the authentication, in case you forgot your password please contact an administrator.",
+        "USERNAME": "Your Username",
+        "PASSWORD": "Your Password",
+        "SIGNIN": "Sign in"
+    },
+    "SETTINGS": {
+        "TITLE_LANGUAGE": "Language settings",
+        "TITLE_LANGUAGE_DESCRIPTION": "Set that language that should be used.",
+        "ENGLISH": "English",
+        "GERMAN": "German",
+        "TITLE_DESIGN": "Design settings",
+        "TITLE_DESIGN_DESCRIPTION": "Switch the design mode of the application, the design choice will be saved.",
+        "LIGHT_MODE": "Light mode",
+        "DARK_MODE": "Dark mode"
+    },
+    "TRANSLATION": {
+        "TITLE": "Translation keys",
+        "MANUAL_P1": "Press",
+        "MANUAL_P2": "to focus the searchbar and the keys ",
+        "MANUAL_P3": " to switch between the translation keys",
+        "FILTER": "Show only keys that have missing translations",
+        "SAVE": "Save translations"
+    },
+    "USER": {
+        "LIST": "List of registered users",
+        "INDEX": "Index",
+        "USERNAME": "Username",
+        "PASSWORD": "Password",
+        "ACTIONS": "Actions",
+        "ADD": "Add a new user",
+        "DELETE": "Delete the user {{name}}",
+        "DELETE_DESCRIPTION": "Are you sure, that you want to delete the user {{name}}, the process can not be reverted!",
+        "UPDATE": "Update the user {{name}}"
     }
 }

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Language } from 'src/app/interfaces/language.interface';
 
 @Component({
@@ -16,7 +17,8 @@ export class LanguageModalComponent implements OnInit {
   @Input() acceptClass: string;
 
   public iLanguage: Language;
-  constructor() { }
+
+  constructor(public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.iLanguage = {

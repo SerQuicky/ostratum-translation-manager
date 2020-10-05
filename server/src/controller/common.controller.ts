@@ -10,7 +10,7 @@ export class CommonController {
     public findSuccess(res: Response): (result: Promise<ServerResponse<any>>) => void {
         return (result: any) => {
             res.status(200);
-            res.json({code: 200, message: "FIND_SUCCESS", value: result});
+            res.json({code: 200, message: "GENERAL.FIND_SUCCESS", value: result});
         }
     }
 
@@ -37,7 +37,7 @@ export class CommonController {
                 }
 
                 res.status(200);
-                res.json({ code: 200, message: "SUCCESS_SIGN_IN", value: [data.token, data.admin] });
+                res.json({ code: 200, message: "GENERAL.SUCCESS_SIGN_IN", value: [data.token, data.admin] });
             });
         }
     }
@@ -49,8 +49,8 @@ export class CommonController {
                     reject(err)
                 }
                 result ?
-                    resolve({ code: 200, message: "CODE_PASSWORD_CHANGED", result: [] })
-                    : reject({ code: 500, message: "CODE_WRONG_OLD_PASSWORD", result: [] });
+                    resolve({ code: 200, message: "GENERAL.CODE_PASSWORD_CHANGED", result: [] })
+                    : reject({ code: 500, message: "GENERAL.CODE_WRONG_OLD_PASSWORD", result: [] });
             });
         });
     }

@@ -8,6 +8,7 @@ import { TranspilerService } from 'src/app/services/others/transpiler/transpiler
 import { StorageService } from 'src/app/services/others/storage/storage.service';
 import { Subscription } from 'rxjs';
 import { Key } from 'src/app/interfaces/key.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-translations-page',
@@ -31,7 +32,8 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
   constructor(private translationService: TranslationService,
     private route: ActivatedRoute,
     private transpilerService: TranspilerService,
-    public storageService: StorageService) { }
+    public storageService: StorageService,
+    public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.translationProjectId = parseInt(this.route.snapshot.paramMap.get('tprojectId'));

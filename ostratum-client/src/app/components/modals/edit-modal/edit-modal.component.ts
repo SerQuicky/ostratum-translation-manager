@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/interfaces/project.interface';
 import { TranslationProject } from 'src/app/interfaces/translation.project.interface';
 
@@ -20,7 +21,7 @@ export class EditModalComponent implements OnInit {
   // prevents that the real projects reference will be used
   public iProject: Project | TranslationProject;
 
-  constructor() { }
+  constructor(public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.iProject = {id: this.project.id, 

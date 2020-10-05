@@ -1,5 +1,6 @@
 import { Component, ComponentRef, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { TranslationProject } from 'src/app/interfaces/translation.project.interface';
 import { ProjectService } from 'src/app/services/communication/project/project.service';
 import { ModalService } from 'src/app/services/others/modal/modal.service';
@@ -21,7 +22,8 @@ export class TranslationProjectComponent implements OnInit {
     private storageService: StorageService,
     private modalService: ModalService,
     private toastService: ToastService,
-    private projectService: ProjectService) { }
+    private projectService: ProjectService,
+    public translate: TranslateService) { }
 
   ngOnInit(): void {}
 
@@ -45,15 +47,16 @@ export class TranslationProjectComponent implements OnInit {
 
   private openDeleteModal(): void {
     let component: ComponentRef<DialogModalComponent> = this.modalService.createDialogModal(
-      "Delete " + this.project.name,
-      "Are you sure, that you want to delete " + this.project.name + " this process can not be reverted!",
-      "Delete", "Cancel",
+      this.translate.instant("PROJECT.DELETE", { name: this.project.name }),
+      this.translate.instant("PROJECT.DELETE_DESCRIPTION", { name: this.project.name }),
+      this.translate.instant("MODAL.DELETE"),
+      this.translate.instant("MODAL.CANCEL"),
       "btn btn-danger");
 
     component.instance.execute.subscribe(success => {
       if (success) {
         this.projectService.deleteTranslateProject(this.project.id).subscribe(response => {
-          this.toastService.determineToast(response, "SUCCESSFULLY DELETED PROJECT");
+          this.toastService.determineToast(response, "TOAST.PROJECT_DELETED");
           this.storageService.updateProjectsSubject.next();
         });
       }
@@ -62,16 +65,17 @@ export class TranslationProjectComponent implements OnInit {
 
   private openEditModal(): void {
     let component: ComponentRef<EditModalComponent> = this.modalService.createProjectEditModal(
-      "Edit project",
+      this.translate.instant("PROJECT.EDIT"),
       this.project,
-      "Save", "Cancel",
+      this.translate.instant("MODAL.SAVE"),
+      this.translate.instant("MODAL.CANCEL"),
       "btn btn-primary"
     );
 
     component.instance.execute.subscribe(data => {
       if (data[0]) {
         this.projectService.updateTranslationProject(data[1]).subscribe(response => {
-          this.toastService.determineToast(response, "SUCCESSFULLY UPDATED PROJECT");
+          this.toastService.determineToast(response, "TOAST.PROJECT_UPDATED");
           this.storageService.updateProjectsSubject.next();
         });
       }

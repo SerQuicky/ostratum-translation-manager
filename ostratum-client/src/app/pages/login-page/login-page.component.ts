@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslationService } from 'src/app/services/communication/translation/translation.service';
 import { StorageService } from 'src/app/services/others/storage/storage.service';
-import { AuthenticationService } from '../../services/communication/authentication/authentication.service';
+import { AuthenticationService } from '../../services/communication/authentication/authentication.service';
 
 @Component({
   selector: 'app-login-page',
@@ -14,7 +15,10 @@ export class LoginPageComponent implements OnInit {
   public username: string = "";
   public password: string = "";
 
-  constructor(private authService: AuthenticationService, public storageService: StorageService, private router: Router) { }
+  constructor(private authService: AuthenticationService, 
+    public storageService: StorageService, 
+    private router: Router,
+    public translate: TranslationService) { }
 
   ngOnInit(): void {
     this.storageService.setDesignState();

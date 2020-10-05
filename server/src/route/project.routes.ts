@@ -2,19 +2,16 @@ import { Request, Response, Application } from 'express';
 import { ProjectController } from '../controller/project.controller';
 import { Session } from '../main/session';
 import { InvalidTokenError } from './authentication.error';
-import { CommonRoutes } from './common.routes';
 
 export class ProjectRoutes {
 
     private app: Application;
     private projectController: ProjectController;
     private session: Session;
-    private commonRoutes: CommonRoutes;
 
     constructor(app: Application, session: Session) {
         this.app = app;
         this.session = session;
-        this.commonRoutes = new CommonRoutes();
         this.projectController = new ProjectController();
         this.initRoutes();
     }

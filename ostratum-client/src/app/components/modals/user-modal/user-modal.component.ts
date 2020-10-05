@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { User } from 'src/app/interfaces/user.interface';
 
 @Component({
@@ -18,7 +19,7 @@ export class UserModalComponent implements OnInit {
   // prevents that the real projects reference will be used
   public iUser: User;
 
-  constructor() { }
+  constructor(public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.iUser = {

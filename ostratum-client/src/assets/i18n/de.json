@@ -1,5 +1,112 @@
 {
+    "GENERAL": {
+        "SUCCESS_TOAST": "Operation war erfolgreich",
+        "ERROR_TOAST": "Operation fehlgeschlagen",
+        "SUCCESS_SIGN_IN": "Sie haben sich erfolgreich angemeldet",
+        "SIGN_OUT_SUCCESS": "YSie wurden erfolgreich abgemeldet",
+        "FIND_SUCCESS": "Daten wurden gefunden",
+        "CODE_PASSWORD_CHANGED": "Das Passwort wurde erfolgreich verändert",
+        "CODE_WRONG_OLD_PASSWORD": "Das Passwort konnte nicht verändert werden, überprüfen sie, ob ihre Angaben richtig waren.",
+        "CODE_WRITE_SUCCESS": "Operation war erfolgreich",
+        "CODE_ERROR_WRITE_ENTITIY": "Die Operation konnte nicht durchgeführt werden",
+        "CODE_ERROR_WRITE_ARGUMENT": "Die übergebenen Argumente sind fehlerhaft"
+    },
     "SIDEBAR": {
-        "PROJECTS": "Projekte"
+        "LOGOUT": "Abmelden",
+        "PROJECTS": "Projekte",
+        "VIEWS": "Ansichten",
+        "SYSTEM": "System",
+        "ACCOUNT": "Account",
+        "SETTINGS": "Einstellungen",
+        "ADMIN": "Admin",
+        "USERS": "Nutzer",
+        "LANGUAGES": "Sprachen"
+    },
+    "MODAL": {
+        "TITLE": "Titel",
+        "DESCRIPTION": "Beschreibung",
+        "LANGUAGE": "Sprache",
+        "ACRONYM": "Akronym",
+        "WAIT_SERVER": "Warte auf den Server...",
+        "USERNAME": "Benutzername",
+        "PASSWORD": "Passwort",
+        "SAVE": "Speichern",
+        "CREATE": "Erstellen",
+        "DELETE": "Löschen",
+        "CANCEL": "Abbrechen"
+    },
+    "TOAST": {
+        "PROJECT_DELETED": "Das Projekt wurde erfolgreich gelöscht.",
+        "PROJECT_UPDATED": "Das Projekt wurde erfolgreich aktualisiert.",
+        "PROJECT_CREATED": "Das Projekt wurde erfolgreich erstellt.",
+        "LANGUAGE_DELETED": "Die Sprache wurde erfolgreich gelöscht.",
+        "LANGUAGE_UPDATED": "Die Sprache wurde erfolgreich aktualisiert.",
+        "LANGUAGE_CREATED": "Das Sprache wurde erfolgreich erstellt.",
+        "USER_DELETED": "Der Anwender wurde erfolgreich gelöscht.",
+        "USER_UPDATED": "Der Anwender wurde erfolgreich aktualisiert.",
+        "USER_CREATED": "Der Anwender wurde erfolgreich erstellt."
+    },
+    "PROJECT": {
+        "DELETE": "Lösche {{name}}",
+        "DELETE_DESCRIPTION": "Sind sie sicher, dass sie {{name}} löschen wollen, der Prozess kann nicht rückgängig gemacht werden!",
+        "EDIT": "Projekt bearbeiten",
+        "PROJECTS": "Projekte",
+        "TRANSLATION_PROJECTS": "Übersetzungs-Projekte",
+        "ADD": "Füge ein neues Projekt hinzu",
+        "ADD_TR": "Füge ein neues Übersetzungs-Projekt hinzu"
+    },
+    "ACCOUNT": {
+        "TITLE": "Account Einstellungen",
+        "UPDATE": "Aktualisiere deinen Account",
+        "UPDATE_BUTTON": "Aktualisiere den Account",
+        "USERNAME": "Benutzername",
+        "OLD_PASSWORD": "Altes Passwort",
+        "NEW_PASSWORD": "Neues Passwort"
+    },
+    "LANGUAGE": {
+        "LIST": "Liste an Sprachen",
+        "INDEX": "Index",
+        "NAME": "Name",
+        "ACRONYM": "Akronym",
+        "ACTIONS": "Aktionen",
+        "ADD": "Füge eine neue Sprache hinzu",
+        "UPDATE": "Aktualisiere die Sprache {{name}}",
+        "DELETE": "Lösche die Sprache {{name}}",
+        "DELETE_DESCRIPTION": "Sind sie sich sicher, dass sie die Sprache {{name}} löschen wollen, der Vorgang kann nicht rückgangig gemacht werden!"
+    },
+    "LOGIN": {
+        "DESCRIPTION": "Sie können das Passwort nach dem Login ändern, sollten sie ihr Passwort vergessen haben, kontaktieren sie bitte einen Administrator.",
+        "USERNAME": "Ihr Nutzername",
+        "PASSWORD": "Ihr Passwort",
+        "SIGNIN": "Anmelden"
+    },
+    "SETTINGS": {
+        "TITLE_LANGUAGE": "Spracheinstellungen",
+        "TITLE_LANGUAGE_DESCRIPTION": "Stellen sie die Sprache ein, welche verwendet werden soll.",
+        "ENGLISH": "Englisch",
+        "GERMAN": "Deutsch",
+        "TITLE_DESIGN": "Designeinstellungen",
+        "TITLE_DESIGN_DESCRIPTION": "Stellen sie den Design-Modus der Anwendung ein, die Designeinstellung wird im System hinterlegt.",
+        "LIGHT_MODE": "Heller Modus",
+        "DARK_MODE": "Dunkler Modus"
+    },
+    "TRANSLATION": {
+        "TITLE": "Übersetzungs-Sclüssel",
+        "MANUAL_P1": "Drücken sie",
+        "MANUAL_P2": ", um die Suche zu fokusieren und",
+        "MANUAL_P3": " um zwischen den Schlüsseln zu wechseln",
+        "FILTER": "Zeige nur Schlüssel bei denen noch Übersetzungen fehlen",
+        "SAVE": "Speichere Übersetzungen"
+    },
+    "USER": {
+        "LIST": "Liste an eingerichteten Nutzern",
+        "INDEX": "Index",
+        "USERNAME": "Benutzername",
+        "PASSWORD": "Passwort",
+        "ACTIONS": "Aktionen",
+        "ADD": "Füge einen neuen Anwender hinzu",
+        "DELETE": "Lösche den Anwender {{name}}",
+        "DELETE_DESCRIPTION": "Sind sie sich sicher, dass sie den Anwender {{name}} löschen wollen, der Vorgang kann nicht rückgangig gemacht werden!",
+        "UPDATE": "Aktualisiere den Anwender {{name}}"
     }
 }

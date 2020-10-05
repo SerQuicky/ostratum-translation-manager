@@ -44,7 +44,7 @@ export class UserRoutes {
 
         this.app.post('/logout', async (req: Request, res: Response) => {
             await this.session.remove(req.headers['authorization']);
-            res.json({ code: 200, message: "SIGN_OUT_SUCCESS", value: [] });
+            res.json({ code: 200, message: "GENERAL.SIGN_OUT_SUCCESS", value: [] });
             res.status(200);
         });
     }

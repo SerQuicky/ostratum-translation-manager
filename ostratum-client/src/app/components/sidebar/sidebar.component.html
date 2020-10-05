@@ -7,7 +7,7 @@
 
         <!-- Navbar form (inline form) -->
         <form class="form-inline d-none d-md-flex ml-auto">
-            <a class="sidebar-link" (click)="logout()">Logout</a>
+            <a class="sidebar-link" (click)="logout()">{{'SIDEBAR.LOGOUT' | translate}}</a>
         </form>
         <!-- Navbar content (with the dropdown menu) -->
     </nav>
@@ -16,29 +16,29 @@
         <div class="sidebar-menu ostratum-sidebar">
             <div class="view-container">
                 <div class="projects-container">
-                    <h5 class="sidebar-title">Views</h5>
+                    <h5 class="sidebar-title">{{'SIDEBAR.VIEWS' | translate}}</h5>
                     <div class="sidebar-divider"></div>
                     <span [ngClass]="{'active': storageService.sidebarStates[0]}" class="sidebar-link" (click)="navigateThroughSidebar('projects', 0)" >{{'SIDEBAR.PROJECTS' | translate}}</span>
                 </div>
 
                 <div class="projects-container">
-                    <h5 class="sidebar-title">System</h5>
+                    <h5 class="sidebar-title">{{'SIDEBAR.SYSTEM' | translate}}</h5>
                     <div class="sidebar-divider"></div>
-                    <span [ngClass]="{'active': storageService.sidebarStates[1]}" class="sidebar-link" (click)="navigateThroughSidebar('account', 1)">Account</span>
-                    <span [ngClass]="{'active': storageService.sidebarStates[2]}" class="sidebar-link" (click)="navigateThroughSidebar('settings', 2)">Settings</span>
+                    <span [ngClass]="{'active': storageService.sidebarStates[1]}" class="sidebar-link" (click)="navigateThroughSidebar('account', 1)">{{'SIDEBAR.ACCOUNT' | translate}}</span>
+                    <span [ngClass]="{'active': storageService.sidebarStates[2]}" class="sidebar-link" (click)="navigateThroughSidebar('settings', 2)">{{'SIDEBAR.SETTINGS' | translate}}</span>
                 </div>
 
                 <div class="projects-container" *ngIf="storageService.adminState">
-                    <h5 class="sidebar-title">Admin</h5>
+                    <h5 class="sidebar-title">{{'SIDEBAR.ADMIN' | translate}}</h5>
                     <div class="sidebar-divider"></div>
-                    <span [ngClass]="{'active': storageService.sidebarStates[3]}" class="sidebar-link" (click)="navigateThroughSidebar('users', 3)">Users</span>
-                    <span [ngClass]="{'active': storageService.sidebarStates[4]}" class="sidebar-link" (click)="navigateThroughSidebar('languages', 4)">Languages</span>
+                    <span [ngClass]="{'active': storageService.sidebarStates[3]}" class="sidebar-link" (click)="navigateThroughSidebar('users', 3)">{{'SIDEBAR.USERS' | translate}}</span>
+                    <span [ngClass]="{'active': storageService.sidebarStates[4]}" class="sidebar-link" (click)="navigateThroughSidebar('languages', 4)">{{'SIDEBAR.LANGUAGES' | translate}}</span>
                 </div>
 
                 <div *ngIf="!storageService.adminState"></div>
 
                 <div>
-                    <span class="sidebar-link">Ostratum Beta-0.0.2</span>
+                    <span class="sidebar-link">Ostratum Beta-0.0.3</span>
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import { Component, ComponentRef, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { DialogModalComponent } from 'src/app/components/modals/dialog-modal/dialog-modal.component';
 import { UserModalComponent } from 'src/app/components/modals/user-modal/user-modal.component';
 import { AuthenticationService } from 'src/app/services/communication/authentication/authentication.service';
@@ -16,7 +17,11 @@ export class UsersPageComponent implements OnInit {
 
   public users: User[] = []
 
-  constructor(public storageService: StorageService, private authenticationService: AuthenticationService, private modalService: ModalService, private toastService: ToastService) { }
+  constructor(public storageService: StorageService,
+    private authenticationService: AuthenticationService,
+    private modalService: ModalService,
+    private toastService: ToastService,
+    public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.storageService.initSidebar(3);
@@ -31,14 +36,17 @@ export class UsersPageComponent implements OnInit {
 
   public openRegisterModal(): void {
     const component: ComponentRef<UserModalComponent> = this.modalService.createUserModal(
-      { id: 0, username: "", password: "" }, "Add new user",
-      "Create", "Cancel", "btn btn-success");
+      { id: 0, username: "", password: "" },
+      this.translate.instant("USER.ADD"),
+      this.translate.instant("MODAL.CREATE"),
+      this.translate.instant("USER.CANCEL"),
+      "btn btn-success");
 
     component.instance.execute.subscribe(data => {
       if (data[0]) {
         const user: User = data[1];
         this.authenticationService.register(user.username, user.password).subscribe(res => {
-          this.toastService.determineToast(res);
+          this.toastService.determineToast(res, "TOAST.USER_CREATED");
           this.loadUsers();
         });
       }
@@ -48,15 +56,16 @@ export class UsersPageComponent implements OnInit {
 
   public openDeleteUserModal(user: User): void {
     let component: ComponentRef<DialogModalComponent> = this.modalService.createDialogModal(
-      "Delete the user" + user.username,
-      "Are you sure, that you want to delete " + user.username + " this process can not be reverted!",
-      "Delete", "Cancel",
+      this.translate.instant("USER.DELETE", { name: user.username }),
+      this.translate.instant("USER.DELETE_DESCRIPTION", { name: user.username }),
+      this.translate.instant("MODAL.DELETE"),
+      this.translate.instant("MODAL.CANCEL"),
       "btn btn-danger");
 
     component.instance.execute.subscribe(success => {
       if (success) {
         this.authenticationService.deleteUser(user.id).subscribe(response => {
-          this.toastService.determineToast(response, "SUCCESSFULLY DELETED User");
+          this.toastService.determineToast(response, "TOAST.USER_DELETED");
           this.loadUsers();
         });
       }
@@ -65,14 +74,17 @@ export class UsersPageComponent implements OnInit {
 
   public openUpdateUserModal(user: User): void {
     const component: ComponentRef<UserModalComponent> = this.modalService.createUserModal(
-      user, "Update the user " + user.username,
-      "Save", "Cancel", "btn btn-success");
+      user,
+      this.translate.instant("USER.UPDATE", { name: user.username }),
+      this.translate.instant("MODAL.SAVE"),
+      this.translate.instant("MODAL.CANCEL"),
+      "btn btn-success");
 
     component.instance.execute.subscribe(data => {
       if (data[0]) {
         const user: User = data[1];
         this.authenticationService.updateUser(user).subscribe(res => {
-          this.toastService.determineToast(res);
+          this.toastService.determineToast(res, "TOAST.USER_UPDATED");
           this.loadUsers();
         });
       }

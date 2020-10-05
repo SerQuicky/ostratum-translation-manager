@@ -1,4 +1,5 @@
 import { Component, ComponentRef, OnDestroy, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { EditModalComponent } from 'src/app/components/modals/edit-modal/edit-modal.component';
 import { Project } from 'src/app/interfaces/project.interface';
@@ -18,7 +19,11 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
   public projects: Project[] = [];
   public projectSubscription: Subscription;
 
-  constructor(private projectService: ProjectService, private storageService: StorageService, private modalService: ModalService, private toastService: ToastService) {}
+  constructor(private projectService: ProjectService, 
+    private storageService: StorageService, 
+    private modalService: ModalService, 
+    private toastService: ToastService,
+    public translate: TranslateService) {}
 
   ngOnInit(): void {
     this.storageService.setSidebarStatus(0);
@@ -27,13 +32,19 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
   }
 
   public openAddNewProjectModal(): void {
-    const component: ComponentRef<EditModalComponent> = this.modalService.createProjectEditModal("Add new project", {id: 0, name: "", description: ""} ,"Create", "Cancel", "btn btn-success");
+    const component: ComponentRef<EditModalComponent> = this.modalService.createProjectEditModal(
+    this.translate.instant("PROJECT.ADD"), 
+    {id: 0, name: "", description: ""},
+    this.translate.instant("MODAL.CREATE"), 
+    this.translate.instant("MODAL.CANCEL"), 
+    "btn btn-success");
+
     component.instance.execute.subscribe(data => {
 
       if (data[0]) {
         const project: Project = data[1];
         this.projectService.addProject(project.name, project.description).subscribe(res => {
-          this.toastService.determineToast(res);
+          this.toastService.determineToast(res, "TOAST.PROJECT_CREATED");
           this.loadProjects();
         });
       }
