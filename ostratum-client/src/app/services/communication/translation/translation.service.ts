@@ -21,8 +21,8 @@ export class TranslationService {
     return this.common.postRequest<any>("addTranslation", { fileName: file.name, file: file.file, type: file.type, languageId: languageId, projectId: projectId });
   }
 
-  public updateTranslation(): Observable<ServerResponse<any>> {
-    return null;
+  public updateTranslation(values: [number, string][]): Observable<ServerResponse<any>> {
+    return this.common.postRequest<any>("updateTranslation", { values: values });
   }
 
   public deleteTranslation(translationId: number): Observable<ServerResponse<any>> {

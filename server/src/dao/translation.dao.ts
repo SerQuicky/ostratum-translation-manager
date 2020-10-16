@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import { Translation } from '../model/translation.interface';
 import { TranslationProject } from '../model/translationProject.interface';
 import { CommonDao } from './common.dao';
@@ -11,7 +12,7 @@ export class TranslationDao {
     }
 
     public getTranslations(projectId: number): Promise<any> {
-        return this.commonDao.read("SELECT translations.id as tID, languages.id as lID, * FROM translations JOIN languages ON translations.languageID = languages.id WHERE projectID = $projectId;", {$projectId: projectId}).then(rows => {
+        return this.commonDao.read("SELECT translations.id as tID, languages.id as lID, * FROM translations JOIN languages ON translations.languageID = languages.id WHERE projectID = $projectId;", { $projectId: projectId }).then(rows => {
             let translations: Translation[] = [];
 
             for (const translation of rows) {
@@ -22,7 +23,7 @@ export class TranslationDao {
                         file: translation.file,
                         type: translation.type,
                         date: translation.date,
-                        language: {id: translation.lID, name: translation.name, acronym: translation.acronym},
+                        language: { id: translation.lID, name: translation.name, acronym: translation.acronym },
                         project: translation.projectID,
                     });
             }
@@ -36,13 +37,23 @@ export class TranslationDao {
         return this.commonDao.write(sqlRequest, [fileName, file, type, date, languageId, projectId]);
     }
 
-    public updateTranslation(id: number, fileName: string, file: string, type: string, date: number): Promise<any> {
-        let sqlRequest = "UPDATE translations SET fileName = $fileName, file = $file, type = $type, date = $date WHERE id = $id";
-        return this.commonDao.write(sqlRequest, { $id: id, $fileName: fileName, $file: file, $type: type, $date: date });
+    public updateTranslations(values: [number, string][]): Promise<any> {
+        return new Promise(async (resolve) => {
+            for(let i = 0; i < values.length; i++) {
+                await this.updateTranslation(values[i][0], values[i][1])
+            }
+            resolve({code: 200, message: "GENERAL.CODE_WRITE_SUCCESS", result: []});
+        });
     }
 
+    private updateTranslation(id: number, file: string) {
+        let sqlRequest = "UPDATE translations SET file = $file WHERE id = $id";
+        return this.commonDao.write(sqlRequest, { $id: id, $file: file });
+    }
+
+
+
     public deleteTranslation(id: number): Promise<any> {
-        console.log(id);
         let sqlRequest = "DELETE FROM translations WHERE id = $id";
         return this.commonDao.write(sqlRequest, { $id: id });
     }

@@ -130,14 +130,14 @@ export class TranspilerService {
     return result;
   }
 
-  public keysToJSON(keys: Key[], acronym: string): any {
+  public keysToJSON(keys: Key[], id: number): any {
     let json = {};
 
     keys.forEach(key => {
       if(key.holder) {
-        json[key.name] = this.keysToJSON(key.keys, acronym);
+        json[key.name] = this.keysToJSON(key.keys, id);
       } else {
-        json[key.name] = key.values.find(value => value.language.acronym == acronym).value;
+        json[key.name] = key.values.find(value => value.language.id == id).value;
       }
     });
 

@@ -17,6 +17,9 @@ import { Language } from 'src/app/interfaces/language.interface';
 import { File } from 'src/app/interfaces/file.interface';
 import { SelectModalComponent } from 'src/app/components/modals/select-modal/select-modal.component';
 
+import * as FileSaver from 'file-saver';
+import * as JSZip from 'jszip';
+
 @Component({
   selector: 'app-translations-page',
   templateUrl: './translations-page.component.html',
@@ -31,7 +34,9 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
   public chosenKey: Key;
   public chosenKeyId: string = null;
   public keys: Key[] = [];
+  private languages: Language[] = [];
   private keySubscription: Subscription;
+
 
   public searchbarValue: string = "";
   public showMissingTranslations: boolean = false;
@@ -47,12 +52,17 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.translationProjectId = parseInt(this.route.snapshot.paramMap.get('tprojectId'));
+    this.loadLanguages();
     this.loadTranslations();
 
     this.keySubscription = this.storageService.editKeySubject.subscribe(key => {
       console.log(key);
       this.showKeyTranslations(key);
     });
+  }
+
+  private loadLanguages(): void {
+    this.languageService.getLanguages().subscribe(response => this.languages = response.value);
   }
 
   private loadTranslations(): void {
@@ -63,8 +73,10 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
       // set sections
       let sections: Section[] = [];
       this.translations.forEach(translation => {
-        sections.push({ language: translation.language, json: JSON.parse(translation.file) })
+        sections.push({ language: translation.language, json: JSON.parse(translation.file) });
       });
+
+      console.log(sections);
 
       this.keys = this.transpilerService.unifyAndTranspileJSONs(sections);
       console.log(this.keys);
@@ -78,9 +90,16 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
   }
 
   public test(): void {
-    console.log(this.keys);
+    let values: [number, string][] = [];
     this.storageService.updateTranslationCounter.next();
-    console.log(this.transpilerService.keysToJSON(this.keys, "EN"));
+
+    this.translations.forEach((translation: Translation)=> {
+      values.push([translation.id, JSON.stringify(this.transpilerService.keysToJSON(this.keys, translation.language.id))]);
+    });
+
+    this.translationService.updateTranslation(values).subscribe(_ => {
+      this.loadTranslations();
+    });
   }
 
   public resolveCountryFlagSVG(acronym: string): string {
@@ -171,6 +190,18 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
         this.toastService.showToast(this.translate.instant("GENERAL.CODE_ERROR_DELETE_TRANSLATION"), this.translate.instant("GENERAL.CODE_ERROR_DELETE_TRANSLATION_DESC"), "alert-danger", "", 4500)
       }
       component.destroy();
+    });
+  }
+
+  public downloadFileExample(): void {
+    const jszip = new JSZip();
+    this.translations.forEach((translation: Translation) => {
+      jszip.file(translation.language.acronym.toLowerCase() + ".json", JSON.stringify(this.transpilerService.keysToJSON(this.keys, translation.language.id)));
+    });
+
+    jszip.generateAsync({ type: 'blob' }).then(function(content) {
+      // see FileSaver.js
+      FileSaver.saveAs(content, 'example.zip')
     });
   }
 }

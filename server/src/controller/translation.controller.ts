@@ -27,7 +27,7 @@ export class TranslationController {
 
 
     public updateTranslation(req: Request, res: Response): void {
-        this.translationDao.updateTranslation(req.body.id, req.body.fileName, req.body.file, req.body.type, this.commonController.getDateTime(Date.now()))
+        this.translationDao.updateTranslations(req.body.values)
             .then(this.commonController.findSuccess(res))
             .catch(this.commonController.serverError(res));
     }

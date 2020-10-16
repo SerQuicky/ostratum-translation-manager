@@ -65,6 +65,7 @@
     </div>
     <div class="save-btn-container">
       <button class="btn btn-primary" (click)="test()" *ngIf="chosenKey != null">{{'TRANSLATION.SAVE' | translate}}</button>
+      <button class="btn btn-primary" (click)="downloadFileExample()" *ngIf="chosenKey != null">Download</button>
     </div>
   </div>
 </div>
