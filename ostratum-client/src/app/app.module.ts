@@ -28,6 +28,7 @@ import { UserModalComponent } from './components/modals/user-modal/user-modal.co
 import { LanguageModalComponent } from './components/modals/language-modal/language-modal.component';
 import { LoaderModalComponent } from './components/modals/loader-modal/loader-modal.component';
 import { TranslationModalComponent } from './components/modals/translation-modal/translation-modal.component';
+import { SelectModalComponent } from './components/modals/select-modal/select-modal.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { TranslationModalComponent } from './components/modals/translation-modal
     LanguageModalComponent,
     LoaderModalComponent,
     TranslationModalComponent,
+    SelectModalComponent,
   ],
   imports: [
     BrowserModule,

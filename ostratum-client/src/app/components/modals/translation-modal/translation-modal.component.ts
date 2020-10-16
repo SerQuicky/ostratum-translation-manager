@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Language } from 'src/app/interfaces/language.interface';
-import { TranslationService } from 'src/app/services/communication/translation/translation.service';
+import { File } from 'src/app/interfaces/file.interface';
+import { ToastService } from 'src/app/services/others/toast/toast.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-translation-modal',
@@ -9,7 +11,7 @@ import { TranslationService } from 'src/app/services/communication/translation/t
 })
 export class TranslationModalComponent implements OnInit {
 
-  @Output() execute = new EventEmitter<[boolean, Language]>();
+  @Output() execute = new EventEmitter<[boolean, Language, File]>();
   @Input() languages: Language[];
   @Input() title: string;
   @Input() acceptText: string;
@@ -18,31 +20,35 @@ export class TranslationModalComponent implements OnInit {
 
   public selectedLanguage: Language;
   public addEmptyLanguage: boolean = true;
-  public fileName: string;
+  public generatedFile: File = { name: "", file: "", type: "json", date: 0};
 
-  constructor(public translate: TranslationService) { }
+  constructor(public translate: TranslateService, private toastService: ToastService) {}
 
   ngOnInit(): void {
     console.log(this.languages);
   }
 
   public executeEmitter(): void {
-    alert(this.selectedLanguage);
-    //this.execute.emit([true, this.selectedLanguage]);
+    if(this.addEmptyLanguage && this.selectedLanguage)
+      this.generatedFile = { name: this.selectedLanguage.acronym.toLowerCase() + ".json", file: "{}", type: "json", date: 0};
+
+    this.selectedLanguage && this.generatedFile.file != "" ?
+    this.execute.emit([true, this.selectedLanguage, this.generatedFile])
+    : this.execute.emit([false, null, null]);
   }
 
   public onFileChanged(event: any): void {
-    alert(event.target.files[0].name);
-    this.fileName = event.target.files[0].name;
-    const selectedFile = event.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.readAsText(selectedFile, "UTF-8");
+    const fileReader: FileReader = new FileReader();
+    fileReader.readAsText(event.target.files[0], "UTF-8");
+
+    // success handler after file read
     fileReader.onload = () => {
-      console.log(JSON.parse(fileReader.result + ""));
+      this.generatedFile = { name: event.target.files[0].name, file: fileReader.result + "", type: event.target.files[0].name.split(".")[1], date: 0 };
     }
-    fileReader.onerror = (error) => {
-      console.log(error);
+
+    // error handler after file read
+    fileReader.onerror = (_) => {
+      this.toastService.showToast(this.translate.instant("GENERAL.CODE_ERROR_FILE_READ"), this.translate.instant("GENERAL.CODE_ERROR_FILE_READ_DESC"), "alert-danger", "", 4000)
     }
-    console.log(event);
   }
 }

@@ -9,7 +9,15 @@
         "CODE_WRONG_OLD_PASSWORD": "The password could not be changed, please check your information.",
         "CODE_WRITE_SUCCESS": "Operation was successful",
         "CODE_ERROR_WRITE_ENTITIY": "Die Operation did not execute",
-        "CODE_ERROR_WRITE_ARGUMENT": "The resolved arguments were wrong"
+        "CODE_ERROR_WRITE_ARGUMENT": "The resolved arguments were wrong",
+        "CODE_ERROR_FILE_READ": "File is damaged",
+        "CODE_ERROR_FILE_READ_DESC": "The chosen file could not be read, please choose another file.",
+        "CODE_ERROR_ADD_TRANSLATION": "Could not create translation",
+        "CODE_ERROR_ADD_TRANSLATION_DESC": "No language or file was chosen, therefore no translation was created.",
+        "CODE_ERROR_DELETE_TRANSLATION": "Translation could not be deleted",
+        "CODE_ERROR_DELETE_TRANSLATION_DESC": "No translation was chosen, therefore the deletion process was canceled.",
+        "CODE_ERROR_ADD_TRANSLATION_EXISTS": "Language already exists",
+        "CODE_ERROR_ADD_TRANSLATION_EXISTS_DESC": "A translation with the chosen language already exists, please delete or update the translation for the language."
     },
     "SIDEBAR": {
         "LOGOUT": "Logout",
@@ -106,7 +114,8 @@
         "MANUAL_P3": " to switch between the translation keys",
         "FILTER": "Show only keys that have missing translations",
         "SAVE": "Save translations",
-        "ADD_TRANSLATION": "Add new translation"
+        "ADD_TRANSLATION": "Add new translation",
+        "DELETE_TRANSLATION": "Delete a translation"
     },
     "USER": {
         "LIST": "List of registered users",

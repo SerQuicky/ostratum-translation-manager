@@ -29,7 +29,7 @@ export class TranslationProjectRoutes {
             this.session.verify(req.headers['authorization']).then(_ => this.translationProjectController.updateTranslationProject(req, res)).catch(_ => new InvalidTokenError(res))
         });
 
-        this.app.post('/deleteTranslateProject', (req: Request, res: Response) => {
+        this.app.post('/deleteTranslationProject', (req: Request, res: Response) => {
             this.session.verifyAdmin(req.headers['authorization']).then(_ => this.translationProjectController.deleteTranslateProject(req, res)).catch(_ => new InvalidTokenError(res))
         });
     }

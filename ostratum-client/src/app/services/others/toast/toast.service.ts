@@ -17,7 +17,7 @@ export class ToastService {
       : this.showToast(this.translate.instant("GENERAL.ERROR_TOAST"), this.translate.instant(response.message), "alert-danger", "", 4000);
   }
 
-  private showToast(title: string, message: string, alertType: string, fillType: string, timer: number): void {
+  public showToast(title: string, message: string, alertType: string, fillType: string, timer: number): void {
     // Built-in function
     halfmoon.initStickyAlert({
       content: message,      // Required, main content of the alert, type: string (can contain HTML)

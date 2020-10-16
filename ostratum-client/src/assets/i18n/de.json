@@ -9,7 +9,15 @@
         "CODE_WRONG_OLD_PASSWORD": "Das Passwort konnte nicht verändert werden, überprüfen sie, ob ihre Angaben richtig waren.",
         "CODE_WRITE_SUCCESS": "Operation war erfolgreich",
         "CODE_ERROR_WRITE_ENTITIY": "Die Operation konnte nicht durchgeführt werden",
-        "CODE_ERROR_WRITE_ARGUMENT": "Die übergebenen Argumente sind fehlerhaft"
+        "CODE_ERROR_WRITE_ARGUMENT": "Die übergebenen Argumente sind fehlerhaft",
+        "CODE_ERROR_FILE_READ": "Datei ist fehlerhaft",
+        "CODE_ERROR_FILE_READ_DESC": "Die ausgewählte Datei konnte nicht gelesen werden, bitte wählen sie eine andere Datei aus.",
+        "CODE_ERROR_ADD_TRANSLATION": "Übersetzung konnte nicht erstellt werden",
+        "CODE_ERROR_ADD_TRANSLATION_DESC": "Keine Sprache bzw. Datei wurde ausgewählt, wodurch die Übersetzung nicht gespeichert werden konnte.",
+        "CODE_ERROR_DELETE_TRANSLATION": "Übersetzung konnte nicht gelöscht werden",
+        "CODE_ERROR_DELETE_TRANSLATION_DESC": "Es wurde keine Übersetzung ausgewählt, wodurch der Löschungvorgang abgebrochen wurde.",
+        "CODE_ERROR_ADD_TRANSLATION_EXISTS": "Sprache existiert bereits",
+        "CODE_ERROR_ADD_TRANSLATION_EXISTS_DESC": "Eine Übersetzung für die ausgewählte Sprache exisitiert bereits, bitte löschen oder aktualisieren Sie die Übersetzung für die Sprache."
     },
     "SIDEBAR": {
         "LOGOUT": "Abmelden",
@@ -106,7 +114,8 @@
         "MANUAL_P3": " um zwischen den Schlüsseln zu wechseln",
         "FILTER": "Zeige nur Schlüssel bei denen noch Übersetzungen fehlen",
         "SAVE": "Speichere Übersetzungen",
-        "ADD_TRANSLATION": "Neue Übersetzung hinzufügen"
+        "ADD_TRANSLATION": "Neue Übersetzung hinzufügen",
+        "DELETE_TRANSLATION": "Lösche eine Übersetzung"
     },
     "USER": {
         "LIST": "Liste an eingerichteten Nutzern",

@@ -12,6 +12,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslationModalComponent } from 'src/app/components/modals/translation-modal/translation-modal.component';
 import { ModalService } from 'src/app/services/others/modal/modal.service';
 import { LanguageService } from 'src/app/services/communication/language/language.service';
+import { ToastService } from 'src/app/services/others/toast/toast.service';
+import { Language } from 'src/app/interfaces/language.interface';
+import { File } from 'src/app/interfaces/file.interface';
+import { SelectModalComponent } from 'src/app/components/modals/select-modal/select-modal.component';
 
 @Component({
   selector: 'app-translations-page',
@@ -38,10 +42,20 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
     public storageService: StorageService,
     public translate: TranslateService,
     private modalService: ModalService,
+    private toastService: ToastService,
     private languageService: LanguageService) { }
 
   ngOnInit(): void {
     this.translationProjectId = parseInt(this.route.snapshot.paramMap.get('tprojectId'));
+    this.loadTranslations();
+
+    this.keySubscription = this.storageService.editKeySubject.subscribe(key => {
+      console.log(key);
+      this.showKeyTranslations(key);
+    });
+  }
+
+  private loadTranslations(): void {
     this.translationService.getTranslations(this.translationProjectId).subscribe(reponse => {
       console.log(reponse);
       this.translations = reponse.value;
@@ -54,11 +68,6 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
 
       this.keys = this.transpilerService.unifyAndTranspileJSONs(sections);
       console.log(this.keys);
-    });
-
-    this.keySubscription = this.storageService.editKeySubject.subscribe(key => {
-      console.log(key);
-      this.showKeyTranslations(key);
     });
   }
 
@@ -132,15 +141,36 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
         this.translate.instant("MODAL.CREATE"),
         this.translate.instant("MODAL.CANCEL"),
         "btn btn-success");
-  
-      component.instance.execute.subscribe(data => {
+
+      component.instance.execute.subscribe((data: [boolean, Language, File]) => {
         console.log(data);
         if (data[0]) {
-          
+          !this.translations.some((translation: Translation) => translation.language.id == data[1].id) ?
+            this.translationService.addTranslation(data[2], data[1].id, this.translationProjectId).subscribe(_ => this.loadTranslations())
+            : this.toastService.showToast(this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION_EXISTS"), this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION_EXISTS_DESC"), "alert-danger", "", 4500)
+        } else {
+          this.toastService.showToast(this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION"), this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION_DESC"), "alert-danger", "", 4500)
         }
         component.destroy();
       });
     })
   }
 
+  public openDeleteTranslationModal(): void {
+    const component: ComponentRef<SelectModalComponent> = this.modalService.createSelectModal(
+      this.translations,
+      this.translate.instant("TRANSLATION.DELETE_TRANSLATION"),
+      this.translate.instant("MODAL.DELETE"),
+      this.translate.instant("MODAL.CANCEL"),
+      "btn btn-danger");
+
+    component.instance.execute.subscribe((data: [boolean, Translation]) => {
+      if (data[0]) {
+        this.translationService.deleteTranslation(data[1].id).subscribe(_ => this.loadTranslations());
+      } else {
+        this.toastService.showToast(this.translate.instant("GENERAL.CODE_ERROR_DELETE_TRANSLATION"), this.translate.instant("GENERAL.CODE_ERROR_DELETE_TRANSLATION_DESC"), "alert-danger", "", 4500)
+      }
+      component.destroy();
+    });
+  }
 }

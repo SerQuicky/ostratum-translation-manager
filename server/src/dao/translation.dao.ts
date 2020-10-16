@@ -42,6 +42,7 @@ export class TranslationDao {
     }
 
     public deleteTranslation(id: number): Promise<any> {
+        console.log(id);
         let sqlRequest = "DELETE FROM translations WHERE id = $id";
         return this.commonDao.write(sqlRequest, { $id: id });
     }

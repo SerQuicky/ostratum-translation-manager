@@ -33,6 +33,7 @@ export class TranslationController {
     }
 
     public deleteTranslation(req: Request, res: Response): void {
+        console.log(req.body.id);
         this.translationDao.deleteTranslation(req.body.id)
             .then(this.commonController.findSuccess(res))
             .catch(this.commonController.serverError(res));
