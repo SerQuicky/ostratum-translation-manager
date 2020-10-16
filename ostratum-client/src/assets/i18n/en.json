@@ -33,7 +33,10 @@
         "SAVE": "Save",
         "CREATE": "Create",
         "DELETE": "Delete",
-        "CANCEL": "Cancel"
+        "CANCEL": "Cancel",
+        "ADD_EMPTY": "Create empty translation file",
+        "CHOOSE_FILE": "Choose translation file",
+        "CHOOSE_LANGUAGE": "Choose language"
     },
     "TOAST": {
         "PROJECT_DELETED": "The project was successfully deleted.",
@@ -72,7 +75,13 @@
         "ADD": "Add a new language",
         "UPDATE": "Update the language {{name}}",
         "DELETE": "Delete the language {{name}}",
-        "DELETE_DESCRIPTION": "Are you sure, that you want to delete the language, the process can not be reverted!"
+        "DELETE_DESCRIPTION": "Are you sure, that you want to delete the language, the process can not be reverted!",
+
+        "KEYS": {
+            "DE": "German",
+            "EN": "English",
+            "FR": "French"
+        }
     },
     "LOGIN": {
         "DESCRIPTION": "You can change your password after the authentication, in case you forgot your password please contact an administrator.",
@@ -96,7 +105,8 @@
         "MANUAL_P2": "to focus the searchbar and the keys ",
         "MANUAL_P3": " to switch between the translation keys",
         "FILTER": "Show only keys that have missing translations",
-        "SAVE": "Save translations"
+        "SAVE": "Save translations",
+        "ADD_TRANSLATION": "Add new translation"
     },
     "USER": {
         "LIST": "List of registered users",

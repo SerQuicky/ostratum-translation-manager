@@ -27,6 +27,7 @@ import { LanguagePageComponent } from './pages/language-page/language-page/langu
 import { UserModalComponent } from './components/modals/user-modal/user-modal.component';
 import { LanguageModalComponent } from './components/modals/language-modal/language-modal.component';
 import { LoaderModalComponent } from './components/modals/loader-modal/loader-modal.component';
+import { TranslationModalComponent } from './components/modals/translation-modal/translation-modal.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { LoaderModalComponent } from './components/modals/loader-modal/loader-mo
     UserModalComponent,
     LanguageModalComponent,
     LoaderModalComponent,
+    TranslationModalComponent,
   ],
   imports: [
     BrowserModule,

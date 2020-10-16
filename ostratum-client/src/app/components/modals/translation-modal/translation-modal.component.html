@@ -1,0 +1,32 @@
+<div class="modal show" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <a href="#" class="btn close" role="button" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </a>
+            <h5 class="modal-title">{{title}}</h5>
+            <div class="form-group">
+                <select class="form-control" [(ngModel)]="selectedLanguage">
+                    <option *ngFor="let language of languages" [value]="language">{{ 'LANGUAGE.KEYS.' + language.acronym | translate}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="custom-checkbox">
+                    <input type="checkbox" id="checkbox-n" [(ngModel)]="addEmptyLanguage">
+                    <label for="checkbox-n">{{ 'MODAL.ADD_EMPTY' | translate}}</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="custom-file">
+                    <input type="file" id="file-input-1" accept=".json" [disabled]="addEmptyLanguage" (change)="onFileChanged($event)">
+                    <label for="file-input-1">{{ fileName ? fileName : 'MODAL.CHOOSE_FILE' | translate}}</label>
+                </div>
+            </div>
+            <div class="text-right mt-20">
+                <button class="btn mr-5" data-dismiss="modal" type="button">{{dismissText}}</button>
+                <button [class]="acceptClass" data-dismiss="modal" type="button"
+                    (click)="executeEmitter()">{{acceptText}}</button>
+            </div>
+        </div>
+    </div>
+</div>

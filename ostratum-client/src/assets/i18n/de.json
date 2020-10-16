@@ -33,7 +33,10 @@
         "SAVE": "Speichern",
         "CREATE": "Erstellen",
         "DELETE": "Löschen",
-        "CANCEL": "Abbrechen"
+        "CANCEL": "Abbrechen",
+        "ADD_EMPTY": "Leere Übersetzungsdatei erstellen",
+        "CHOOSE_FILE": "Übersetzungsdatei auswählen",
+        "CHOOSE_LANGUAGE": "Sprache auswählen"
     },
     "TOAST": {
         "PROJECT_DELETED": "Das Projekt wurde erfolgreich gelöscht.",
@@ -72,7 +75,13 @@
         "ADD": "Füge eine neue Sprache hinzu",
         "UPDATE": "Aktualisiere die Sprache {{name}}",
         "DELETE": "Lösche die Sprache {{name}}",
-        "DELETE_DESCRIPTION": "Sind sie sich sicher, dass sie die Sprache {{name}} löschen wollen, der Vorgang kann nicht rückgangig gemacht werden!"
+        "DELETE_DESCRIPTION": "Sind sie sich sicher, dass sie die Sprache {{name}} löschen wollen, der Vorgang kann nicht rückgangig gemacht werden!",
+
+        "KEYS": {
+            "DE": "Deutsch",
+            "EN": "Englisch",
+            "FR": "Französisch"
+        }
     },
     "LOGIN": {
         "DESCRIPTION": "Sie können das Passwort nach dem Login ändern, sollten sie ihr Passwort vergessen haben, kontaktieren sie bitte einen Administrator.",
@@ -91,12 +100,13 @@
         "DARK_MODE": "Dunkler Modus"
     },
     "TRANSLATION": {
-        "TITLE": "Übersetzungs-Sclüssel",
+        "TITLE": "Übersetzungs-Schlüssel",
         "MANUAL_P1": "Drücken sie",
         "MANUAL_P2": ", um die Suche zu fokusieren und",
         "MANUAL_P3": " um zwischen den Schlüsseln zu wechseln",
         "FILTER": "Zeige nur Schlüssel bei denen noch Übersetzungen fehlen",
-        "SAVE": "Speichere Übersetzungen"
+        "SAVE": "Speichere Übersetzungen",
+        "ADD_TRANSLATION": "Neue Übersetzung hinzufügen"
     },
     "USER": {
         "LIST": "Liste an eingerichteten Nutzern",

@@ -39,7 +39,7 @@ export class UsersPageComponent implements OnInit {
       { id: 0, username: "", password: "" },
       this.translate.instant("USER.ADD"),
       this.translate.instant("MODAL.CREATE"),
-      this.translate.instant("USER.CANCEL"),
+      this.translate.instant("MODAL.CANCEL"),
       "btn btn-success");
 
     component.instance.execute.subscribe(data => {

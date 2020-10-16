@@ -3,6 +3,7 @@ import { DialogModalComponent } from 'src/app/components/modals/dialog-modal/dia
 import { EditModalComponent } from 'src/app/components/modals/edit-modal/edit-modal.component';
 import { LanguageModalComponent } from 'src/app/components/modals/language-modal/language-modal.component';
 import { LoaderModalComponent } from 'src/app/components/modals/loader-modal/loader-modal.component';
+import { TranslationModalComponent } from 'src/app/components/modals/translation-modal/translation-modal.component';
 import { UserModalComponent } from 'src/app/components/modals/user-modal/user-modal.component';
 import { Language } from 'src/app/interfaces/language.interface';
 import { Project } from 'src/app/interfaces/project.interface';
@@ -74,6 +75,18 @@ export class ModalService {
     const component: ComponentRef<LanguageModalComponent> = this.viewContainerRef.createComponent(factory);
     component.instance.title = title;
     component.instance.language = language;
+    component.instance.acceptText = acceptText;
+    component.instance.dismissText = dismissText;
+    component.instance.acceptClass = acceptClass;
+
+    return component;
+  }
+
+  public createTranslationModal(languages: Language[], title: string, acceptText: string, dismissText: string, acceptClass: string): ComponentRef<TranslationModalComponent> {
+    const factory: ComponentFactory<TranslationModalComponent> = this.componentResolver.resolveComponentFactory(TranslationModalComponent);
+    const component: ComponentRef<TranslationModalComponent> = this.viewContainerRef.createComponent(factory);
+    component.instance.title = title;
+    component.instance.languages = languages;
     component.instance.acceptText = acceptText;
     component.instance.dismissText = dismissText;
     component.instance.acceptClass = acceptClass;

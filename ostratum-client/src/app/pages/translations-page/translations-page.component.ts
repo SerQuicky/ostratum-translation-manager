@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentRef, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Translation } from 'src/app/interfaces/translation.interface';
 import { Section } from 'src/app/interfaces/section.interface';
@@ -9,6 +9,9 @@ import { StorageService } from 'src/app/services/others/storage/storage.service'
 import { Subscription } from 'rxjs';
 import { Key } from 'src/app/interfaces/key.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslationModalComponent } from 'src/app/components/modals/translation-modal/translation-modal.component';
+import { ModalService } from 'src/app/services/others/modal/modal.service';
+import { LanguageService } from 'src/app/services/communication/language/language.service';
 
 @Component({
   selector: 'app-translations-page',
@@ -33,7 +36,9 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private transpilerService: TranspilerService,
     public storageService: StorageService,
-    public translate: TranslateService) { }
+    public translate: TranslateService,
+    private modalService: ModalService,
+    private languageService: LanguageService) { }
 
   ngOnInit(): void {
     this.translationProjectId = parseInt(this.route.snapshot.paramMap.get('tprojectId'));
@@ -119,5 +124,23 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
     return key.values.some(value => value.value == "");
   }
 
+  public openAddNewTranslationModal(): void {
+    this.languageService.getLanguages().subscribe(response => {
+      const component: ComponentRef<TranslationModalComponent> = this.modalService.createTranslationModal(
+        response.value,
+        this.translate.instant("TRANSLATION.ADD_TRANSLATION"),
+        this.translate.instant("MODAL.CREATE"),
+        this.translate.instant("MODAL.CANCEL"),
+        "btn btn-success");
+  
+      component.instance.execute.subscribe(data => {
+        console.log(data);
+        if (data[0]) {
+          
+        }
+        component.destroy();
+      });
+    })
+  }
 
 }

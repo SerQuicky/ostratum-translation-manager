@@ -3,7 +3,10 @@
   <div class="translations-overview">
     <div class="translation-container" *ngIf="keys.length != 0">
       <div class="static-content">
-        <h5 class="sidebar-title">{{'TRANSLATION.TITLE' | translate}}</h5>
+        <h5 class="sidebar-title">
+          {{'TRANSLATION.TITLE' | translate}}
+          <i class="fa fa-plus-circle" aria-hidden="true" (click)="openAddNewTranslationModal()"></i>
+        </h5>
         <div class="sidebar-divider"></div>
         <div class="sidebar-content">
           <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchbarValue" #search>
