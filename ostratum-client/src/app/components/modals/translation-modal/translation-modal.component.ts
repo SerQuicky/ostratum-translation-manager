@@ -37,6 +37,9 @@ export class TranslationModalComponent implements OnInit {
     : this.execute.emit([false, null, null]);
   }
 
+  /**
+  * get a json translation file
+  */
   public onFileChanged(event: any): void {
     const fileReader: FileReader = new FileReader();
     fileReader.readAsText(event.target.files[0], "UTF-8");

@@ -29,10 +29,17 @@ export class KeyComponent implements OnInit, OnDestroy {
     this.updateSubscription = this.storageService.updateTranslationCounter.subscribe(_ => this.countOpenTranslations());
   }
 
+  /**
+  * count the number of missing values for a translation keys
+  */
   private countOpenTranslations(): void {
     this.openTranslationCounter = this.key.values.filter(value => value.value == "").length;
   }
 
+  /**
+  * case 1: translation key is a holder -> hide or show the children keys
+  * case 2: open the translation key with its values 
+  */
   public editKeys(): void {
     if(this.objectHolder) {
       this.hideChildKeys = !this.hideChildKeys;

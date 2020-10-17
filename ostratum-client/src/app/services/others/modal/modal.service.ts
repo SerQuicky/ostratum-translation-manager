@@ -18,8 +18,6 @@ import { User } from 'src/app/interfaces/user.interface';
 export class ModalService {
 
 
-  //TODO: Combine all create Functions
-
   private viewContainerRef: ViewContainerRef
   private loaderComponent: ComponentRef<LoaderModalComponent>;
 
@@ -29,11 +27,27 @@ export class ModalService {
     this.viewContainerRef = viewContainerRef;
   }
 
+  /**
+  * create a component reference by its type (T) through a factory
+  */
   public createComponent<T>(component: ComponentFactory<T>): ComponentRef<T> {
-    // TODO: check if normal return is enough
     const cf: ComponentRef<T> = this.viewContainerRef.createComponent(component);
     return cf;
   }
+
+  /**
+  * destroy a component (modal) 
+  */
+  public destroyModal(component: ComponentRef<any>): void {
+    if(component) {
+      component.destroy();
+    }
+  }
+
+
+  /** ------------------------------------------------------------------------------------------------------------------
+  *                                                 Generic modal windows
+  * ------------------------------------------------------------------------------------------------------------------*/
 
   public createDialogModal(title: string, description: string, acceptText: string, dismissText: string, acceptClass: string): ComponentRef<DialogModalComponent> {
     const factory: ComponentFactory<DialogModalComponent> = this.componentResolver.resolveComponentFactory(DialogModalComponent);
@@ -46,6 +60,40 @@ export class ModalService {
 
     return component;
   }
+
+  public createSelectModal<T>(objects: T[], values: string[], title: string, acceptText: string, dismissText: string, acceptClass: string): ComponentRef<SelectModalComponent<T>> {
+    const factory: ComponentFactory<SelectModalComponent<T>> = this.componentResolver.resolveComponentFactory<SelectModalComponent<T>>(SelectModalComponent);
+    const component: ComponentRef<SelectModalComponent<T>> = this.viewContainerRef.createComponent(factory);
+    component.instance.title = title;
+    component.instance.objects = objects;
+    component.instance.values = values;
+    component.instance.acceptText = acceptText;
+    component.instance.dismissText = dismissText;
+    component.instance.acceptClass = acceptClass;
+
+    return component;
+  }
+
+  public showLoader(): void {
+    if (!this.loaderComponent) {
+      const factory: ComponentFactory<LoaderModalComponent> = this.componentResolver.resolveComponentFactory(LoaderModalComponent);
+      this.loaderComponent = this.viewContainerRef.createComponent(factory);
+    }
+  }
+
+  public hideLoader(): void {
+    if (this.loaderComponent) {
+      setTimeout(() => {
+        this.destroyModal(this.loaderComponent);
+        this.loaderComponent = null;
+      }, 500);
+    }
+  }
+
+
+  /** ------------------------------------------------------------------------------------------------------------------
+  *                                                 Specific modal windows
+  * ------------------------------------------------------------------------------------------------------------------*/
 
   public createProjectEditModal(title: string, project: Project | TranslationProject, acceptText: string, dismissText: string, acceptClass: string, projectId?: number): ComponentRef<EditModalComponent> {
     const factory: ComponentFactory<EditModalComponent> = this.componentResolver.resolveComponentFactory(EditModalComponent);
@@ -96,31 +144,4 @@ export class ModalService {
     return component;
   }
 
-  public createSelectModal(translations: Translation[], title: string, acceptText: string, dismissText: string, acceptClass: string): ComponentRef<SelectModalComponent> {
-    const factory: ComponentFactory<SelectModalComponent> = this.componentResolver.resolveComponentFactory(SelectModalComponent);
-    const component: ComponentRef<SelectModalComponent> = this.viewContainerRef.createComponent(factory);
-    component.instance.title = title;
-    component.instance.translations = translations;
-    component.instance.acceptText = acceptText;
-    component.instance.dismissText = dismissText;
-    component.instance.acceptClass = acceptClass;
-
-    return component;
-  }
-
-  public showLoader(): void {
-    if (!this.loaderComponent) {
-      const factory: ComponentFactory<LoaderModalComponent> = this.componentResolver.resolveComponentFactory(LoaderModalComponent);
-      this.loaderComponent = this.viewContainerRef.createComponent(factory);
-    }
-  }
-
-  public hideLoader(): void {
-    if (this.loaderComponent) {
-      setTimeout(() => {
-        this.loaderComponent.destroy();
-        this.loaderComponent = null;
-      }, 500);
-    }
-  }
 }

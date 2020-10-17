@@ -13,7 +13,7 @@ export class SettingsPageComponent implements OnInit {
   public language: string = "en";
 
   constructor(private storageService: StorageService, private translate: TranslateService) { 
-    this.language = this.translate.getDefaultLang();
+    this.language = this.translate.getDefaultLang();  
   }
 
   ngOnInit(): void {
@@ -42,6 +42,7 @@ export class SettingsPageComponent implements OnInit {
 
   public updateLanuage(language: string): void {
     this.language = language;
+    localStorage.setItem("lang", language);
     this.translate.use(this.language);
   }
 

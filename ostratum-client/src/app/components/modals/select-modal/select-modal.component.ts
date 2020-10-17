@@ -7,26 +7,25 @@ import { Translation } from 'src/app/interfaces/translation.interface';
   templateUrl: './select-modal.component.html',
   styleUrls: ['./select-modal.component.scss']
 })
-export class SelectModalComponent implements OnInit {
+export class SelectModalComponent<T> implements OnInit {
 
-  @Output() execute = new EventEmitter<[boolean, Translation]>();
-  @Input() translations: Translation[];
+  @Output() execute = new EventEmitter<[boolean, T]>();
+  @Input() objects: T[];
+  @Input() values: string[];
   @Input() title: string;
   @Input() acceptText: string;
   @Input() dismissText: string;
   @Input() acceptClass: string;
 
-  public selectedTranslation: Translation;
+  public selectedIndex: number;
 
   constructor(public translate: TranslateService) {}
 
-  ngOnInit(): void {
-    console.log(this.translations);
-  }
+  ngOnInit(): void {}
 
   public executeEmitter(): void {
-    this.selectedTranslation ? 
-    this.execute.emit([true, this.selectedTranslation])
+    this.selectedIndex ? 
+    this.execute.emit([true, this.objects[this.selectedIndex]])
     : this.execute.emit([false, null]); 
   }
 

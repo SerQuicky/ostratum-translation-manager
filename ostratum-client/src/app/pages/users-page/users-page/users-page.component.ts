@@ -50,7 +50,7 @@ export class UsersPageComponent implements OnInit {
           this.loadUsers();
         });
       }
-      component.destroy();
+      this.modalService.destroyModal(component);
     });
   }
 
@@ -88,7 +88,7 @@ export class UsersPageComponent implements OnInit {
           this.loadUsers();
         });
       }
-      component.destroy();
+      this.modalService.destroyModal(component);
     });
   }
 }

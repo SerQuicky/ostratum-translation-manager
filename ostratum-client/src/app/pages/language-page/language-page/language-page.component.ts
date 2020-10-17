@@ -44,7 +44,7 @@ export class LanguagePageComponent implements OnInit {
           this.loadLanguages();
         });
       }
-      component.destroy();
+      this.modalService.destroyModal(component);
     });
   }
 
@@ -64,7 +64,7 @@ export class LanguagePageComponent implements OnInit {
           this.loadLanguages();
         });
       }
-      component.destroy();
+      this.modalService.destroyModal(component);
     });
   }
 

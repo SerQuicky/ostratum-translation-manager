@@ -14,21 +14,24 @@ export class AppComponent implements AfterViewInit {
   title = 'ostratum-client';
 
   constructor(private modalService: ModalService, private translate: TranslateService) {
+    // set layout design (light-/dark-mode)
     if (JSON.parse(localStorage.getItem("darkmode"))) {
       document.getElementById("body").classList.add("dark-mode");
     }
 
-    const language: string = localStorage.getItem("language") ? JSON.parse(localStorage.getItem("language")) : "en";
-    this.translate.setDefaultLang(language);
-    this.translate.use(language);
+    // set language that the application uses
+    if (localStorage.getItem("lang")) {
+      const language: string = localStorage.getItem("lang");
+      this.translate.setDefaultLang(language);
+    } else {
+      localStorage.setItem("lang", "en");
+    }
+    
+    this.translate.use(localStorage.getItem("lang"));
   }
 
   ngAfterViewInit(): void {
     this.modalService.setContainerRef(this.vc);
-    //this.modalService.showLoader();
-    //let component: ComponentRef<DialogModalComponent> = this.modalService.createComponent<DialogModalComponent>(this.componentResolver.resolveComponentFactory(DialogModalComponent));
-    //let component: ComponentRef<DialogModalComponent> = this.modalService.createDialogModal("Hey", "Du loser das ist ein Text", "Delete", "Close", "btn btn-danger");
-    //component.instance.execute.subscribe(test => console.log(test));
   }
 
 }

@@ -50,7 +50,7 @@ export class TranslationProjectsPageComponent implements OnInit, OnDestroy {
           this.loadTranslationProjects();
         });
       }
-      component.destroy();
+      this.modalService.destroyModal(component);
     });
   }
 

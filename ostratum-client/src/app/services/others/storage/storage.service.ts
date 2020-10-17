@@ -23,15 +23,18 @@ export class StorageService {
     this.adminState = JSON.parse(localStorage.getItem("state"));
    }
 
+  // activate the current sidebar element
   public setSidebarStatus(index: number) {
     this.sidebarStates = this.sidebarStates.map(_ => false);
     this.sidebarStates[index] = true;
   }
 
+  // small timeout before a sidebar element is set
   public initSidebar(index: number): void {
     setTimeout(() => { this.setSidebarStatus(index) }, 5)
   }
 
+  // set logo by the current layout design
   public setDesignState(): void {
     if(JSON.parse(localStorage.getItem("darkmode"))) {
       document.getElementById("body").classList.add("dark-mode");

@@ -19,7 +19,7 @@
     width: 100%;
 
     display: grid;
-    grid-template-rows: 80% 1fr;
+    grid-template-rows: 80% 1fr 1fr;
 
     .translation-boxes {
         overflow-y: scroll;
@@ -28,7 +28,7 @@
     .save-btn-container {
         button {
             height: 50px;
-            width: 250px;
+            width: 300px;
             margin: 0 auto;
             display: block;
         }

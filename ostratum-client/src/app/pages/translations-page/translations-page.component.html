@@ -35,8 +35,9 @@
     </div>
   </div>
 
-  <div class="translations-display" *ngIf="chosenKey != null">
-    <div class="translation-boxes">
+  <div class="translations-display">
+    <div *ngIf="chosenKey == null"></div>
+    <div class="translation-boxes" *ngIf="chosenKey != null">
       <div class="w-400 mw-full" *ngFor="let value of chosenKey.values">
         <div class="card p-0">
           <div class="px-card py-10 border-bottom">
@@ -64,8 +65,10 @@
       </div>
     </div>
     <div class="save-btn-container">
-      <button class="btn btn-primary" (click)="test()" *ngIf="chosenKey != null">{{'TRANSLATION.SAVE' | translate}}</button>
-      <button class="btn btn-primary" (click)="downloadFileExample()" *ngIf="chosenKey != null">Download</button>
+      <button class="btn btn-primary" (click)="saveTranslations()">{{'TRANSLATION.SAVE' | translate}}</button>
+    </div>
+    <div class="save-btn-container">
+      <button class="btn btn-primary" (click)="downloadFileExample()">{{'TRANSLATION.DOWNLOAD' | translate}}</button>
     </div>
   </div>
 </div>

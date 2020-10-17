@@ -65,41 +65,42 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  /* ---------------------------------------------------------------------------------------------------
+  *                        REST-Translation calls
+  * --------------------------------------------------------------------------------------------------- */
+
+  /**
+  * Get and save all possible languages
+  */
   private loadLanguages(): void {
     this.languageService.getLanguages().subscribe(response => this.languages = response.value);
   }
 
 
   /**
-  * Create an image label.txt
-  * @param file_name name of the image for the label file name
-  * @param yolo_objects list of objects that were classified
+  * Get, Save and Convert the translations to a key tree data structure
   */
   private loadTranslations(): void {
     this.translationService.getTranslations(this.translationProjectId).subscribe(reponse => {
-      console.log(reponse);
       this.translations = reponse.value;
 
-      // set sections
+      // set sections for the convertion
       let sections: Section[] = [];
       this.translations.forEach(translation => {
         sections.push({ language: translation.language, json: JSON.parse(translation.file) });
       });
 
-      console.log(sections);
-
+      // unify and convert the all translation into the key data structure
       this.keys = this.transpilerService.unifyAndTranspileJSONs(sections);
       console.log(this.keys);
     });
   }
 
-  public showKeyTranslations(key: Key): void {
-    this.storageService.updateTranslationCounter.next();
-    this.chosenKey = key;
-    this.chosenKeyId = this.chosenKey.id;
-  }
-
-  public test(): void {
+  /**
+  * Update / Save the current state of the translations
+  */
+  public saveTranslations(): void {
     let values: [number, string][] = [];
     this.storageService.updateTranslationCounter.next();
 
@@ -112,15 +113,87 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  /* ---------------------------------------------------------------------------------------------------
+  *                        Modal calls
+  * --------------------------------------------------------------------------------------------------- */
+
+  /**
+  * Open a modal that can create a new translation for the translation project
+  */
+  public openAddNewTranslationModal(): void {
+    this.languageService.getLanguages().subscribe(response => {
+      const component: ComponentRef<TranslationModalComponent> = this.modalService.createTranslationModal(
+        response.value,
+        this.translate.instant("TRANSLATION.ADD_TRANSLATION"),
+        this.translate.instant("MODAL.CREATE"),
+        this.translate.instant("MODAL.CANCEL"),
+        "btn btn-success");
+
+      component.instance.execute.subscribe((data: [boolean, Language, File]) => {
+        if (data[0]) {
+          // check if the language already exists, if not the new translation will be created
+          !this.translations.some((translation: Translation) => translation.language.id == data[1].id) ?
+            this.translationService.addTranslation(data[2], data[1].id, this.translationProjectId).subscribe(_ => {
+              this.loadTranslations();
+              this.chosenKey = null;
+            })
+            : this.toastService.showToast(this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION_EXISTS"), this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION_EXISTS_DESC"), "alert-danger", "", 4500);
+        } else {
+          // a toast will be shown, if not all information of the modal are valid
+          this.toastService.showToast(this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION"), this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION_DESC"), "alert-danger", "", 4500)
+        }
+        this.modalService.destroyModal(component);
+      });
+    })
+  }
+
+  /**
+  * Open a select modal for the deletion of a translation
+  */
+  public openDeleteTranslationModal(): void {
+    const component: ComponentRef<SelectModalComponent<Translation>> = this.modalService.createSelectModal<Translation>(
+      this.translations,
+      this.translations.map((translation: Translation) => 'LANGUAGE.KEYS.' +  translation.language.acronym),
+      this.translate.instant("TRANSLATION.DELETE_TRANSLATION"),
+      this.translate.instant("MODAL.DELETE"),
+      this.translate.instant("MODAL.CANCEL"),
+      "btn btn-danger");
+
+    component.instance.execute.subscribe((data: [boolean, Translation]) => {
+      if (data[0]) {
+        this.translationService.deleteTranslation(data[1].id).subscribe(_ => this.loadTranslations());
+        this.chosenKey = null;
+      } else {
+        this.toastService.showToast(this.translate.instant("GENERAL.CODE_ERROR_DELETE_TRANSLATION"), this.translate.instant("GENERAL.CODE_ERROR_DELETE_TRANSLATION_DESC"), "alert-danger", "", 4500)
+      }
+      this.modalService.destroyModal(component);
+    });
+  }
+
+  /* ---------------------------------------------------------------------------------------------------
+  *             Helper functions (key input handling, download translations, etc.)
+  * --------------------------------------------------------------------------------------------------- */
+
+  /**
+  * Map an acronym to a flag icon (special case for EN to GB...)
+  */
+  public showKeyTranslations(key: Key): void {
+    this.storageService.updateTranslationCounter.next();
+    this.chosenKey = key;
+    this.chosenKeyId = this.chosenKey.id;
+  }
+
+
+  /**
+  * Map an acronym to a flag icon (special case for EN to GB...)
+  */
   public resolveCountryFlagSVG(acronym: string): string {
-    let rAcronym: string = acronym == "EN" ? "GB" : acronym;
-    return "http://catamphetamine.gitlab.io/country-flag-icons/3x2/" + rAcronym + ".svg"
+    return "http://catamphetamine.gitlab.io/country-flag-icons/3x2/" + (acronym == "EN" ? "GB" : acronym) + ".svg"
   }
 
-  ngOnDestroy(): void {
-    this.keySubscription.unsubscribe();
-  }
-
+  /**
+  * key inputs for the translation key handling
+  */
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     console.log(event.key);
@@ -135,74 +208,40 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+  * Check if some subkey of a key has an empty value
+  * @param icrement the direction in which the chosen key should be changed
+  */
   private selectKeyByKeyboard(icrement: number): void {
     if (this.chosenKey) {
-      const switchedKey: Key = this.transpilerService.getNextCheckableKey(this.keys,
-        this.chosenKey,
-        icrement,
-        this.showMissingTranslations ? this.switchToOnlyMissingTranslations : (_: Key) => true);
+      const switchedKey: Key = this.transpilerService.getNextCheckableKey(this.keys, this.chosenKey, icrement, this.showMissingTranslations ? this.switchToOnlyMissingTranslations : this.switchOnKey);
 
       if (switchedKey) {
         this.showKeyTranslations(switchedKey);
-      } else {
-        alert('uff');
       }
 
     } else {
-      const switchedKey: Key = this.transpilerService.getFirstCheckableKey(this.keys, this.showMissingTranslations);
+      const switchedKey: Key = this.transpilerService.getFirstCheckableKey(this.keys, this.showMissingTranslations ? this.switchToOnlyMissingTranslations : this.switchOnKey);
       if (switchedKey) {
         this.showKeyTranslations(switchedKey);
-      } else {
-        alert('uff');
       }
     }
   }
 
+  /**
+  * Check if some subkey of a key has an empty value
+  */
   private switchToOnlyMissingTranslations(key: Key): boolean {
     return key.values.some(value => value.value == "");
   }
 
-  public openAddNewTranslationModal(): void {
-    this.languageService.getLanguages().subscribe(response => {
-      const component: ComponentRef<TranslationModalComponent> = this.modalService.createTranslationModal(
-        response.value,
-        this.translate.instant("TRANSLATION.ADD_TRANSLATION"),
-        this.translate.instant("MODAL.CREATE"),
-        this.translate.instant("MODAL.CANCEL"),
-        "btn btn-success");
-
-      component.instance.execute.subscribe((data: [boolean, Language, File]) => {
-        console.log(data);
-        if (data[0]) {
-          !this.translations.some((translation: Translation) => translation.language.id == data[1].id) ?
-            this.translationService.addTranslation(data[2], data[1].id, this.translationProjectId).subscribe(_ => this.loadTranslations())
-            : this.toastService.showToast(this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION_EXISTS"), this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION_EXISTS_DESC"), "alert-danger", "", 4500)
-        } else {
-          this.toastService.showToast(this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION"), this.translate.instant("GENERAL.CODE_ERROR_ADD_TRANSLATION_DESC"), "alert-danger", "", 4500)
-        }
-        component.destroy();
-      });
-    })
+  private switchOnKey(key: Key): boolean {
+    return true;
   }
 
-  public openDeleteTranslationModal(): void {
-    const component: ComponentRef<SelectModalComponent> = this.modalService.createSelectModal(
-      this.translations,
-      this.translate.instant("TRANSLATION.DELETE_TRANSLATION"),
-      this.translate.instant("MODAL.DELETE"),
-      this.translate.instant("MODAL.CANCEL"),
-      "btn btn-danger");
-
-    component.instance.execute.subscribe((data: [boolean, Translation]) => {
-      if (data[0]) {
-        this.translationService.deleteTranslation(data[1].id).subscribe(_ => this.loadTranslations());
-      } else {
-        this.toastService.showToast(this.translate.instant("GENERAL.CODE_ERROR_DELETE_TRANSLATION"), this.translate.instant("GENERAL.CODE_ERROR_DELETE_TRANSLATION_DESC"), "alert-danger", "", 4500)
-      }
-      component.destroy();
-    });
-  }
-
+  /**
+  * Download the translation (jsons) as a zip
+  */
   public downloadFileExample(): void {
     const jszip = new JSZip();
     this.translations.forEach((translation: Translation) => {
@@ -210,7 +249,11 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
     });
 
     jszip.generateAsync({ type: 'blob' }).then(function (content) {
-      FileSaver.saveAs(content, 'example.zip')
+      FileSaver.saveAs(content, 'translations.zip')
     });
+  }
+
+  ngOnDestroy(): void {
+    this.keySubscription.unsubscribe();
   }
 }

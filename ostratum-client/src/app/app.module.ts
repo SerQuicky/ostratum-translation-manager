@@ -11,7 +11,6 @@ import { TranslationsPageComponent } from './pages/translations-page/translation
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { AuthenticationService } from './services/communication/authentication/authentication.service';
 import { CommonCommunication } from './services/communication/common.communication';
 import { ProjectComponent } from './components/project/project.component';
 import { TranslationProjectComponent } from './components/translation-project/translation-project.component';

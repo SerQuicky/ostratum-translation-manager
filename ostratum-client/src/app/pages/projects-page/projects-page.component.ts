@@ -48,7 +48,7 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
           this.loadProjects();
         });
       }
-      component.destroy();
+      this.modalService.destroyModal(component);
     });
   }
 

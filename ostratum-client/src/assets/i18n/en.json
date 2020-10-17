@@ -88,7 +88,13 @@
         "KEYS": {
             "DE": "German",
             "EN": "English",
-            "FR": "French"
+            "FR": "French",
+            "PL": "Polish",
+            "NL": "Dutch",
+            "CS": "Czech",
+            "IT": "Italian",
+            "ES": "Spanish",
+            "RU": "Russian"
         }
     },
     "LOGIN": {
@@ -114,6 +120,7 @@
         "MANUAL_P3": " to switch between the translation keys",
         "FILTER": "Show only keys that have missing translations",
         "SAVE": "Save translations",
+        "DOWNLOAD": "Download translations",
         "ADD_TRANSLATION": "Add new translation",
         "DELETE_TRANSLATION": "Delete a translation"
     },
