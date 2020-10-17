@@ -20,7 +20,7 @@ export class TranslationModalComponent implements OnInit {
 
   public selectedLanguage: Language;
   public addEmptyLanguage: boolean = true;
-  public generatedFile: File = { name: "", file: "", type: "json", date: 0};
+  public generatedFile: File = { name: "", file: "", type: "json"};
 
   constructor(public translate: TranslateService, private toastService: ToastService) {}
 
@@ -30,7 +30,7 @@ export class TranslationModalComponent implements OnInit {
 
   public executeEmitter(): void {
     if(this.addEmptyLanguage && this.selectedLanguage)
-      this.generatedFile = { name: this.selectedLanguage.acronym.toLowerCase() + ".json", file: "{}", type: "json", date: 0};
+      this.generatedFile = { name: this.selectedLanguage.acronym.toLowerCase() + ".json", file: "{}", type: "json"};
 
     this.selectedLanguage && this.generatedFile.file != "" ?
     this.execute.emit([true, this.selectedLanguage, this.generatedFile])
@@ -43,7 +43,7 @@ export class TranslationModalComponent implements OnInit {
 
     // success handler after file read
     fileReader.onload = () => {
-      this.generatedFile = { name: event.target.files[0].name, file: fileReader.result + "", type: event.target.files[0].name.split(".")[1], date: 0 };
+      this.generatedFile = { name: event.target.files[0].name, file: fileReader.result + "", type: event.target.files[0].name.split(".")[1]};
     }
 
     // error handler after file read

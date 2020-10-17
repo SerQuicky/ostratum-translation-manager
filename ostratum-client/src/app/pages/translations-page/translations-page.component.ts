@@ -31,13 +31,15 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
 
   private translationProjectId: number;
   public translations: Translation[] = [];
+  public languages: Language[] = [];
+
+  // key data (chosen keys, all keys, etc.)
   public chosenKey: Key;
   public chosenKeyId: string = null;
   public keys: Key[] = [];
-  private languages: Language[] = [];
   private keySubscription: Subscription;
 
-
+  // translation keys filter and search
   public searchbarValue: string = "";
   public showMissingTranslations: boolean = false;
 
@@ -51,12 +53,14 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
     private languageService: LanguageService) { }
 
   ngOnInit(): void {
+    // retrieve the translation project id, so the translations of this project can be received
     this.translationProjectId = parseInt(this.route.snapshot.paramMap.get('tprojectId'));
+
+    // load all possible languages and get the current translations
     this.loadLanguages();
     this.loadTranslations();
 
     this.keySubscription = this.storageService.editKeySubject.subscribe(key => {
-      console.log(key);
       this.showKeyTranslations(key);
     });
   }
@@ -65,6 +69,12 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
     this.languageService.getLanguages().subscribe(response => this.languages = response.value);
   }
 
+
+  /**
+  * Create an image label.txt
+  * @param file_name name of the image for the label file name
+  * @param yolo_objects list of objects that were classified
+  */
   private loadTranslations(): void {
     this.translationService.getTranslations(this.translationProjectId).subscribe(reponse => {
       console.log(reponse);
@@ -93,7 +103,7 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
     let values: [number, string][] = [];
     this.storageService.updateTranslationCounter.next();
 
-    this.translations.forEach((translation: Translation)=> {
+    this.translations.forEach((translation: Translation) => {
       values.push([translation.id, JSON.stringify(this.transpilerService.keysToJSON(this.keys, translation.language.id))]);
     });
 
@@ -199,8 +209,7 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
       jszip.file(translation.language.acronym.toLowerCase() + ".json", JSON.stringify(this.transpilerService.keysToJSON(this.keys, translation.language.id)));
     });
 
-    jszip.generateAsync({ type: 'blob' }).then(function(content) {
-      // see FileSaver.js
+    jszip.generateAsync({ type: 'blob' }).then(function (content) {
       FileSaver.saveAs(content, 'example.zip')
     });
   }
