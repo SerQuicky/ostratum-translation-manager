@@ -1,7 +1,7 @@
 <div class="translations-container">
 
   <div class="translations-overview">
-    <div class="translation-container" *ngIf="keys.length != 0">
+    <div class="translation-container">
       <div class="static-content">
         <h5 class="sidebar-title">
           {{'TRANSLATION.TITLE' | translate}}
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="translation-content">
+      <div class="translation-content" *ngIf="keys && keys.length != 0">
         <div *ngFor="let key of keys | translationPipe:searchbarValue:showMissingTranslations;">
           <app-key [key]="key" [searchbarValue]="searchbarValue" [showMissingTranslations]="showMissingTranslations"
             [chosenKeyId]="chosenKeyId"></app-key>

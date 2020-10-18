@@ -28,7 +28,7 @@ export class TranslationProjectComponent implements OnInit {
   ngOnInit(): void {}
 
   private openTranslationProject(): void {
-    this.router.navigate(['main/translations', this.project.projectId]);
+    this.router.navigate(['main/translations', this.project.id]);
   }
 
   public resolveProjectClick(event: string): void {
@@ -55,7 +55,7 @@ export class TranslationProjectComponent implements OnInit {
 
     component.instance.execute.subscribe(success => {
       if (success) {
-        this.projectService.deleteTranslateProject(this.project.id).subscribe(response => {
+        this.projectService.deleteTranslationProject(this.project.id).subscribe(response => {
           this.toastService.determineToast(response, "TOAST.PROJECT_DELETED");
           this.storageService.updateProjectsSubject.next();
         });

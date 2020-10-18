@@ -15,8 +15,8 @@ export class LoginPageComponent implements OnInit {
   public username: string = "";
   public password: string = "";
 
-  constructor(private authService: AuthenticationService, 
-    public storageService: StorageService, 
+  constructor(private authService: AuthenticationService,
+    public storageService: StorageService,
     private router: Router,
     public translate: TranslationService) { }
 
@@ -25,8 +25,9 @@ export class LoginPageComponent implements OnInit {
   }
 
   public signIn(): void {
-    this.authService.authenticate("Administrator", "A12").subscribe(response => {
-      localStorage.setItem("username", "Test");
+    //this.authService.authenticate("Administrator", "A12").subscribe(response => {
+    this.authService.authenticate(this.username, this.password).subscribe(response => {
+      localStorage.setItem("username", this.username);
       localStorage.setItem("aot", response.value[0]);
       localStorage.setItem("state", response.value[1]);
       this.storageService.adminState = JSON.parse(response.value[1]);

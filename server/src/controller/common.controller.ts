@@ -10,7 +10,7 @@ export class CommonController {
     public findSuccess(res: Response): (result: Promise<ServerResponse<any>>) => void {
         return (result: any) => {
             res.status(200);
-            res.json({code: 200, message: "GENERAL.FIND_SUCCESS", value: result});
+            res.json({ code: 200, message: "GENERAL.FIND_SUCCESS", value: result });
         }
     }
 
@@ -31,13 +31,13 @@ export class CommonController {
     public authenticate(res: Response): (result: ServerResponse<[String, String]>) => void {
         return (data: any) => {
             bcrypt.compare(data.password, data.result.password, function (err: any, result: boolean) {
-                if (err) {
-                    res.status(500);
-                    res.json({ actionSuccess: false });
+                if (err || !result) {
+                    res.status(200);
+                    res.json({ code: 500, message: "GENERAL.CODE_WRONG_OLD_PASSWORD", result: [] });
+                } else {
+                    res.status(200);
+                    res.json({ code: 200, message: "GENERAL.SUCCESS_SIGN_IN", value: [data.token, data.admin] });
                 }
-
-                res.status(200);
-                res.json({ code: 200, message: "GENERAL.SUCCESS_SIGN_IN", value: [data.token, data.admin] });
             });
         }
     }

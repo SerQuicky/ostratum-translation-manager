@@ -30,7 +30,7 @@ export class TranslationProjectRoutes {
         });
 
         this.app.post('/deleteTranslationProject', (req: Request, res: Response) => {
-            this.session.verifyAdmin(req.headers['authorization']).then(_ => this.translationProjectController.deleteTranslateProject(req, res)).catch(_ => new InvalidTokenError(res))
+            this.session.verifyAdmin(req.headers['authorization']).then(_ => this.translationProjectController.deleteTranslationProject(req, res)).catch(_ => new InvalidTokenError(res))
         });
     }
 }

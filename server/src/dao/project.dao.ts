@@ -12,7 +12,6 @@ export class ProjectDao {
 
     public getProjects(): Promise<any> {
         return this.commonDao.read("SELECT * FROM projects;", {}).then(rows => {
-            console.log(rows);
             let projects: Project[] = [];
 
             for (const project of rows) {
@@ -23,7 +22,6 @@ export class ProjectDao {
                         description: project.description
                     });
             }
-            console.log(projects);
             return projects;
         })
     }
@@ -49,7 +47,6 @@ export class ProjectDao {
 
     public async addProject(name: string, description: string): Promise<any> {
         const response = await this.commonDao.write("INSERT INTO projects (name, description) VALUES (?, ?)", [name, description]);
-        console.log(response);
         return response.result ? 
             this.commonDao.write("INSERT INTO role_projects (roleID, projectID) VALUES (1, $projectId), (2, $projectId)", {$projectId: response.result[0]['lastID']})
             : new Promise((resolve, reject) => resolve({code: 500, message: "ERROR_PROJECT_ADD", value: []}));
@@ -61,7 +58,6 @@ export class ProjectDao {
     }
 
     public updateProject(id: number, newName: string, description: string): Promise<any> {
-        console.log(id + " " + newName + " " + description);
         let sqlRequest = "UPDATE projects SET name = $newName, description = $description WHERE id = $id";
         return this.commonDao.write(sqlRequest, { $id: id, $newName: newName, $description: description });
     }

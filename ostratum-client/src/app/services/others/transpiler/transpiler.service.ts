@@ -35,8 +35,6 @@ export class TranspilerService {
       keys.push(this.transpileJSON(section.json, section.language, "id"));
     });
 
-    console.log(keys);
-
 
     // unify the generated data structures as one
     for (let u = 1; u < keys.length; u++) {
@@ -160,7 +158,6 @@ export class TranspilerService {
   */
   public getFirstCheckableKey(keys: Key[], func: (key: Key) => boolean): Key {
     const keyList: Key[] = this.keysToDimensionList(keys);
-    console.log(keyList);
     for (let i = 0; i < keyList.length; i++) {
       if (!keyList[i].holder && func(keyList[i])) {
         return keyList[i];

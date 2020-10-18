@@ -55,6 +55,8 @@ export class UserDao {
                 token = await session.add(adminRole, user.username);
             }
 
+            console.log(user)
+
             return {result: user, password: password, token: token, admin: adminRole};
         });
     }

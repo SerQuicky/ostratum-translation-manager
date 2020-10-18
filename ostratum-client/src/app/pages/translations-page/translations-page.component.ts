@@ -82,8 +82,8 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
   * Get, Save and Convert the translations to a key tree data structure
   */
   private loadTranslations(): void {
-    this.translationService.getTranslations(this.translationProjectId).subscribe(reponse => {
-      this.translations = reponse.value;
+    this.translationService.getTranslations(this.translationProjectId).subscribe(response => {
+      this.translations = response.value ? response.value : [];
 
       // set sections for the convertion
       let sections: Section[] = [];
@@ -93,7 +93,6 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
 
       // unify and convert the all translation into the key data structure
       this.keys = this.transpilerService.unifyAndTranspileJSONs(sections);
-      console.log(this.keys);
     });
   }
 
@@ -196,7 +195,6 @@ export class TranslationsPageComponent implements OnInit, OnDestroy {
   */
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    console.log(event.key);
     if (event.key === "ArrowUp") {
       this.selectKeyByKeyboard(-1);
     } else if (event.key === "ArrowDown") {

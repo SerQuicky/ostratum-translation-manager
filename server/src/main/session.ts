@@ -83,16 +83,12 @@ export class Session {
     public remove(token?: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
             this.jwts = this.jwts.filter(jwt => jwt.token != token);
-            console.log(this.jwts);
             resolve(true);
         })
     }
 
     public getUsernameByToken(token?: string): string {
-        console.log(token);
-        console.log(this.jwts);
         const jwt: JWT | undefined = this.jwts.find(jwt => jwt.token == token);
-        console.log(jwt);
         return jwt ? jwt.username : "";
     }
 

@@ -38,7 +38,7 @@ export class TranslationProjectDao {
         return this.commonDao.write(sqlRequest, { $id: id, $name: name, $description: description });
     }
 
-    public deleteTranslateProject(id: number): Promise<any> {
+    public deleteTranslationProject(id: number): Promise<any> {
         let sqlRequest = "DELETE FROM translation_projects WHERE id = $id";
         return this.commonDao.write(sqlRequest, { $id: id });
     }

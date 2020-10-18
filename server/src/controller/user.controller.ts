@@ -24,7 +24,6 @@ export class UserController {
     }
 
     public async authenticate(session: Session, req: Request, res: Response): Promise<void> {
-
         this.userDao.authenticate(session, true, req.body.username, req.body.password)
             .then(this.commonController.authenticate(res))
             .catch(this.commonController.serverError(res));

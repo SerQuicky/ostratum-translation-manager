@@ -46,7 +46,7 @@ export class ProjectService {
     return this.common.postRequest<any>("updateTranslationProject", {id: project.id, name: project.name, description: project.description});
   }
 
-  public deleteTranslateProject(id: number): Observable<ServerResponse<any>> {
-    return this.common.postRequest<any>("deleteTranslateProject", {id: id});
+  public deleteTranslationProject(id: number): Observable<ServerResponse<any>> {
+    return this.common.postRequest<any>("deleteTranslationProject", {id: id});
   }
 }

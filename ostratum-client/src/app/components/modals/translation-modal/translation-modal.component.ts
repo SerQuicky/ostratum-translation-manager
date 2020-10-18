@@ -24,9 +24,7 @@ export class TranslationModalComponent implements OnInit {
 
   constructor(public translate: TranslateService, private toastService: ToastService) {}
 
-  ngOnInit(): void {
-    console.log(this.languages);
-  }
+  ngOnInit(): void {}
 
   public executeEmitter(): void {
     if(this.addEmptyLanguage && this.selectedLanguage)

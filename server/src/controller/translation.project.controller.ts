@@ -31,8 +31,8 @@ export class TranslationProjectController {
             .catch(this.commonController.serverError(res));
     }
 
-    public deleteTranslateProject(req: Request, res: Response): void {
-        this.translationProject.deleteTranslateProject(req.body.id)
+    public deleteTranslationProject(req: Request, res: Response): void {
+        this.translationProject.deleteTranslationProject(req.body.id)
             .then(this.commonController.writeResult(res))
             .catch(this.commonController.serverError(res));
     }
