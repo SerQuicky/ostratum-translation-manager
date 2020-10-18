@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogModalComponent } from './dialog-modal.component';
 
-describe('DialogModalComponent', () => {
+// currently not used
+
+/* describe('DialogModalComponent', () => {
   let component: DialogModalComponent;
   let fixture: ComponentFixture<DialogModalComponent>;
 
@@ -22,4 +24,4 @@ describe('DialogModalComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+}); */

@@ -2,7 +2,9 @@ import { TestBed } from '@angular/core/testing';
 
 import { TranslationService } from './translation.service';
 
-describe('TranslationService', () => {
+// currently not used
+
+/* describe('TranslationService', () => {
   let service: TranslationService;
 
   beforeEach(() => {
@@ -13,4 +15,4 @@ describe('TranslationService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-});
+}); */

@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { KeyComponent } from './key.component';
 
-describe('KeyComponent', () => {
+// currently not used
+
+/* describe('KeyComponent', () => {
   let component: KeyComponent;
   let fixture: ComponentFixture<KeyComponent>;
 
@@ -22,4 +24,4 @@ describe('KeyComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+}); */

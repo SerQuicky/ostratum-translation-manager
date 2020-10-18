@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoaderModalComponent } from './loader-modal.component';
 
-describe('LoaderModalComponent', () => {
+// currently not used
+
+/* describe('LoaderModalComponent', () => {
   let component: LoaderModalComponent;
   let fixture: ComponentFixture<LoaderModalComponent>;
 
@@ -22,4 +24,4 @@ describe('LoaderModalComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+}); */

@@ -129,26 +129,9 @@ export class TranspilerService {
   }
 
   /* ---------------------------------------------------------------------------------------------------
-  *                       Key handling (update, iterate, etc.)
+  *                       Key handling (iterate, etc.)
   * --------------------------------------------------------------------------------------------------- */
 
-  /**
-  * update a key in a key list
-  * @param keys list of all keys that contains the key that should be updated
-  * @param key new key
-  * @return updated key list
-  */
-  public updateKey(keys: Key[], key: Key): Key[] {
-    keys.forEach(subKey => {
-      if (subKey.holder) {
-        subKey.keys = this.updateKey(subKey.keys, key);
-      } else if (subKey.id == key.id) {
-        subKey = key;
-      }
-    })
-
-    return keys;
-  }
 
   /**
   * update a key in a key list
@@ -176,6 +159,7 @@ export class TranspilerService {
   public getNextCheckableKey(keys: Key[], chosenKey: Key, increment: number, func: (key: Key) => boolean): Key {
     const keyList: Key[] = this.keysToDimensionList(keys);
     let index: number = keyList.indexOf(chosenKey);
+    console.log(index);
     for (let i = index; i < keyList.length && i >= 0; i += increment) {
       if (keyList[i] && !keyList[i].holder && i != index && func(keyList[i])) {
         return keyList[i];

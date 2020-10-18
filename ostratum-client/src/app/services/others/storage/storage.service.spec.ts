@@ -2,7 +2,9 @@ import { TestBed } from '@angular/core/testing';
 
 import { StorageService } from './storage.service';
 
-describe('StorageService', () => {
+// currently not used
+
+/* describe('StorageService', () => {
   let service: StorageService;
 
   beforeEach(() => {
@@ -13,4 +15,4 @@ describe('StorageService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-});
+}); */

@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TranslationProjectsPageComponent } from './translation-projects-page.component';
 
-describe('TranslationProjectsPageComponent', () => {
+// currently not used
+
+/* describe('TranslationProjectsPageComponent', () => {
   let component: TranslationProjectsPageComponent;
   let fixture: ComponentFixture<TranslationProjectsPageComponent>;
 
@@ -22,4 +24,4 @@ describe('TranslationProjectsPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+}); */

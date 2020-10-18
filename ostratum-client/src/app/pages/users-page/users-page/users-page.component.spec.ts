@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersPageComponent } from './users-page.component';
 
-describe('UsersPageComponent', () => {
+// currently not used
+
+/* describe('UsersPageComponent', () => {
   let component: UsersPageComponent;
   let fixture: ComponentFixture<UsersPageComponent>;
 
@@ -22,4 +24,4 @@ describe('UsersPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+}); */

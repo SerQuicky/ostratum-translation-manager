@@ -2,7 +2,9 @@ import { TestBed } from '@angular/core/testing';
 
 import { ToastService } from './toast.service';
 
-describe('ToastService', () => {
+// currently not used
+
+/* describe('ToastService', () => {
   let service: ToastService;
 
   beforeEach(() => {
@@ -13,4 +15,4 @@ describe('ToastService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-});
+}); */

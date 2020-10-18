@@ -2,7 +2,9 @@ import { TestBed } from '@angular/core/testing';
 
 import { ModalService } from './modal.service';
 
-describe('ModalService', () => {
+// currently not used
+
+/* describe('ModalService', () => {
   let service: ModalService;
 
   beforeEach(() => {
@@ -13,4 +15,4 @@ describe('ModalService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-});
+}); */

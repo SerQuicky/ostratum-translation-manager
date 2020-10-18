@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LanguageModalComponent } from './language-modal.component';
 
-describe('LanguageModalComponent', () => {
+// currently not used
+
+/* describe('LanguageModalComponent', () => {
   let component: LanguageModalComponent;
   let fixture: ComponentFixture<LanguageModalComponent>;
 
@@ -22,4 +24,4 @@ describe('LanguageModalComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+}); */
