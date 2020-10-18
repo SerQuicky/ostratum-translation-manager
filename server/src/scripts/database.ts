@@ -1,33 +1,15 @@
 import { Database } from 'sqlite3'
-import { ExampleDatabaseScript } from '../scripts/database';
 
-export class Connector {
+export class ExampleDatabaseScript { 
 
     private database: Database;
-    private script: ExampleDatabaseScript;
 
-    constructor() {
-        this.database = new Database('./sqlite.db', async (err) => {
-            if (err) {
-                console.error(err.message);
-            }
-        });
-
-        this.script = new ExampleDatabaseScript(this.database);
-        this.initScript();
+    constructor(private _database: Database) {
+        this.database = _database;
     }
 
-    private async initScript() {
-        await this.script.initTables();
 
-        if(process.argv[2] == "example") {
-            await this.script.initExampleData();
-        } else if (process.argv[2] == "base") {
-            await this.script.initBaseData();
-        }
-    }
-
-    private createTables(): Promise<any> {
+    public initTables(): Promise<any> {
         return new Promise(async (resolve, reject) => {
 
             await this.executeRequest("CREATE TABLE if not exists users (" +
@@ -95,6 +77,35 @@ export class Connector {
                 " FOREIGN KEY(languageID) REFERENCES languages(id) " +
                 " FOREIGN KEY(languageID) REFERENCES translation_projects(id) " +
                 ")");
+
+            resolve();
+        });
+    }
+
+    public initBaseData(): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            await this.executeRequest("INSERT INTO roles (name) VALUES ('admin'), ('normal') ");
+            await this.executeRequest("INSERT INTO users (username, password) VALUES ('Administrator', '$2b$10$tB7Dm2swpVZGJODPhgKdlukB0sdcPFXAx8DY0D1qOgaG9tu/mOgva') ");
+            await this.executeRequest("INSERT INTO user_roles (userID, roleID) VALUES (1, 1) ");
+        });
+    }
+
+    public initExampleData(): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            // user and roles
+            await this.executeRequest("INSERT INTO roles (name) VALUES ('admin'), ('normal') ");
+            await this.executeRequest("INSERT INTO users (username, password) VALUES ('Administrator', '$2b$10$yI1EWvrkiuUkDJo/fu8GPOBD1B/5iBhtlivwInMHx3H6n/A1QjMKG'), ('Test', '$2b$10$yI1EWvrkiuUkDJo/fu8GPOBD1B/5iBhtlivwInMHx3H6n/A1QjMKG'), ('Translator', '$2b$10$yI1EWvrkiuUkDJo/fu8GPOBD1B/5iBhtlivwInMHx3H6n/A1QjMKG') ");
+            await this.executeRequest("INSERT INTO user_roles (userID, roleID) VALUES (1, 1), (2, 2), (3, 2) ");
+            
+            // projects and view rights
+            await this.executeRequest("INSERT INTO projects (name, description) VALUES ('Apps', 'This is the first description.'), ('Games', 'This is the second description.'), ('Documents', 'This is the third description.') ");
+            await this.executeRequest("INSERT INTO translation_projects (name, projectID, description) VALUES ('First App', 1, 'This is a description for first app.'), ('Second App', 1, 'This is a description for the second app.'), ('Third App', 1, 'This is a description for the third app.') ");
+            await this.executeRequest("INSERT INTO role_projects (roleID, projectID) VALUES (2, 1), (2, 2), (2, 3) ");
+
+            // language and translation files
+            await this.executeRequest("INSERT INTO languages (name, acronym) VALUES ('English', 'EN'), ('German', 'DE'), ('French', 'FR') ");
+            await this.executeRequest("INSERT INTO translations (fileName, file, type, date, languageID, projectID) VALUES ('en.json', '" + JSON.stringify({"GENERAL": {"APP": "HELLO"} }) + "', 'json', 20200921143000, 1, 1), ('de.json', '" + JSON.stringify({"GENERAL": {"APP": "HALLO"} }) + "', 'json', 20200921143000, 2, 1)");
+
 
             resolve();
         });
