@@ -15,7 +15,7 @@ export class TranslationDao {
         return this.commonDao.read("SELECT translations.id as tID, languages.id as lID, * FROM translations JOIN languages ON translations.languageID = languages.id WHERE projectID = $projectId;", { $projectId: projectId }).then(rows => {
             let translations: Translation[] = [];
 
-            for (const translation of rows) {
+            for (const translation of rows.result) {
                 translations.push(
                     {
                         id: translation.tID,
@@ -42,7 +42,7 @@ export class TranslationDao {
             for(let i = 0; i < values.length; i++) {
                 await this.updateTranslation(values[i][0], values[i][1])
             }
-            resolve({code: 200, message: "GENERAL.CODE_WRITE_SUCCESS", result: []});
+            resolve({code: 200, title: "GENERAL.CODE_WRITE_SUCCESS_TITLE", message: "GENERAL.CODE_WRITE_SUCCESS", result: []});
         });
     }
 

@@ -11,10 +11,8 @@ export class ToastService {
 
   constructor(private translate: TranslateService) { }
 
-  public determineToast(response: ServerResponse<any>, description?: string): void {
-    response.code == 200 ? 
-      this.showToast(this.translate.instant("GENERAL.SUCCESS_TOAST"), this.translate.instant(description ? description : response.message), "alert-success", "", 4000)
-      : this.showToast(this.translate.instant("GENERAL.ERROR_TOAST"), this.translate.instant(response.message), "alert-danger", "", 4000);
+  public determineToast(response: ServerResponse<any>, timer?: number): void {
+    this.showToast(this.translate.instant(response.title), this.translate.instant(response.message), response.code == 200 ? "alert-success" : "alert-danger", "", timer ? timer : 4000);
   }
 
   public showToast(title: string, message: string, alertType: string, fillType: string, timer: number): void {

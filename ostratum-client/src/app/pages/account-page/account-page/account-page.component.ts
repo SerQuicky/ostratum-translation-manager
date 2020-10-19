@@ -27,7 +27,6 @@ export class AccountPageComponent implements OnInit {
 
   public changePassword(): void {
     this.authenticationService.changePassword(this.username, this.oldPassword, this.newPassword).subscribe(res => {
-      this.toastService.determineToast(res);
     });
   }
 }

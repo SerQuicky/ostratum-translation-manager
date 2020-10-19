@@ -14,7 +14,7 @@ export class ProjectDao {
         return this.commonDao.read("SELECT * FROM projects;", {}).then(rows => {
             let projects: Project[] = [];
 
-            for (const project of rows) {
+            for (const project of rows.result) {
                 projects.push(
                     {
                         id: project.id,
@@ -32,7 +32,7 @@ export class ProjectDao {
         return this.commonDao.read(sqlRequest, { $username: username }).then(rows => {
             let projects: Project[] = [];
 
-            for (const project of rows) {
+            for (const project of rows.result) {
                 projects.push(
                     {
                         id: project.prID,
@@ -49,7 +49,7 @@ export class ProjectDao {
         const response = await this.commonDao.write("INSERT INTO projects (name, description) VALUES (?, ?)", [name, description]);
         return response.result ? 
             this.commonDao.write("INSERT INTO role_projects (roleID, projectID) VALUES (1, $projectId), (2, $projectId)", {$projectId: response.result[0]['lastID']})
-            : new Promise((resolve, reject) => resolve({code: 500, message: "ERROR_PROJECT_ADD", value: []}));
+            : new Promise((resolve, reject) => resolve({code: 500, title: "CODE_ERROR_WRITE_ARGUMENT_TITLE", message: "CODE_ERROR_WRITE_ARGUMENT", value: []}));
     }
 
     public addRoleToProject(roleID: number, projectID: number): Promise<any> {

@@ -67,9 +67,10 @@ export class CommonCommunication {
      * validate the response, if it contains a specific error code display a toast message
      */
     public validateReponse<T>(response: ServerResponse<T>): void {
-        if (response.code == 400) {
-            this.router.navigate(['/']);
+        if(response.code === 200 || response.code > 300) {
             this.toastService.determineToast(response);
+            if (response.code == 400)
+                this.router.navigate(['/']);
         }
     }
 }

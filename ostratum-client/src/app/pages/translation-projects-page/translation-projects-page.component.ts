@@ -46,7 +46,6 @@ export class TranslationProjectsPageComponent implements OnInit, OnDestroy {
       if (data[0]) {
         const project: TranslationProject = data[1];
         this.projectService.addTranslationProject(project.name, project.description, project.projectId).subscribe(res => {
-          this.toastService.determineToast(res, "TOAST.PROJECT_CREATED");
           this.loadTranslationProjects();
         });
       }

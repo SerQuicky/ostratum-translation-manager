@@ -1,15 +1,36 @@
 {
     "GENERAL": {
-        "SUCCESS_TOAST": "Operation war erfolgreich",
-        "ERROR_TOAST": "Operation fehlgeschlagen",
         "SUCCESS_SIGN_IN": "Sie haben sich erfolgreich angemeldet",
-        "SIGN_OUT_SUCCESS": "YSie wurden erfolgreich abgemeldet",
         "FIND_SUCCESS": "Daten wurden gefunden",
+
+        "SIGN_OUT_SUCCESS_TITLE": "Abmeldung erfolreich",
+        "SIGN_OUT_SUCCESS": "Die Abmeldung war erfolreich",
+
+        "CODE_WRONG_PASSWORD_TITLE": "Passwort ist falsch",
+        "CODE_WRONG_PASSWORD": "Das angegebene Passwort und der Benutzername passen nicht überein",
+
+        "UNKNOWN_ACCOUNT_TITLE": "Unbekannter Benutzername",
+        "UNKNOWN_ACCOUNT": "Der angegebene Benutzername ist dem System nicht bekannt",
+        
+        "CODE_PASSWORD_CHANGED_TITLE": "Passwort geändert",
         "CODE_PASSWORD_CHANGED": "Das Passwort wurde erfolgreich verändert",
+
+        "CODE_WRONG_OLD_PASSWORD_TITLE": "Passwort nicht geändert",
         "CODE_WRONG_OLD_PASSWORD": "Das Passwort konnte nicht verändert werden, überprüfen sie, ob ihre Angaben richtig waren.",
-        "CODE_WRITE_SUCCESS": "Operation war erfolgreich",
-        "CODE_ERROR_WRITE_ENTITIY": "Die Operation konnte nicht durchgeführt werden",
+
+        "CODE_WRITE_SUCCESS_TITLE": "Operation war erfolgreich",
+        "CODE_WRITE_SUCCESS": "Die ausgeführte Operation war erfolgreich",
+
+
+        "CODE_ERROR_WRITE_ENTITIY_TITLE": "Operation war nicht erfolgreich",
+        "CODE_ERROR_WRITE_ENTITIY": "Die Operation konnte nicht durchgeführt werden, überprüfen sie die angegebenen Werte.",
+
+        "CODE_ERROR_WRITE_ARGUMENT_TITLE": "Fehlerhafte Argument",
         "CODE_ERROR_WRITE_ARGUMENT": "Die übergebenen Argumente sind fehlerhaft",
+
+        "TOKEN_EXPIRED_OR_INVALID_TITLE": "Token invalid",
+        "TOKEN_EXPIRED_OR_INVALID": "Der Authentifizierungs-Token ist abgelaufen oder fehlerheft, sie werden sicherheitshalber abgemeldet.",
+
         "CODE_ERROR_FILE_READ": "Datei ist fehlerhaft",
         "CODE_ERROR_FILE_READ_DESC": "Die ausgewählte Datei konnte nicht gelesen werden, bitte wählen sie eine andere Datei aus.",
         "CODE_ERROR_ADD_TRANSLATION": "Übersetzung konnte nicht erstellt werden",

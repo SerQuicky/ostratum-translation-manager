@@ -46,7 +46,6 @@ export class UsersPageComponent implements OnInit {
       if (data[0]) {
         const user: User = data[1];
         this.authenticationService.register(user.username, user.password).subscribe(res => {
-          this.toastService.determineToast(res, "TOAST.USER_CREATED");
           this.loadUsers();
         });
       }
@@ -65,7 +64,6 @@ export class UsersPageComponent implements OnInit {
     component.instance.execute.subscribe(success => {
       if (success) {
         this.authenticationService.deleteUser(user.id).subscribe(response => {
-          this.toastService.determineToast(response, "TOAST.USER_DELETED");
           this.loadUsers();
         });
       }
@@ -84,7 +82,6 @@ export class UsersPageComponent implements OnInit {
       if (data[0]) {
         const user: User = data[1];
         this.authenticationService.updateUser(user).subscribe(res => {
-          this.toastService.determineToast(res, "TOAST.USER_UPDATED");
           this.loadUsers();
         });
       }

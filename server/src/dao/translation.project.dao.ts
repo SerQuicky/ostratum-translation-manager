@@ -13,7 +13,7 @@ export class TranslationProjectDao {
         return this.commonDao.read("SELECT * FROM translation_projects WHERE projectID = $projectId;", {$projectId: projectId}).then(rows => {
             let lprojects: TranslationProject[] = [];
 
-            for (const lproject of rows) {
+            for (const lproject of rows.result) {
                 lprojects.push(
                     {
                         id: lproject.id,

@@ -13,7 +13,7 @@ export class LanguageDao {
         return this.commonDao.read("SELECT * FROM languages;", {}).then(rows => {
             let languages: Language[] = [];
 
-            for (const language of rows) {
+            for (const language of rows.result) {
                 languages.push(
                     {
                         id: language.id,

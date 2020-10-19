@@ -10,7 +10,7 @@ export class CommonController {
     public findSuccess(res: Response): (result: Promise<ServerResponse<any>>) => void {
         return (result: any) => {
             res.status(200);
-            res.json({ code: 200, message: "GENERAL.FIND_SUCCESS", value: result });
+            res.json({ code: 201, title: "GENERAL.FIND_SUCCESS_TITLE", message: "GENERAL.FIND_SUCCESS", value: result });
         }
     }
 
@@ -30,15 +30,20 @@ export class CommonController {
 
     public authenticate(res: Response): (result: ServerResponse<[String, String]>) => void {
         return (data: any) => {
-            bcrypt.compare(data.password, data.result.password, function (err: any, result: boolean) {
-                if (err || !result) {
-                    res.status(200);
-                    res.json({ code: 500, message: "GENERAL.CODE_WRONG_OLD_PASSWORD", result: [] });
-                } else {
-                    res.status(200);
-                    res.json({ code: 200, message: "GENERAL.SUCCESS_SIGN_IN", value: [data.token, data.admin] });
-                }
-            });
+            if (data.state) {
+                bcrypt.compare(data.password, data.result.password, function (err: any, result: boolean) {
+                    if (err || !result) {
+                        res.status(200);
+                        res.json({ code: 500, title: "GENERAL.CODE_WRONG_PASSWORD_TITLE", message: "GENERAL.CODE_WRONG_PASSWORD", result: [] });
+                    } else {
+                        res.status(200);
+                        res.json({ code: 200, title: "GENERAL.SUCCESS_SIGN_IN", message: "GENERAL.SUCCESS_SIGN_IN", value: [data.token, data.admin] });
+                    }
+                });
+            } else {
+                res.status(200);
+                res.json({ code: 500, title: "GENERAL.UNKNOWN_ACCOUNT_TITLE", message: "GENERAL.UNKNOWN_ACCOUNT", result: [] });
+            }
         }
     }
 
@@ -49,8 +54,8 @@ export class CommonController {
                     reject(err)
                 }
                 result ?
-                    resolve({ code: 200, message: "GENERAL.CODE_PASSWORD_CHANGED", result: [] })
-                    : reject({ code: 500, message: "GENERAL.CODE_WRONG_OLD_PASSWORD", result: [] });
+                    resolve({ code: 200, title: "GENERAL.CODE_PASSWORD_CHANGED_TITLE", message: "GENERAL.CODE_PASSWORD_CHANGED", result: [] })
+                    : reject({ code: 500, title: "GENERAL.CODE_WRONG_OLD_PASSWORD_TITLE", message: "GENERAL.CODE_WRONG_OLD_PASSWORD", result: [] });
             });
         });
     }

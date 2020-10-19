@@ -17,19 +17,19 @@ export class CommonDao {
     }
 
     // read request are requests that does not change the dabase entries
-    public read(sqlRequest: string, sqlParams: any): Promise<any> {
+    public read(sqlRequest: string, sqlParams: any): Promise<ServerResponse<any>> {
         return new Promise((resolve, reject) => {
             this.database.all(sqlRequest, sqlParams, function (err: any, rows: any) {
                 if (err) {
                     reject(
-                        new DaoError(20, "Internal server error")
+                        resolve({code: 500, title: "GENERAL.READ_FAILED_TITLE", message: "GENERAL.READ_FAILED", result: []})
                     );
                 } else if (rows === null || rows.length === 0) {
                     reject(
-                        new DaoError(21, "Entity not found")
+                        resolve({code: 500, title: "GENERAL.READ_FAILED_TITLE", message: "GENERAL.READ_FAILED", result: []})
                     );
                 } else {
-                    resolve(rows);
+                    resolve({code: 201, title: "GENERAL.READ_SUCCESS_TITEL", message: "GENERAL.READ_SUCCESS", result: rows})
                 }
             })
         })
@@ -41,14 +41,14 @@ export class CommonDao {
             let stmt: Statement = this.database.prepare(sqlRequest);
             stmt.run(sqlParams, function (err: any) {
                 if (this.changes >= 1) {
-                    resolve({code: 200, message: "GENERAL.CODE_WRITE_SUCCESS", result: [{lastID: this.lastID}]});
+                    resolve({code: 200, title: "GENERAL.CODE_WRITE_SUCCESS_TITLE", message: "GENERAL.CODE_WRITE_SUCCESS", result: [{lastID: this.lastID}]});
                 } else if (this.changes === 0) {
                     reject(
-                        {code: 500, message: "GENERAL.CODE_ERROR_WRITE_ENTITIY", result: []}
+                        {code: 500, title: "GENERAL.CODE_ERROR_WRITE_ENTITIY_TITLE", message: "GENERAL.CODE_ERROR_WRITE_ENTITIY", result: []}
                     )
                 } else {
                     reject(
-                        {code: 500, message: "GENERAL.CODE_ERROR_WRITE_ARGUMENT", result: []}
+                        {code: 500, title: "GENERAL.CODE_ERROR_WRITE_ARGUMENT_TITLE", message: "GENERAL.CODE_ERROR_WRITE_ARGUMENT", result: []}
                     )
                 }
             })

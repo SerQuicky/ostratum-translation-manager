@@ -40,7 +40,6 @@ export class LanguagePageComponent implements OnInit {
       if (data[0]) {
         const language: Language = data[1];
         this.languageService.addLanguage(language.name, language.acronym).subscribe(res => {
-          this.toastService.determineToast(res, "TOAST.LANGUAGE_CREATED");
           this.loadLanguages();
         });
       }
@@ -60,7 +59,6 @@ export class LanguagePageComponent implements OnInit {
       if (data[0]) {
         const language: Language = data[1];
         this.languageService.updateLanguage(language).subscribe(res => {
-          this.toastService.determineToast(res, "TOAST.LANGUAGE_DELETED");
           this.loadLanguages();
         });
       }
@@ -79,7 +77,6 @@ export class LanguagePageComponent implements OnInit {
     component.instance.execute.subscribe(success => {
       if (success) {
         this.languageService.deleteLanguage(language.id).subscribe(response => {
-          this.toastService.determineToast(response, "TOAST.LANGUAGE_UPDATED");
           this.loadLanguages();
         });
       }

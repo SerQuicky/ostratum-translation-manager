@@ -14,14 +14,14 @@ export class ExampleDatabaseScript {
 
             await this.executeRequest("CREATE TABLE if not exists users (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " username TEXT," +
-                " password TEXT," +
+                " username TEXT CHECK(username <> '')," +
+                " password TEXT CHECK(password <> '')," +
                 " UNIQUE(username) " +
                 ")");
 
             await this.executeRequest("CREATE TABLE if not exists roles (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " name TEXT," +
+                " name TEXT CHECK(name <> '')," +
                 " UNIQUE(name) " +
                 ")");
 
@@ -35,7 +35,7 @@ export class ExampleDatabaseScript {
 
             await this.executeRequest("CREATE TABLE if not exists projects (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " name TEXT," +
+                " name TEXT CHECK(name <> '')," +
                 " description TEXT," +
                 " UNIQUE(name) " +
                 ")");
@@ -50,7 +50,7 @@ export class ExampleDatabaseScript {
 
             await this.executeRequest("CREATE TABLE if not exists translation_projects (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " name TEXT," +
+                " name TEXT CHECK(name <> '')," +
                 " projectID INTEGER," +
                 " description TEXT," +
                 " UNIQUE(name, projectID), " +
@@ -59,8 +59,8 @@ export class ExampleDatabaseScript {
 
             await this.executeRequest("CREATE TABLE if not exists languages (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " name TEXT," +
-                " acronym TEXT," +
+                " name TEXT CHECK(name <> '')," +
+                " acronym TEXT CHECK(acronym <> '')," +
                 " UNIQUE(name), " +
                 " UNIQUE(acronym) " +
                 ")");
@@ -68,7 +68,7 @@ export class ExampleDatabaseScript {
             await this.executeRequest("CREATE TABLE if not exists translations (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " fileName TEXT," +
-                " file TEXT," +
+                " file TEXT CHECK(file <> '')," +
                 " type TEXT," +
                 " date INTEGER," + 
                 " languageID INTEGER," +

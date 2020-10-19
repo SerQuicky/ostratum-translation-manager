@@ -1,15 +1,35 @@
 {
     "GENERAL": {
-        "SUCCESS_TOAST": "Operation was successful",
-        "ERROR_TOAST": "Operation failed",
         "SUCCESS_SIGN_IN": "You have successfully signed in",
-        "SIGN_OUT_SUCCESS": "You were succesfully signed out",
         "FIND_SUCCESS": "Date were found",
+
+        "SIGN_OUT_SUCCESS_TITLE": "Check out",
+        "SIGN_OUT_SUCCESS": "The check out was successful",
+
+        "CODE_WRONG_PASSWORD_TITLE": "Password wrong",
+        "CODE_WRONG_PASSWORD": "The specified password and user name do not match",
+
+        "UNKNOWN_ACCOUNT_TITLE": "Unknown username",
+        "UNKNOWN_ACCOUNT": "The specified username is not known to this machine",
+        
+        "CODE_PASSWORD_CHANGED_TITLE": "Password changed",
         "CODE_PASSWORD_CHANGED": "The password was successfully changed",
-        "CODE_WRONG_OLD_PASSWORD": "The password could not be changed, please check your information.",
-        "CODE_WRITE_SUCCESS": "Operation was successful",
-        "CODE_ERROR_WRITE_ENTITIY": "Die Operation did not execute",
-        "CODE_ERROR_WRITE_ARGUMENT": "The resolved arguments were wrong",
+
+        "CODE_WRONG_OLD_PASSWORD_TITLE": "Password not changed",
+        "CODE_WRONG_OLD_PASSWORD": "The password could not be changed, check if your details were correct.",
+
+        "CODE_WRITE_SUCCESS_TITLE": "Operation was successful",
+        "CODE_WRITE_SUCCESS": "The operation carried out was successful",
+
+        "CODE_ERROR_WRITE_ENTITIY_TITLE": "Operation was not successful",
+        "CODE_ERROR_WRITE_ENTITIY": "The operation could not be performed, check the specified values",
+
+        "CODE_ERROR_WRITE_ARGUMENT_TITLE": "Incorrect argument",
+        "CODE_ERROR_WRITE_ARGUMENT": "The passed arguments are incorrect",
+
+        "TOKEN_EXPIRED_OR_INVALID_TITLE": "Token invalid",
+        "TOKEN_EXPIRED_OR_INVALID": "The authentication token has expired or is incorrect, you will be logged out for security reasons",
+
         "CODE_ERROR_FILE_READ": "File is damaged",
         "CODE_ERROR_FILE_READ_DESC": "The chosen file could not be read, please choose another file.",
         "CODE_ERROR_ADD_TRANSLATION": "Could not create translation",

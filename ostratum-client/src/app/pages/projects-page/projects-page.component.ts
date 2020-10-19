@@ -44,7 +44,6 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
       if (data[0]) {
         const project: Project = data[1];
         this.projectService.addProject(project.name, project.description).subscribe(res => {
-          this.toastService.determineToast(res, "TOAST.PROJECT_CREATED");
           this.loadProjects();
         });
       }

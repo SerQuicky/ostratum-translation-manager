@@ -58,7 +58,6 @@ export class ProjectComponent implements OnInit {
     component.instance.execute.subscribe(success => {
       if (success) {
         this.projectService.deleteProject(this.project.id).subscribe(response => {
-          this.toastService.determineToast(response, "TOAST.PROJECT_DELETED");
           this.storageService.updateProjectsSubject.next();
         });
       }
@@ -77,7 +76,6 @@ export class ProjectComponent implements OnInit {
     component.instance.execute.subscribe(data => {
       if (data[0]) {
         this.projectService.updateProject(data[1]).subscribe(response => {
-          this.toastService.determineToast(response, "TOAST.PROJECT_UPDATED");
           this.storageService.updateProjectsSubject.next();
         });
       }

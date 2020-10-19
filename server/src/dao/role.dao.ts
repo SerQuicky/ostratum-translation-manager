@@ -14,7 +14,7 @@ export class RoleDao {
         return this.commonDao.read("SELECT * FROM roles;", {}).then(rows => {
             let roles: Role[] = [];
 
-            for (const role of rows) {
+            for (const role of rows.result) {
                 roles.push(
                     {
                         id: role.id,

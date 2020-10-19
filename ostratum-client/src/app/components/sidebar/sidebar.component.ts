@@ -32,7 +32,6 @@ export class SidebarComponent implements OnInit {
   public logout(): void {
     this.authenticationService.logout().subscribe(response => {
       this.router.navigate(['/']);
-      this.toastService.determineToast(response);
     })
   }
 

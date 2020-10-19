@@ -53,7 +53,7 @@ export class Session {
         return new Promise((resolve, reject) => { 
             const result = this.jwts.some(jwt => jwt.token == token && jwt.admin && jwt.expireDate > Date.now());
             if(!result) {
-                reject({state: false, message: "ERROR.TOKEN_EXPIRED_OR_INVALID"})
+                reject({state: false, title: "GENERAL.TOKEN_EXPIRED_OR_INVALID_TITLE", message: "GENERAL.TOKEN_EXPIRED_OR_INVALID"})
             }
 
             resolve({state: true, message: ""});
