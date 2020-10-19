@@ -33,6 +33,8 @@ npm install
 npm run start [param]
 ```
 
+The administrator of the basic database has the following credentials *Name: Administrator* and *Password: @nw1Gf&&SToB*, please change them after you signed in.
+
 Start the web application in the development mode by the command (In the client directory). A production docker image will be created in the future (Version 2.0.0)
 
 ```
