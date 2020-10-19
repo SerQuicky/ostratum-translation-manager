@@ -66,3 +66,23 @@ Any feature, pull-request or opened issue is greatly appreciated. :)
 Feel free to contribute to the project, if you have any problems or question you can an issue or contact me under the mail adress michael.frank1996@gmail.com
 
 ## Screenshots
+
+<p align="center">
+  <img src="https://github.com/SerQuicky/ostratum-translation-manager/blob/master/resources/projects.png">  
+</p>
+
+<p align="center">
+  <img src="https://github.com/SerQuicky/ostratum-translation-manager/blob/master/resources/translation2.png">  
+</p>
+
+<p align="center">
+  <img src="https://github.com/SerQuicky/ostratum-translation-manager/blob/master/resources/translations1.png">  
+</p>
+
+<p align="center">
+  <img src="https://github.com/SerQuicky/ostratum-translation-manager/blob/master/resources/modal1.png">  
+</p>
+
+<p align="center">
+  <img src="https://github.com/SerQuicky/ostratum-translation-manager/blob/master/resources/modal2.png">  
+</p>
